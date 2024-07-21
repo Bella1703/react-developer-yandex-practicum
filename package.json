@@ -50,8 +50,8 @@
 	"scripts": {
 		"build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.js --env env=prod",
 		"start": "webpack serve --config webpack/webpack.config.js --env env=dev",
-		"stylelint": "stylelint \"src/**/*.css\"",
-		"stylelint:fix": "stylelint \"src/**/*.css\" --fix",
+		"stylelint": "stylelint \"src/**/*.{css,scss}\"",
+		"stylelint:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
 		"lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
 		"format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\" --ignore-path ./.prettierignore",
 		"test": "yarn stylelint:fix && yarn lint && yarn format",
@@ -61,6 +61,7 @@
 	"dependencies": {
 		"@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
 		"clsx": "^2.1.0",
+		"core-js": "^3.37.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
 	},

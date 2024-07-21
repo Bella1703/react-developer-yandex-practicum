@@ -1,0 +1,73 @@
+import s from './burger-constructor.module.scss';
+import React from 'react';
+import { IngredientType } from '../../app';
+import {
+	ConstructorElement,
+	Button,
+	DragIcon,
+	CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
+
+interface BurgerConstructorProps {
+	burgerIngredients: IngredientType[];
+}
+
+export const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
+	burgerIngredients,
+}) => {
+	const burgerBun = burgerIngredients.find(
+		(ingredient) => ingredient.type === 'bun'
+	);
+
+	return (
+		<section className={`${s.container} pl-4 pr-4`}>
+			{burgerBun && (
+				<ConstructorElement
+					key={burgerBun._id}
+					text={burgerBun.name + ' (верх)'}
+					price={burgerBun.price}
+					thumbnail={burgerBun.image}
+					type='top'
+					isLocked={true}
+					extraClass={'ml-8'}
+				/>
+			)}
+			<ul className={`${s.ingredients} custom-scroll mt-4 mb-4`}>
+				{burgerIngredients.map(
+					(ingredient) =>
+						ingredient.type !== 'bun' && (
+							<li key={ingredient._id} className={s.ingredientsItem}>
+								<DragIcon type='primary' />
+								<ConstructorElement
+									text={ingredient.name}
+									price={ingredient.price}
+									thumbnail={ingredient.image}
+									extraClass={'ml-2'}
+								/>
+							</li>
+						)
+				)}
+			</ul>
+			{burgerBun && (
+				<ConstructorElement
+					key={burgerBun._id}
+					text={burgerBun.name + ' (низ)'}
+					price={burgerBun.price}
+					thumbnail={burgerBun.image}
+					type='bottom'
+					isLocked={true}
+					extraClass={'ml-8'}
+				/>
+			)}
+			<div className={`${s.footer} mt-10 pr-8`}>
+				<div className={`${s.sum} text text_type_digits-medium`}>
+					610
+					<CurrencyIcon type='primary' />
+				</div>
+				<Button htmlType='button' type='primary' size='large'>
+					Оформить заказ
+				</Button>
+			</div>
+		</section>
+	);
+};

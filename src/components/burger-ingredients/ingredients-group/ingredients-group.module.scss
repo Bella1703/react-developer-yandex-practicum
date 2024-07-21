@@ -1,0 +1,10 @@
+.container {
+	width: 100%;
+	max-width: 600px;
+}
+
+.list {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+}

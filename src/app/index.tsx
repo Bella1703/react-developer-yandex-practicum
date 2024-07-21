@@ -1,32 +1,71 @@
-import clsx from 'clsx';
 import { useState } from 'react';
 import s from './app.module.scss';
-import reactLogo from './assets/react.svg';
-import { ReactComponent as TypescriptLogo } from './assets/typescript.svg';
+import { AppHeader } from '../components/app-header/app-header';
+import { BurgerIngredients } from '../components/burger-ingredients/burger-ingredients';
+import { burgerIngredientsData } from '../../utils/data.js';
+import { BurgerConstructor } from '../components/burger-constructor/burger-constructor';
+
+export interface IngredientType {
+	_id: string;
+	name: string;
+	type: string;
+	proteins: number;
+	fat: number;
+	carbohydrates: number;
+	calories: number;
+	price: number;
+	image: string;
+	image_mobile: string;
+	image_large: string;
+	__v: number;
+}
+
+export interface BurgerIngredientsGroupType {
+	name: string;
+	type: string;
+	ingredients: IngredientType[];
+}
 
 export const App = () => {
-	// const num = 0
-	const [count, setCount] = useState(0);
+	const [burgerIngredientsGroups] = useState<BurgerIngredientsGroupType[]>([
+		{
+			name: 'Булки',
+			type: 'bun',
+			ingredients: burgerIngredientsData.filter((item) => item.type === 'bun'),
+		},
+		{
+			name: 'Соусы',
+			type: 'sauce',
+			ingredients: burgerIngredientsData.filter(
+				(item) => item.type === 'sauce'
+			),
+		},
+		{
+			name: 'Начинки',
+			type: 'main',
+			ingredients: burgerIngredientsData.filter((item) => item.type === 'main'),
+		},
+	]);
+
+	const burgerIngredients = burgerIngredientsData.filter(
+		(ingredient) =>
+			ingredient._id === '60666c42cc7b410027a1a9b1' ||
+			ingredient._id === '60666c42cc7b410027a1a9b9' ||
+			ingredient._id === '60666c42cc7b410027a1a9b4' ||
+			ingredient._id === '60666c42cc7b410027a1a9bc' ||
+			ingredient._id === '60666c42cc7b410027a1a9bb' ||
+			ingredient._id === '60666c42cc7b410027a1a9ba' ||
+			ingredient._id === '60666c42cc7b410027a1a9b3' ||
+			ingredient._id === '60666c42cc7b410027a1a9bf'
+	);
+
 	return (
-		<div className='page'>
-			<div className='logo-wrapper'>
-				<a href='https://reactjs.org' target='_blank' rel='noreferrer'>
-					<img
-						src={reactLogo}
-						className={clsx(s.logo, s.react)}
-						alt='React logo'
-					/>
-				</a>
-				<a href='https://vitejs.dev' target='_blank' rel='noreferrer'>
-					<TypescriptLogo className={s.logo}/>
-				</a>
+		<>
+			<AppHeader />
+			<div className={s.container}>
+				<BurgerIngredients burgerIngredientsGroups={burgerIngredientsGroups} />
+				<BurgerConstructor burgerIngredients={burgerIngredients} />
 			</div>
-			<h1>React + TS</h1>
-			<div className={s.card}>
-				<button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</button>
-			</div>
-		</div>
+		</>
 	);
 };

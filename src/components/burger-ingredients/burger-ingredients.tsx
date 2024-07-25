@@ -1,7 +1,7 @@
 import s from './burger-ingredients.module.scss';
 import React from 'react';
 import { Tabs } from './tabs/tabs';
-import { BurgerIngredientsGroupType } from '../../app';
+import { BurgerIngredientsGroupType } from '../app/app';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
 
 interface BurgerIngredientsProps {

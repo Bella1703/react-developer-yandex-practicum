@@ -1,6 +1,6 @@
 import s from './burger-constructor.module.scss';
 import React from 'react';
-import { IngredientType } from '../../app';
+import { IngredientType } from '../app/app';
 import {
 	ConstructorElement,
 	Button,

@@ -1,12 +1,14 @@
 import s from './burger-constructor.module.scss';
-import React from 'react';
-import { IngredientType } from '../app/app';
+import React, { useState } from 'react';
+import { IngredientType } from '../../app';
 import {
 	ConstructorElement,
 	Button,
 	DragIcon,
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Modal } from '../modal/modal';
+import { OrderDetails } from './order-details/order-details';
 
 interface BurgerConstructorProps {
 	burgerIngredients: IngredientType[];
@@ -18,12 +20,17 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 	const burgerBun = burgerIngredients.find(
 		(ingredient) => ingredient.type === 'bun'
 	);
-
+	const [modalState, setModalState] = useState(false);
+	const handleOpenModal = () => {
+		setModalState(true);
+	};
+	const handleCloseModal = () => {
+		setModalState(false);
+	};
 	return (
 		<section className={`${s.container} pl-4 pr-4`}>
 			{burgerBun && (
 				<ConstructorElement
-					key={burgerBun._id}
 					text={burgerBun.name + ' (верх)'}
 					price={burgerBun.price}
 					thumbnail={burgerBun.image}
@@ -50,7 +57,6 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 			</ul>
 			{burgerBun && (
 				<ConstructorElement
-					key={burgerBun._id}
 					text={burgerBun.name + ' (низ)'}
 					price={burgerBun.price}
 					thumbnail={burgerBun.image}
@@ -64,9 +70,18 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 					610
 					<CurrencyIcon type='primary' />
 				</div>
-				<Button htmlType='button' type='primary' size='large'>
+				<Button
+					onClick={handleOpenModal}
+					htmlType='button'
+					type='primary'
+					size='large'>
 					Оформить заказ
 				</Button>
+				{modalState && (
+					<Modal title={''} onClose={handleCloseModal}>
+						<OrderDetails />
+					</Modal>
+				)}
 			</div>
 		</section>
 	);

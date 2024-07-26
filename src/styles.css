@@ -3,3 +3,5 @@ ul {
 	padding: 0;
 	list-style-type: none;
 }
+
+iframe#webpack-dev-server-client-overlay{display:none!important}

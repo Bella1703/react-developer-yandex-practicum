@@ -1,14 +1,16 @@
 import s from './burger-ingredients.module.scss';
 import React from 'react';
 import { Tabs } from './tabs/tabs';
-import { BurgerIngredientsGroupType } from '../app/app';
+import { BurgerIngredientsGroupType, IngredientType } from '../../app';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
 
 interface BurgerIngredientsProps {
+	burgerIngredientsData: IngredientType[];
 	burgerIngredientsGroups: BurgerIngredientsGroupType[];
 }
 
 export const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
+	burgerIngredientsData,
 	burgerIngredientsGroups,
 }) => {
 	return (
@@ -18,11 +20,15 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
 			<ul className={`${s.list} custom-scroll`}>
 				{burgerIngredientsGroups.map((group, index) => (
 					<li key={index}>
-						<IngredientsGroup
-							name={group.name}
-							type={group.type}
-							ingredients={group.ingredients}
-						/>
+						{burgerIngredientsData && (
+							<IngredientsGroup
+								name={group.name}
+								type={group.type}
+								ingredients={burgerIngredientsData.filter(
+									(item: { type: string }) => item.type === group.type
+								)}
+							/>
+						)}
 					</li>
 				))}
 			</ul>

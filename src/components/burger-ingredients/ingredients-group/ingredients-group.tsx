@@ -33,11 +33,7 @@ export const IngredientsGroup: React.FC<BurgerIngredientsGroup> = ({
 			<ul className={`${s.list} pl-4 pr-4 mt-6`}>
 				{ingredients.map((ingredient) => (
 					<li key={ingredient._id}>
-						<IngredientCard
-							text={ingredient.name}
-							price={ingredient.price}
-							thumbnail={ingredient.image}
-						/>
+						<IngredientCard {...ingredient} />
 					</li>
 				))}
 			</ul>

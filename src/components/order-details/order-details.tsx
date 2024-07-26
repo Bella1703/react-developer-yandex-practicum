@@ -1,6 +1,6 @@
 import s from './order-details.module.scss';
 import React from 'react';
-import imageDone from '../../../images/done.png';
+import imageDone from '../../images/done.png';
 
 export const OrderDetails = () => {
 	return (

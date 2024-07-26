@@ -2,7 +2,7 @@ import s from './tabs.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 
-import { BurgerIngredientsGroupType } from '../../../app';
+import { BurgerIngredientsGroupType } from '../../app';
 
 interface TabsProps {
 	burgerIngredientsGroups: BurgerIngredientsGroupType[];

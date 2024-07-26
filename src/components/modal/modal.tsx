@@ -2,7 +2,7 @@ import s from './modal.module.scss';
 import React, { ReactNode, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ModalOverlay } from './modal-overlay/modal-overlay';
+import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 interface ModalProps {
 	children: ReactNode;

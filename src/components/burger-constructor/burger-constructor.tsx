@@ -1,6 +1,6 @@
 import s from './burger-constructor.module.scss';
 import React, { useState } from 'react';
-import { IngredientType } from '../../app';
+import { IngredientType } from '../app';
 import {
 	ConstructorElement,
 	Button,
@@ -8,7 +8,7 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
-import { OrderDetails } from './order-details/order-details';
+import { OrderDetails } from '../order-details/order-details';
 
 interface BurgerConstructorProps {
 	burgerIngredients: IngredientType[];

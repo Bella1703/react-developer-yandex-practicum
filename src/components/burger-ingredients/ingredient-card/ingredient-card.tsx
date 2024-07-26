@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../../modal/modal';
 import { Ingredient } from '../ingredients-group/ingredients-group';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 
 export const IngredientCard: React.FC<Ingredient> = ({ ...props }) => {
 	const [modalState, setModalState] = useState(false);

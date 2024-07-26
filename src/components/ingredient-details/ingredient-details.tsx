@@ -1,6 +1,6 @@
 import s from './ingredient-details.module.scss';
 import React from 'react';
-import { Ingredient } from '../ingredients-group/ingredients-group';
+import { Ingredient } from '../burger-ingredients/ingredients-group/ingredients-group';
 
 export const IngredientDetails: React.FC<Ingredient> = ({ ...props }) => {
 	return (

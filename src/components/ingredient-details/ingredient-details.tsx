@@ -1,8 +1,8 @@
 import s from './ingredient-details.module.scss';
-import React from 'react';
+import React, { FC } from 'react';
 import { Ingredient } from '../burger-ingredients/ingredients-group/ingredients-group';
 
-export const IngredientDetails: React.FC<Ingredient> = ({ ...props }) => {
+export const IngredientDetails: FC<Ingredient> = ({ ...props }) => {
 	return (
 		<div className={s.content}>
 			<img src={props.image} alt={props.name} className={s.image} />

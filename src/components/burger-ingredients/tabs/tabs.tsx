@@ -1,6 +1,6 @@
 import s from './tabs.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { FC } from 'react';
 
 import { BurgerIngredientsGroupType } from '../../app';
 
@@ -8,7 +8,7 @@ interface TabsProps {
 	burgerIngredientsGroups: BurgerIngredientsGroupType[];
 }
 
-export const Tabs: React.FC<TabsProps> = ({ burgerIngredientsGroups }) => {
+export const Tabs: FC<TabsProps> = ({ burgerIngredientsGroups }) => {
 	const [current, setCurrent] = React.useState('buns');
 
 	return (

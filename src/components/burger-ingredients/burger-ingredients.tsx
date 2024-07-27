@@ -1,5 +1,5 @@
 import s from './burger-ingredients.module.scss';
-import React from 'react';
+import React, { FC } from 'react';
 import { Tabs } from './tabs/tabs';
 import { BurgerIngredientsGroupType, IngredientType } from '../app';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
@@ -9,7 +9,7 @@ interface BurgerIngredientsProps {
 	burgerIngredientsGroups: BurgerIngredientsGroupType[];
 }
 
-export const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
+export const BurgerIngredients: FC<BurgerIngredientsProps> = ({
 	burgerIngredientsData,
 	burgerIngredientsGroups,
 }) => {
@@ -25,7 +25,7 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
 								name={group.name}
 								type={group.type}
 								ingredients={burgerIngredientsData.filter(
-									(item: { type: string }) => item.type === group.type
+									(item) => item.type === group.type
 								)}
 							/>
 						)}

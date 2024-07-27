@@ -1,5 +1,5 @@
 import s from './ingredients-group.module.scss';
-import React from 'react';
+import React, { FC } from 'react';
 import { IngredientCard } from '../ingredient-card/ingredient-card';
 
 export interface Ingredient {
@@ -23,7 +23,7 @@ export interface BurgerIngredientsGroup {
 	ingredients: Ingredient[];
 }
 
-export const IngredientsGroup: React.FC<BurgerIngredientsGroup> = ({
+export const IngredientsGroup: FC<BurgerIngredientsGroup> = ({
 	name,
 	ingredients,
 }) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import s from './nav-item.module.scss';
 
 interface NavItemProps {
@@ -9,7 +9,7 @@ interface NavItemProps {
 	text: string;
 }
 
-export const NavItem: React.FC<NavItemProps> = ({ Component, type, text }) => {
+export const NavItem: FC<NavItemProps> = ({ Component, type, text }) => {
 	return (
 		<li className={`${s.menuItem} pl-5 pr-5 pb-4 pt-4`}>
 			<Component type={type} />

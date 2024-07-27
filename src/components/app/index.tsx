@@ -18,40 +18,41 @@ export interface IngredientType {
 	image_large: string;
 	__v: number;
 }
-
 export interface BurgerIngredientsGroupType {
 	name: string;
 	type: string;
 }
-
-interface StateType {
-	ingredientsData: IngredientType[] | null;
-	ingredientsGroups: BurgerIngredientsGroupType[];
+interface BurgerIngredientsType {
+	data: IngredientType[] | null;
+	groups: BurgerIngredientsGroupType[];
 	loading: boolean;
 }
 
+const apiUrl = 'https://norma.nomoreparties.space/api/ingredients';
+
 export const App = () => {
 	const [error, setError] = useState();
-	const [state, setState] = useState<StateType>({
-		ingredientsData: null,
-		ingredientsGroups: [
-			{
-				name: 'Булки',
-				type: 'bun',
-			},
-			{
-				name: 'Соусы',
-				type: 'sauce',
-			},
-			{
-				name: 'Начинки',
-				type: 'main',
-			},
-		],
-		loading: true,
-	});
-	const burgerIngredients = state.ingredientsData
-		? state.ingredientsData.filter(
+	const [burgerIngredients, setBurgerIngredients] =
+		useState<BurgerIngredientsType>({
+			data: null,
+			groups: [
+				{
+					name: 'Булки',
+					type: 'bun',
+				},
+				{
+					name: 'Соусы',
+					type: 'sauce',
+				},
+				{
+					name: 'Начинки',
+					type: 'main',
+				},
+			],
+			loading: true,
+		});
+	const selectedIngredients = burgerIngredients.data
+		? burgerIngredients.data.filter(
 				(ingredient) =>
 					ingredient._id === '643d69a5c3f7b9001cfa093c' ||
 					ingredient._id === '643d69a5c3f7b9001cfa0944' ||
@@ -62,18 +63,20 @@ export const App = () => {
 					ingredient._id === '643d69a5c3f7b9001cfa0946'
 		  )
 		: [];
-	const apiUrl = 'https://norma.nomoreparties.space/api/ingredients';
 	useEffect(() => {
 		const getIngredientsData = async () => {
 			try {
-				setState({ ...state, loading: true });
+				setBurgerIngredients({ ...burgerIngredients, loading: true });
 				const res = await fetch(apiUrl);
+				if (!res.ok) {
+					throw new Error('Ответ сети был не ok.');
+				}
 				const data = await res.json();
-				setState({
-					...state,
-					ingredientsData: data.data,
+				setBurgerIngredients((prevState) => ({
+					...prevState,
+					data: data.data,
 					loading: false,
-				});
+				}));
 			} catch (err: any) {
 				setError(err);
 			}
@@ -85,19 +88,21 @@ export const App = () => {
 		<>
 			<AppHeader />
 			<div className={s.container}>
-				{error ? (
+				{error && (
 					<p className={'text text_type_main-large'}>
 						Что-то пошло не так. Перезагрузите страницу.
 					</p>
-				) : state.ingredientsData === null ? (
+				)}
+				{!error && burgerIngredients.data === null && (
 					<p className={'text text_type_main-large'}>Загрузка данных...</p>
-				) : (
+				)}
+				{!error && burgerIngredients.data !== null && (
 					<>
 						<BurgerIngredients
-							burgerIngredientsData={state.ingredientsData}
-							burgerIngredientsGroups={state.ingredientsGroups}
+							burgerIngredientsData={burgerIngredients.data}
+							burgerIngredientsGroups={burgerIngredients.groups}
 						/>
-						<BurgerConstructor burgerIngredients={burgerIngredients} />
+						<BurgerConstructor selectedIngredients={selectedIngredients} />
 					</>
 				)}
 			</div>

@@ -1,5 +1,5 @@
 import s from './burger-constructor.module.scss';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { IngredientType } from '../app';
 import {
 	ConstructorElement,
@@ -11,13 +11,13 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 
 interface BurgerConstructorProps {
-	burgerIngredients: IngredientType[];
+	selectedIngredients: IngredientType[];
 }
 
-export const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
-	burgerIngredients,
+export const BurgerConstructor: FC<BurgerConstructorProps> = ({
+	selectedIngredients,
 }) => {
-	const burgerBun = burgerIngredients.find(
+	const burgerBun = selectedIngredients.find(
 		(ingredient) => ingredient.type === 'bun'
 	);
 	const [modalState, setModalState] = useState(false);
@@ -40,7 +40,7 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 				/>
 			)}
 			<ul className={`${s.ingredients} custom-scroll mt-4 mb-4`}>
-				{burgerIngredients.map(
+				{selectedIngredients.map(
 					(ingredient) =>
 						ingredient.type !== 'bun' && (
 							<li key={ingredient._id} className={s.ingredientsItem}>

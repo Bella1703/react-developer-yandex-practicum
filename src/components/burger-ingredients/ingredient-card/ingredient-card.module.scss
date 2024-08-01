@@ -1,0 +1,26 @@
+.card {
+	position: relative;
+	display: flex;
+	flex-flow: column wrap;
+	place-content: center flex-start;
+	gap: 8px;
+	min-height: 208px;
+	text-align: center;
+}
+
+.image {
+	width: 240px;
+	height: 120px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.price {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+
+.counter {
+	position: absolute;
+}

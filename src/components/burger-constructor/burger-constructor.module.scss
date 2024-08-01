@@ -1,0 +1,41 @@
+.container {
+	width: 100%;
+	margin-top: 100px;
+}
+
+.ingredients {
+	display: grid;
+	gap: 16px;
+	max-height: 464px;
+	overflow-y: scroll;
+}
+
+.ingredientsItem {
+	display: grid;
+	grid-template-columns: auto 1fr;
+
+	& svg {
+		height: 100%;
+	}
+}
+
+.footer {
+	display: flex;
+	flex-wrap: wrap;
+	place-content: center flex-end;
+	gap: 40px;
+	height: auto;
+
+
+	& svg {
+		width: 36px;
+		height: 36px;
+	}
+}
+
+.sum {
+	display: flex;
+	flex-wrap: wrap;
+	place-content: center flex-end;
+	gap: 8px;
+}

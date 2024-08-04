@@ -39,3 +39,23 @@
 	place-content: center flex-end;
 	gap: 8px;
 }
+
+.placeholder {
+	width: 100%;
+	max-width: 536px;
+	height: 80px;
+	margin-left: 32px;
+	background-color: #1c1c21;
+}
+
+.placeholderIngredient {
+	border-radius: 40px;
+}
+
+.placeholderTopBun {
+	border-radius: 88px 88px 40px 40px;
+}
+
+.placeholderBottomBun {
+	border-radius: 40px 40px 88px 88px;
+}

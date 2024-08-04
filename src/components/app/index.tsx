@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import s from './app.module.scss';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
+import { getIngredients } from '../../services/actions/ingredients';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { RootState } from "../../services/reducers";
 
 export interface IngredientType {
 	_id: string;
@@ -23,36 +28,32 @@ export interface BurgerIngredientsGroupType {
 	type: string;
 }
 interface BurgerIngredientsType {
-	data: IngredientType[] | null;
 	groups: BurgerIngredientsGroupType[];
-	loading: boolean;
 }
 
-const apiUrl = 'https://norma.nomoreparties.space/api/ingredients';
-
 export const App = () => {
-	const [error, setError] = useState();
-	const [burgerIngredients, setBurgerIngredients] =
-		useState<BurgerIngredientsType>({
-			data: null,
-			groups: [
-				{
-					name: 'Булки',
-					type: 'bun',
-				},
-				{
-					name: 'Соусы',
-					type: 'sauce',
-				},
-				{
-					name: 'Начинки',
-					type: 'main',
-				},
-			],
-			loading: true,
-		});
-	const selectedIngredients = burgerIngredients.data
-		? burgerIngredients.data.filter(
+	const dispatch = useDispatch();
+	const { ingredients, isLoading, hasError } = useSelector(
+		(state: RootState) => state.ingredients
+	);
+	const [burgerIngredients] = useState<BurgerIngredientsType>({
+		groups: [
+			{
+				name: 'Булки',
+				type: 'bun',
+			},
+			{
+				name: 'Соусы',
+				type: 'sauce',
+			},
+			{
+				name: 'Начинки',
+				type: 'main',
+			},
+		],
+	});
+	const selectedIngredients = ingredients
+		? ingredients.filter(
 				(ingredient) =>
 					ingredient._id === '643d69a5c3f7b9001cfa093c' ||
 					ingredient._id === '643d69a5c3f7b9001cfa0944' ||
@@ -64,46 +65,30 @@ export const App = () => {
 		  )
 		: [];
 	useEffect(() => {
-		const getIngredientsData = async () => {
-			try {
-				setBurgerIngredients({ ...burgerIngredients, loading: true });
-				const res = await fetch(apiUrl);
-				if (!res.ok) {
-					throw new Error('Ответ сети был не ok.');
-				}
-				const data = await res.json();
-				setBurgerIngredients((prevState) => ({
-					...prevState,
-					data: data.data,
-					loading: false,
-				}));
-			} catch (err: any) {
-				setError(err);
-			}
-		};
-		getIngredientsData();
+		// @ts-ignore
+		dispatch(getIngredients());
 	}, []);
 
 	return (
 		<>
 			<AppHeader />
 			<div className={s.container}>
-				{error && (
+				{hasError && (
 					<p className={'text text_type_main-large'}>
 						Что-то пошло не так. Перезагрузите страницу.
 					</p>
 				)}
-				{!error && burgerIngredients.data === null && (
+				{isLoading && (
 					<p className={'text text_type_main-large'}>Загрузка данных...</p>
 				)}
-				{!error && burgerIngredients.data !== null && (
-					<>
+				{!hasError && ingredients && (
+					<DndProvider backend={HTML5Backend}>
 						<BurgerIngredients
-							burgerIngredientsData={burgerIngredients.data}
+							burgerIngredientsData={ingredients}
 							burgerIngredientsGroups={burgerIngredients.groups}
 						/>
-						<BurgerConstructor selectedIngredients={selectedIngredients} />
-					</>
+						<BurgerConstructor />
+					</DndProvider>
 				)}
 			</div>
 		</>

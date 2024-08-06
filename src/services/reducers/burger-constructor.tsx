@@ -3,6 +3,7 @@ import {
 	REMOVE_INGREDIENT,
 	REPLACE_BUN,
 	CLEAR_CONSTRUCTOR,
+	MOVE_INGREDIENT,
 } from '../actions/burger-constructor';
 import { IngredientType } from './ingredients';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,25 +17,32 @@ interface AddIngredientAction {
 	ingredient: IngredientType;
 }
 
-interface RemoveIngredient {
+interface RemoveIngredientAction {
 	type: typeof REMOVE_INGREDIENT;
 	ingredient: BurgerIngredientType;
 }
 
-interface ReplaceBun {
+interface ReplaceBunAction {
 	type: typeof REPLACE_BUN;
 	bun: IngredientType;
 }
 
-interface ClearConstructor {
+interface ClearConstructorAction {
 	type: typeof CLEAR_CONSTRUCTOR;
+}
+
+interface MoveIngredientAction {
+	type: typeof MOVE_INGREDIENT;
+	dragIndex: number;
+	hoverIndex: number;
 }
 
 export type BurgerConstructorActionTypes =
 	| AddIngredientAction
-	| RemoveIngredient
-	| ReplaceBun
-	| ClearConstructor;
+	| RemoveIngredientAction
+	| ReplaceBunAction
+	| ClearConstructorAction
+	| MoveIngredientAction;
 
 const burgerConstructorInitialState = {
 	bun: null,
@@ -77,6 +85,16 @@ export const burgerConstructorReducer = (
 		}
 		case CLEAR_CONSTRUCTOR: {
 			return burgerConstructorInitialState;
+		}
+		case MOVE_INGREDIENT: {
+			const dragCard = state.selectedIngredients[action.dragIndex];
+			const newCards = [...state.selectedIngredients];
+			newCards.splice(action.dragIndex, 1);
+			newCards.splice(action.hoverIndex, 0, dragCard);
+			return {
+				...state,
+				selectedIngredients: newCards,
+			};
 		}
 		default: {
 			return state;

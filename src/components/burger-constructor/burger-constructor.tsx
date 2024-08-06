@@ -4,7 +4,6 @@ import { useDrop } from 'react-dnd';
 import {
 	ConstructorElement,
 	Button,
-	DragIcon,
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
@@ -20,6 +19,7 @@ import { RootState } from '../../services/reducers';
 import { placeOrder } from '../../services/actions/order';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
+import { BurgerConstructorIngredient } from './burger-constructor-ingredient/burger-constructor-ingredient';
 
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
@@ -103,7 +103,7 @@ export const BurgerConstructor = () => {
 			<div
 				ref={topBunDropTarget}
 				className={bun ? '' : `${s.placeholder} ${s.placeholderTopBun}`}>
-				{bun && (
+				{bun ? (
 					<ConstructorElement
 						text={bun.name + ' (верх)'}
 						price={bun.price}
@@ -112,6 +112,8 @@ export const BurgerConstructor = () => {
 						isLocked={true}
 						extraClass={'ml-8'}
 					/>
+				) : (
+					<p>Выберите булки</p>
 				)}
 			</div>
 
@@ -119,25 +121,23 @@ export const BurgerConstructor = () => {
 				ref={ingredientDropTarget}
 				className={
 					selectedIngredients.length === 0
-						? `${s.placeholder} ${s.placeholderIngredient}`
-						: ''
+						? `${s.placeholder} ${s.placeholderIngredient} mt-4`
+						: 'mt-4'
 				}>
-				<ul className={`${s.ingredients} custom-scroll mt-4`}>
-					{selectedIngredients.map((ingredient) => (
-						<li
-							key={ingredient.uuid}
-							className={s.ingredientsItem}
-							onClick={(e) => handleRemoveIngredient(e, ingredient)}>
-							<DragIcon type='primary' />
-							<ConstructorElement
-								text={ingredient.name}
-								price={ingredient.price}
-								thumbnail={ingredient.image}
-								extraClass={'ml-2'}
+				{selectedIngredients.length > 0 ? (
+					<ul className={`${s.ingredients} custom-scroll mt-4`}>
+						{selectedIngredients.map((ingredient, index) => (
+							<BurgerConstructorIngredient
+								key={ingredient.uuid}
+								ingredient={ingredient}
+								handleRemoveIngredient={handleRemoveIngredient}
+								index={index}
 							/>
-						</li>
-					))}
-				</ul>
+						))}
+					</ul>
+				) : (
+					<p>Выберите начинки</p>
+				)}
 			</div>
 
 			<div
@@ -145,7 +145,7 @@ export const BurgerConstructor = () => {
 				className={
 					bun ? 'mt-4' : `${s.placeholder} ${s.placeholderBottomBun} mt-4`
 				}>
-				{bun && (
+				{bun ? (
 					<ConstructorElement
 						text={bun.name + ' (низ)'}
 						price={bun.price}
@@ -154,6 +154,8 @@ export const BurgerConstructor = () => {
 						isLocked={true}
 						extraClass={'ml-8'}
 					/>
+				) : (
+					<p>Выберите булки</p>
 				)}
 			</div>
 

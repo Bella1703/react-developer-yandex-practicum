@@ -10,15 +10,6 @@
 	overflow-y: scroll;
 }
 
-.ingredientsItem {
-	display: grid;
-	grid-template-columns: auto 1fr;
-
-	& svg {
-		height: 100%;
-	}
-}
-
 .footer {
 	display: flex;
 	flex-wrap: wrap;
@@ -41,6 +32,10 @@
 }
 
 .placeholder {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-content: center;
 	width: 100%;
 	max-width: 536px;
 	height: 80px;

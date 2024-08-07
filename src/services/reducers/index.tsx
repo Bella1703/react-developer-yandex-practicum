@@ -1,0 +1,25 @@
+import { combineReducers } from 'redux';
+import { ingredientsReducer, IngredientsStateTypes } from './ingredients';
+import {
+	burgerConstructorReducer,
+	BurgerConstructorStateTypes,
+} from './burger-constructor';
+import { OrderStateTypes, placeOrderReducer } from './order';
+import {
+	ingredientDetailsInitialStateTypes,
+	ingredientDetailsReducer,
+} from './ingredient-details';
+
+export type RootState = {
+	ingredients: IngredientsStateTypes;
+	burgerConstructor: BurgerConstructorStateTypes;
+	order: OrderStateTypes;
+	ingredientDetails: ingredientDetailsInitialStateTypes;
+};
+
+export const rootReducer = combineReducers({
+	ingredients: ingredientsReducer,
+	burgerConstructor: burgerConstructorReducer,
+	order: placeOrderReducer,
+	ingredientDetails: ingredientDetailsReducer,
+});

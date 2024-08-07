@@ -3,9 +3,9 @@ import { RootState } from '../reducers';
 import { Dispatch } from 'react';
 import { CLEAR_CONSTRUCTOR } from './burger-constructor';
 
-export const PLACE_ORDER = 'PLACE_ORDER';
+export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST';
 export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS';
-export const PLACE_ORDER_FAILED = 'PLACE_ORDER_FAILED';
+export const PLACE_ORDER_ERROR = 'PLACE_ORDER_ERROR';
 
 export interface ResponseTypes {
 	name: string;
@@ -14,6 +14,8 @@ export interface ResponseTypes {
 	};
 	success: boolean;
 }
+
+const apiUrl = 'https://norma.nomoreparties.space/api/orders';
 
 export const placeOrder = (
 	order: string[]
@@ -27,10 +29,10 @@ export const placeOrder = (
 		dispatch: Dispatch<{ type: string; response?: ResponseTypes }>
 	) => {
 		dispatch({
-			type: PLACE_ORDER,
+			type: PLACE_ORDER_REQUEST,
 		});
 		try {
-			const res = await fetch('https://norma.nomoreparties.space/api/orders', {
+			const res = await fetch(apiUrl, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -51,12 +53,12 @@ export const placeOrder = (
 				});
 			} else {
 				dispatch({
-					type: PLACE_ORDER_FAILED,
+					type: PLACE_ORDER_ERROR,
 				});
 			}
 		} catch (error) {
 			dispatch({
-				type: PLACE_ORDER_FAILED,
+				type: PLACE_ORDER_ERROR,
 			});
 		}
 	};

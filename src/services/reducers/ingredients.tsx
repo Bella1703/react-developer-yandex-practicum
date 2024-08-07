@@ -1,7 +1,7 @@
 import {
-	GET_INGREDIENTS,
+	GET_INGREDIENTS_REQUEST,
 	GET_INGREDIENTS_SUCCESS,
-	GET_INGREDIENTS_FAILED,
+	GET_INGREDIENTS_ERROR,
 } from '../actions/ingredients';
 
 export interface IngredientType {
@@ -19,14 +19,14 @@ export interface IngredientType {
 	__v: number;
 }
 interface GetIngredientsAction {
-	type: typeof GET_INGREDIENTS;
+	type: typeof GET_INGREDIENTS_REQUEST;
 }
 interface GetIngredientsSuccessAction {
 	type: typeof GET_INGREDIENTS_SUCCESS;
 	ingredients: IngredientType[];
 }
 interface GetIngredientsFailedAction {
-	type: typeof GET_INGREDIENTS_FAILED;
+	type: typeof GET_INGREDIENTS_ERROR;
 }
 export type IngredientsActionTypes =
 	| GetIngredientsAction
@@ -48,7 +48,7 @@ export const ingredientsReducer = (
 	action: IngredientsActionTypes
 ): IngredientsStateTypes => {
 	switch (action.type) {
-		case GET_INGREDIENTS: {
+		case GET_INGREDIENTS_REQUEST: {
 			return {
 				...state,
 				isLoading: true,
@@ -62,7 +62,7 @@ export const ingredientsReducer = (
 				hasError: false,
 			};
 		}
-		case GET_INGREDIENTS_FAILED: {
+		case GET_INGREDIENTS_ERROR: {
 			return {
 				...state,
 				isLoading: false,

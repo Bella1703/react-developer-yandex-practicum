@@ -1,20 +1,20 @@
 import { IngredientType } from '../reducers/ingredients';
 
-export const GET_INGREDIENTS = 'GET_INGREDIENTS';
+export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR';
+
+const apiUrl = 'https://norma.nomoreparties.space/api/ingredients';
 
 export const getIngredients = () => {
 	return async function (
 		dispatch: (arg0: { type: string; ingredients?: IngredientType[] }) => void
 	) {
 		dispatch({
-			type: GET_INGREDIENTS,
+			type: GET_INGREDIENTS_REQUEST,
 		});
 		try {
-			const res = await fetch(
-				'https://norma.nomoreparties.space/api/ingredients'
-			);
+			const res = await fetch(apiUrl);
 			if (!res.ok) {
 				throw new Error('Ответ сети был не ok.');
 			}
@@ -26,12 +26,12 @@ export const getIngredients = () => {
 				});
 			} else {
 				dispatch({
-					type: GET_INGREDIENTS_FAILED,
+					type: GET_INGREDIENTS_ERROR,
 				});
 			}
 		} catch (error) {
 			dispatch({
-				type: GET_INGREDIENTS_FAILED,
+				type: GET_INGREDIENTS_ERROR,
 			});
 		}
 	};

@@ -1,15 +1,23 @@
 import s from './tabs.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { BurgerIngredientsGroupType } from '../../app';
 
 interface TabsProps {
 	burgerIngredientsGroups: BurgerIngredientsGroupType[];
+	activeTabType: string;
 }
 
-export const Tabs: FC<TabsProps> = ({ burgerIngredientsGroups }) => {
-	const [current, setCurrent] = React.useState('buns');
+export const Tabs: FC<TabsProps> = ({
+	burgerIngredientsGroups,
+	activeTabType,
+}) => {
+	const [current, setCurrent] = React.useState(activeTabType);
+
+	useEffect(() => {
+		setCurrent(activeTabType);
+	}, [activeTabType]);
 
 	return (
 		<div className={`${s.tabs} mt-5`}>
@@ -18,7 +26,7 @@ export const Tabs: FC<TabsProps> = ({ burgerIngredientsGroups }) => {
 					key={index}
 					value={group.type}
 					active={current === group.type}
-					onClick={setCurrent}>
+					onClick={() => setCurrent(group.type)}>
 					{group.name}
 				</Tab>
 			))}

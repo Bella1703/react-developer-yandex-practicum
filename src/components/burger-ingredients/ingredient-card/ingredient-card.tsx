@@ -25,7 +25,6 @@ export const IngredientCard: FC<Ingredient> = ({ ...props }) => {
 			ingredients: ingredients,
 			id: props._id,
 		});
-		console.log(ingredientDetails)
 		setModalState(true);
 	};
 	const handleCloseModal = () => {

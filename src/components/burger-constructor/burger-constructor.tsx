@@ -11,15 +11,16 @@ import { OrderDetails } from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { BurgerIngredientType } from '../../services/reducers/burger-constructor';
 import {
-	ADD_INGREDIENT,
 	REMOVE_INGREDIENT,
 	REPLACE_BUN,
+	addIngredient,
 } from '../../services/actions/burger-constructor';
 import { RootState } from '../../services/reducers';
 import { placeOrder } from '../../services/actions/order';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient/burger-constructor-ingredient';
+import { IngredientType } from '../../services/reducers/ingredients';
 
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
@@ -56,10 +57,7 @@ export const BurgerConstructor = () => {
 	const [, ingredientDropTarget] = useDrop({
 		accept: ['main', 'sauce'],
 		drop(ingredient) {
-			dispatch({
-				type: ADD_INGREDIENT,
-				ingredient,
-			});
+			dispatch(addIngredient(ingredient as IngredientType));
 		},
 	});
 

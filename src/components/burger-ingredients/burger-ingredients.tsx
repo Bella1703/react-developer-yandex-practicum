@@ -1,24 +1,36 @@
 import s from './burger-ingredients.module.scss';
-import React, { FC, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Tabs } from './tabs/tabs';
-import { BurgerIngredientsGroupType } from '../app';
-import { IngredientType } from '../../services/reducers/ingredients';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../services/reducers';
 
-interface BurgerIngredientsProps {
-	burgerIngredientsData: IngredientType[];
-	burgerIngredientsGroups: BurgerIngredientsGroupType[];
+export interface BurgerIngredientsGroupType {
+	name: string;
+	type: string;
 }
 
-export const BurgerIngredients: FC<BurgerIngredientsProps> = ({
-	burgerIngredientsData,
-	burgerIngredientsGroups,
-}) => {
+export const BurgerIngredients = () => {
+	const tabsRef = useRef<HTMLDivElement | null>(null);
+	const groupTitleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+	const [burgerIngredientsGroups] = useState<BurgerIngredientsGroupType[]>([
+		{
+			name: 'Булки',
+			type: 'bun',
+		},
+		{
+			name: 'Соусы',
+			type: 'sauce',
+		},
+		{
+			name: 'Начинки',
+			type: 'main',
+		},
+	]);
 	const [activeTabType, setActiveTabType] = useState(
 		burgerIngredientsGroups[0].type
 	);
-	const tabsRef = useRef<HTMLDivElement | null>(null);
-	const groupTitleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+	const { ingredients } = useSelector((state: RootState) => state.ingredients);
 
 	const onIngredientsScroll = () => {
 		if (!tabsRef.current) {
@@ -54,7 +66,7 @@ export const BurgerIngredients: FC<BurgerIngredientsProps> = ({
 			<ul onScroll={onIngredientsScroll} className={`${s.list} custom-scroll`}>
 				{burgerIngredientsGroups.map((group, index) => (
 					<li key={index}>
-						{burgerIngredientsData && (
+						{ingredients && (
 							<section>
 								<h2
 									ref={(el) => (groupTitleRefs.current[index] = el)}
@@ -63,7 +75,7 @@ export const BurgerIngredients: FC<BurgerIngredientsProps> = ({
 								</h2>
 								<IngredientsGroup
 									type={group.type}
-									ingredients={burgerIngredientsData.filter(
+									ingredients={ingredients.filter(
 										(item) => item.type === group.type
 									)}
 								/>

@@ -6,7 +6,6 @@ import {
 	MOVE_INGREDIENT,
 } from '../actions/burger-constructor';
 import { IngredientType } from './ingredients';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface BurgerIngredientType extends IngredientType {
 	uuid: string;
@@ -14,7 +13,7 @@ export interface BurgerIngredientType extends IngredientType {
 
 interface AddIngredientAction {
 	type: typeof ADD_INGREDIENT;
-	ingredient: IngredientType;
+	payload: BurgerIngredientType;
 }
 
 interface RemoveIngredientAction {
@@ -60,13 +59,9 @@ export const burgerConstructorReducer = (
 ) => {
 	switch (action.type) {
 		case ADD_INGREDIENT: {
-			const ingredientWithUuid = {
-				...action.ingredient,
-				uuid: uuidv4(),
-			};
 			return {
 				...state,
-				selectedIngredients: [...state.selectedIngredients, ingredientWithUuid],
+				selectedIngredients: [...state.selectedIngredients, action.payload],
 			};
 		}
 		case REMOVE_INGREDIENT: {

@@ -2,7 +2,7 @@ import {
 	PLACE_ORDER_REQUEST,
 	PLACE_ORDER_SUCCESS,
 	PLACE_ORDER_ERROR,
-	ResponseTypes,
+	OrderResponseType,
 } from '../actions/order';
 
 interface PlaceOrderAction {
@@ -20,7 +20,7 @@ export type OrderActionTypes =
 	| PlaceOrderSuccessAction
 	| PlaceOrderFailedAction;
 export interface OrderStateTypes {
-	response: null | ResponseTypes;
+	response: null | OrderResponseType;
 	isLoading: boolean;
 	hasError: boolean;
 }
@@ -44,7 +44,7 @@ export const placeOrderReducer = (
 		}
 		case PLACE_ORDER_SUCCESS: {
 			return {
-				response: action.response as ResponseTypes,
+				response: action.response as OrderResponseType,
 				isLoading: false,
 				hasError: false,
 			};

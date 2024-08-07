@@ -1,10 +1,14 @@
 import { IngredientType } from '../reducers/ingredients';
+import { request } from '../../utils/request';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR';
 
-const apiUrl = 'https://norma.nomoreparties.space/api/ingredients';
+export interface IngredientsResponseType {
+	success: boolean;
+	data: IngredientType[];
+}
 
 export const getIngredients = () => {
 	return async function (
@@ -14,21 +18,11 @@ export const getIngredients = () => {
 			type: GET_INGREDIENTS_REQUEST,
 		});
 		try {
-			const res = await fetch(apiUrl);
-			if (!res.ok) {
-				throw new Error('Ответ сети был не ok.');
-			}
-			const data = await res.json();
-			if (data && data.success) {
-				dispatch({
-					type: GET_INGREDIENTS_SUCCESS,
-					ingredients: data.data,
-				});
-			} else {
-				dispatch({
-					type: GET_INGREDIENTS_ERROR,
-				});
-			}
+			const data = await request('ingredients');
+			dispatch({
+				type: GET_INGREDIENTS_SUCCESS,
+				ingredients: (data as IngredientsResponseType).data,
+			});
 		} catch (error) {
 			dispatch({
 				type: GET_INGREDIENTS_ERROR,

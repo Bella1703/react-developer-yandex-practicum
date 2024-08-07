@@ -7,22 +7,10 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { getIngredients } from '../../services/actions/ingredients';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { RootState } from "../../services/reducers";
+import { RootState } from '../../services/reducers';
+import { ThunkDispatch } from 'redux-thunk';
+import { IngredientsActionTypes } from '../../services/reducers/ingredients';
 
-export interface IngredientType {
-	_id: string;
-	name: string;
-	type: string;
-	proteins: number;
-	fat: number;
-	carbohydrates: number;
-	calories: number;
-	price: number;
-	image: string;
-	image_mobile: string;
-	image_large: string;
-	__v: number;
-}
 export interface BurgerIngredientsGroupType {
 	name: string;
 	type: string;
@@ -30,9 +18,10 @@ export interface BurgerIngredientsGroupType {
 interface BurgerIngredientsType {
 	groups: BurgerIngredientsGroupType[];
 }
+type AppDispatch = ThunkDispatch<RootState, void, IngredientsActionTypes>;
 
 export const App = () => {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 	const { ingredients, isLoading, hasError } = useSelector(
 		(state: RootState) => state.ingredients
 	);
@@ -52,20 +41,8 @@ export const App = () => {
 			},
 		],
 	});
-	const selectedIngredients = ingredients
-		? ingredients.filter(
-				(ingredient) =>
-					ingredient._id === '643d69a5c3f7b9001cfa093c' ||
-					ingredient._id === '643d69a5c3f7b9001cfa0944' ||
-					ingredient._id === '643d69a5c3f7b9001cfa093f' ||
-					ingredient._id === '643d69a5c3f7b9001cfa0947' ||
-					ingredient._id === '643d69a5c3f7b9001cfa0948' ||
-					ingredient._id === '643d69a5c3f7b9001cfa094a' ||
-					ingredient._id === '643d69a5c3f7b9001cfa0946'
-		  )
-		: [];
+
 	useEffect(() => {
-		// @ts-ignore
 		dispatch(getIngredients());
 	}, []);
 

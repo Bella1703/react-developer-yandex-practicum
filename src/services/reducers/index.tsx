@@ -5,7 +5,10 @@ import {
 	BurgerConstructorStateTypes,
 } from './burger-constructor';
 import { OrderStateTypes, placeOrderReducer } from './order';
-import { ingredientDetailsInitialStateTypes, ingredientDetailsReducer } from "./ingredient-details";
+import {
+	ingredientDetailsInitialStateTypes,
+	ingredientDetailsReducer,
+} from './ingredient-details';
 
 export type RootState = {
 	ingredients: IngredientsStateTypes;

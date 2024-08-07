@@ -1,20 +1,10 @@
-import {
-	IngredientType,
-	IngredientsStateTypes,
-	IngredientsActionTypes,
-} from '../reducers/ingredients';
-import { ThunkAction } from 'redux-thunk';
+import { IngredientType } from '../reducers/ingredients';
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
-export const getIngredients = (): ThunkAction<
-	void,
-	IngredientsStateTypes,
-	unknown,
-	IngredientsActionTypes
-> => {
+export const getIngredients = () => {
 	return async function (
 		dispatch: (arg0: { type: string; ingredients?: IngredientType[] }) => void
 	) {

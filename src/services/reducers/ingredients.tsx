@@ -18,31 +18,25 @@ export interface IngredientType {
 	image_large: string;
 	__v: number;
 }
-
 interface GetIngredientsAction {
 	type: typeof GET_INGREDIENTS;
 }
-
 interface GetIngredientsSuccessAction {
 	type: typeof GET_INGREDIENTS_SUCCESS;
 	ingredients: IngredientType[];
 }
-
 interface GetIngredientsFailedAction {
 	type: typeof GET_INGREDIENTS_FAILED;
 }
-
 export type IngredientsActionTypes =
 	| GetIngredientsAction
 	| GetIngredientsSuccessAction
 	| GetIngredientsFailedAction;
-
 export interface IngredientsStateTypes {
 	ingredients: IngredientType[] | [];
 	isLoading: boolean;
 	hasError: boolean;
 }
-
 const initialState: IngredientsStateTypes = {
 	ingredients: [],
 	isLoading: false,

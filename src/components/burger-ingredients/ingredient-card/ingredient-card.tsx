@@ -16,9 +16,6 @@ export const IngredientCard: FC<Ingredient> = ({ ...props }) => {
 	const [modalState, setModalState] = useState(false);
 	const { ingredients } = useSelector((state: RootState) => state.ingredients);
 	const dispatch = useDispatch();
-	const { ingredientDetails } = useSelector(
-		(state: RootState) => state.ingredientDetails
-	);
 	const handleOpenModal = () => {
 		dispatch({
 			type: GET_INGREDIENT_DETAILS,

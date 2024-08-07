@@ -6,11 +6,9 @@ interface GetIngredientDetailsActionTypes {
 	ingredients: IngredientType[];
 	id: string;
 }
-
 export interface ingredientDetailsInitialStateTypes {
 	ingredientDetails: null | IngredientType;
 }
-
 const ingredientDetailsInitialState: ingredientDetailsInitialStateTypes = {
 	ingredientDetails: null,
 };

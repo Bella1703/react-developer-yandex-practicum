@@ -8,27 +8,22 @@ import {
 interface PlaceOrderAction {
 	type: typeof PLACE_ORDER;
 }
-
 interface PlaceOrderSuccessAction {
 	type: typeof PLACE_ORDER_SUCCESS;
 	response: object;
 }
-
 interface PlaceOrderFailedAction {
 	type: typeof PLACE_ORDER_FAILED;
 }
-
 export type OrderActionTypes =
 	| PlaceOrderAction
 	| PlaceOrderSuccessAction
 	| PlaceOrderFailedAction;
-
 export interface OrderStateTypes {
 	response: null | ResponseTypes;
 	isLoading: boolean;
 	hasError: boolean;
 }
-
 const initialState: OrderStateTypes = {
 	response: null,
 	isLoading: false,

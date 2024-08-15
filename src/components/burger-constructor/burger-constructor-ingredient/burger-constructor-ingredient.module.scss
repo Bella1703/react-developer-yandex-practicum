@@ -1,0 +1,8 @@
+.ingredientsItem {
+	display: grid;
+	grid-template-columns: auto 1fr;
+
+	& svg {
+		height: 100%;
+	}
+}

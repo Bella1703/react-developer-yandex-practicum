@@ -1,0 +1,9 @@
+.cabinetNav {
+	a, button {
+		display: flex;
+		flex-wrap: wrap;
+		align-content: center;
+		height: 60px;
+		cursor: pointer;
+	}
+}

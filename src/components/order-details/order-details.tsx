@@ -17,7 +17,12 @@ export const OrderDetails = () => {
 				</p>
 			)}
 			{isLoading && (
-				<p className={'text text_type_main-large'}>Формируем заказ...</p>
+				<>
+					<p className={'text text_type_main-large mb-9'}>
+						Формируем заказ
+					</p>
+					<p className={s.spinner}></p>
+				</>
 			)}
 			{!hasError && !isLoading && response && response.success && (
 				<>

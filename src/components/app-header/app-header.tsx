@@ -8,19 +8,19 @@ import {
 import { NavItem } from './nav-item/nav-item.';
 import React, { useState } from 'react';
 
-interface navItem {
-	component: React.ComponentType<{
+export interface NavItemTypes {
+	Component: React.ComponentType<{
 		type: 'primary' | 'secondary' | 'error' | 'success';
 	}>;
-	type: 'primary' | 'secondary' | 'error' | 'success';
 	text: string;
+	link: string;
 }
 
 export const AppHeader = () => {
-	const [navItems] = useState<navItem[]>([
-		{ component: BurgerIcon, type: 'primary', text: 'Конструктор' },
-		{ component: ListIcon, type: 'secondary', text: 'Лента заказов' },
-		{ component: ProfileIcon, type: 'secondary', text: 'Личный кабинет' },
+	const [navItems] = useState<NavItemTypes[]>([
+		{ Component: BurgerIcon, text: 'Конструктор', link: '/' },
+		{ Component: ListIcon, text: 'Лента заказов', link: '/unknown' },
+		{ Component: ProfileIcon, text: 'Личный кабинет', link: '/profile' },
 	]);
 
 	return (
@@ -34,9 +34,9 @@ export const AppHeader = () => {
 						{navItems.map((item, index) => (
 							<NavItem
 								key={index}
-								Component={item.component}
+								Component={item.Component}
 								text={item.text}
-								type={item.type}
+								link={item.link}
 							/>
 						))}
 					</ul>

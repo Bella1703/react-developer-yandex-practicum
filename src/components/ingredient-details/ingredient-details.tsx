@@ -1,15 +1,37 @@
 import s from './ingredient-details.module.scss';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { Action } from 'redux';
 import { RootState } from '../../services/reducers';
+import { GET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
+import { getIngredients } from '../../services/actions/ingredients';
 
 export const IngredientDetails = () => {
+	const dispatch = useDispatch();
+	const location = useLocation();
+	const background = location.state?.background;
+	const { ingredients } = useSelector((state: RootState) => state.ingredients);
 	const { ingredientDetails } = useSelector(
 		(state: RootState) => state.ingredientDetails
 	);
+
+	useEffect(() => {
+		dispatch(getIngredients() as unknown as Action);
+	}, []);
+	useEffect(() => {
+		ingredients &&
+			dispatch({
+				type: GET_INGREDIENT_DETAILS,
+				ingredients: ingredients,
+				id: location.pathname.split('/')[2],
+			});
+	}, [ingredients]);
+
 	return (
 		ingredientDetails && (
-			<div className={s.content}>
+			<div className={`${s.content} ${background ? '' : 'mt-30'}`}>
+				<p className={'text text_type_main-large'}>Детали ингредиента</p>
 				<img
 					src={ingredientDetails.image}
 					alt={ingredientDetails.name}

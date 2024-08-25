@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { CLEAR_CONSTRUCTOR } from './burger-constructor';
-import { request } from '../../utils/request';
+import { requestWithRefresh } from '../../utils/request';
 
 export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST';
 export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS';
@@ -14,7 +14,7 @@ export interface OrderResponseType {
 	};
 }
 
-export const placeOrder = (order: string[]) => {
+export const placeOrder = (order: string[], token: string) => {
 	return async (
 		dispatch: Dispatch<{ type: string; response?: OrderResponseType }>
 	) => {
@@ -22,10 +22,11 @@ export const placeOrder = (order: string[]) => {
 			type: PLACE_ORDER_REQUEST,
 		});
 		try {
-			const data = await request('orders', {
+			const data = await requestWithRefresh('orders', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+					Authorization: token,
 				},
 				body: JSON.stringify({ ingredients: order }),
 			});

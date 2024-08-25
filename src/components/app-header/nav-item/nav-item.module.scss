@@ -1,9 +1,15 @@
 .menuItem {
-	display: flex;
-	gap: 8px;
-	width: max-content;
-
 	&:last-child {
 		justify-self: flex-end;
+	}
+
+	& a {
+		display: flex;
+		gap: 8px;
+		width: max-content;
+
+		&:-webkit-any-link .active  {
+			color: #F2F2F3 !important;
+		}
 	}
 }

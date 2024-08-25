@@ -1,6 +1,7 @@
 import s from './burger-constructor.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useDrop } from 'react-dnd';
+import { useNavigate } from 'react-router-dom';
 import {
 	ConstructorElement,
 	Button,
@@ -25,6 +26,7 @@ import { IngredientType } from '../../services/reducers/ingredients';
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
 export const BurgerConstructor = () => {
+	const navigate = useNavigate();
 	const dispatch: AppThunkDispatch = useDispatch();
 	const { bun, selectedIngredients } = useSelector(
 		(state: RootState) => state.burgerConstructor
@@ -86,13 +88,21 @@ export const BurgerConstructor = () => {
 		if (!bun || selectedIngredients.length === 0) {
 			return false;
 		}
-		dispatch(
-			placeOrder([
-				bun._id,
-				...selectedIngredients.map((ingredient) => ingredient._id),
-				bun._id,
-			])
-		);
+		const accessToken = localStorage.getItem('accessToken');
+		if (accessToken) {
+			dispatch(
+				placeOrder(
+					[
+						bun._id,
+						...selectedIngredients.map((ingredient) => ingredient._id),
+						bun._id,
+					],
+					accessToken
+				)
+			);
+		} else {
+			navigate('/login', { replace: true });
+		}
 		handleOpenModal();
 	};
 
@@ -170,7 +180,7 @@ export const BurgerConstructor = () => {
 					Оформить заказ
 				</Button>
 				{modalState && (
-					<Modal title={''} onClose={handleCloseModal}>
+					<Modal onClose={handleCloseModal}>
 						<OrderDetails />
 					</Modal>
 				)}

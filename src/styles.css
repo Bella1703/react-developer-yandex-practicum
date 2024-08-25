@@ -4,4 +4,15 @@ ul {
 	list-style-type: none;
 }
 
+a {
+	color: #F2F2F3;
+	text-decoration: none;
+}
+
+button {
+	padding: 0;
+	background-color: transparent;
+	border: 0;
+}
+
 iframe#webpack-dev-server-client-overlay{display:none!important}

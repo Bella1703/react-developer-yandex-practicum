@@ -11,6 +11,7 @@ import {
 	EmailInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useForm } from '../hooks/useForm';
 
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
@@ -19,7 +20,7 @@ export function ForgotPassword() {
 	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('accessToken');
 	const emailInputRef = useRef(null);
-	const [enteredEmail, setEnteredEmail] = React.useState('');
+	const { values, handleChange } = useForm();
 	const { email } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
@@ -35,16 +36,15 @@ export function ForgotPassword() {
 
 	const recoverPassword = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (enteredEmail && !document.querySelector('.input__error')) {
+		if (values.email && !document.querySelector('.input__error')) {
 			try {
 				await request('password-reset', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ email: enteredEmail }),
+					body: JSON.stringify({ email: values.email }),
 				});
-				// navigate('/reset-password');
 				navigate('/reset-password', { state: { forgotPassword: true } });
 			} catch (error) {
 				alert('Что-то пошло не так, попробуйте еще');
@@ -58,8 +58,8 @@ export function ForgotPassword() {
 			<form onSubmit={(e) => recoverPassword(e)}>
 				<div ref={emailInputRef}>
 					<EmailInput
-						onChange={(e) => setEnteredEmail(e.target.value)}
-						value={enteredEmail}
+						onChange={(e) => handleChange(e)}
+						value={values.email}
 						name={'email'}
 						isIcon={false}
 						extraClass='mt-6'

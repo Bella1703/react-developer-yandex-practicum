@@ -1,12 +1,13 @@
 import s from './app-header.module.scss';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { NavItem } from './nav-item/nav-item.';
 import {
 	Logo,
 	BurgerIcon,
 	ListIcon,
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavItem } from './nav-item/nav-item.';
-import React, { useState } from 'react';
 
 export interface NavItemTypes {
 	Component: React.ComponentType<{
@@ -26,9 +27,9 @@ export const AppHeader = () => {
 	return (
 		<header className={s.header}>
 			<div className={`${s.container} pb-4 pt-4`}>
-				<div className={`${s.logoWrapper} pb-1 pt-1`}>
+				<Link to={'/'} className={`${s.logoWrapper} pb-1 pt-1`}>
 					<Logo />
-				</div>
+				</Link>
 				<nav className={s.nav}>
 					<ul className={s.navList}>
 						{navItems.map((item, index) => (

@@ -18,8 +18,17 @@ import { Profile } from '../../pages/profile';
 import { Orders } from '../../pages/orders';
 import { NotFound404 } from '../../pages/not-found';
 import { ProfileLayout } from '../../pages/profile-layout';
+import { useDispatch } from 'react-redux';
+import { RootState } from '../../services/reducers';
+import { useEffect } from 'react';
+import { getIngredients } from '../../services/actions/ingredients';
+import { ThunkDispatch } from 'redux-thunk';
+import { IngredientsActionTypes } from '../../services/reducers/ingredients';
+
+type AppDispatch = ThunkDispatch<RootState, void, IngredientsActionTypes>;
 
 export const App = () => {
+	const dispatch = useDispatch<AppDispatch>();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const background = location.state && location.state.background;
@@ -28,6 +37,10 @@ export const App = () => {
 	const handleModalClose = () => {
 		navigate(-1);
 	};
+
+	useEffect(() => {
+		dispatch(getIngredients());
+	}, []);
 
 	return (
 		<>

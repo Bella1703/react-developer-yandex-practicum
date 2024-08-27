@@ -12,6 +12,7 @@ import {
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useForm } from '../hooks/useForm';
 
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
@@ -19,9 +20,8 @@ export function ResetPassword() {
 	const dispatch: AppThunkDispatch = useDispatch();
 	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('accessToken');
-	const tokenRef = React.useRef<HTMLInputElement>(null);
-	const [password, setPassword] = React.useState('');
-	const [token, setToken] = React.useState('');
+	const codeRef = React.useRef<HTMLInputElement>(null);
+	const { values, handleChange } = useForm();
 	const { email } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
@@ -37,22 +37,25 @@ export function ResetPassword() {
 
 	const onIconClick = () => {
 		setTimeout(() => {
-			if (tokenRef.current) {
-				tokenRef.current.focus();
+			if (codeRef.current) {
+				codeRef.current.focus();
 			}
 		}, 0);
 		alert('Icon Click Callback');
 	};
 	const saveNewPassword = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (password && !document.querySelector('.input__error')) {
+		if (values.password && !document.querySelector('.input__error')) {
 			try {
 				await request('password-reset/reset', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ password: password, token: token }),
+					body: JSON.stringify({
+						password: values.password,
+						token: values.code,
+					}),
 				});
 				navigate('/login');
 			} catch (error) {
@@ -66,8 +69,8 @@ export function ResetPassword() {
 			<h1 className='text text_type_main-medium'>Восстановление пароля</h1>
 			<form onSubmit={(e) => saveNewPassword(e)}>
 				<PasswordInput
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
+					onChange={(e) => handleChange(e)}
+					value={values.password}
 					name={'password'}
 					extraClass='mt-6'
 					placeholder={'Введите новый пароль'}
@@ -75,11 +78,11 @@ export function ResetPassword() {
 				<Input
 					type={'text'}
 					placeholder={'Введите код из письма'}
-					onChange={(e) => setToken(e.target.value)}
-					value={token}
-					name={'name'}
+					onChange={(e) => handleChange(e)}
+					value={values.code}
+					name={'code'}
 					error={false}
-					ref={tokenRef}
+					ref={codeRef}
 					onIconClick={onIconClick}
 					errorText={'Ошибка'}
 					size={'default'}

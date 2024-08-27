@@ -2,10 +2,8 @@ import s from './ingredient-details.module.scss';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { Action } from 'redux';
 import { RootState } from '../../services/reducers';
 import { GET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
-import { getIngredients } from '../../services/actions/ingredients';
 
 export const IngredientDetails = () => {
 	const dispatch = useDispatch();
@@ -16,9 +14,6 @@ export const IngredientDetails = () => {
 		(state: RootState) => state.ingredientDetails
 	);
 
-	useEffect(() => {
-		dispatch(getIngredients() as unknown as Action);
-	}, []);
 	useEffect(() => {
 		ingredients &&
 			dispatch({

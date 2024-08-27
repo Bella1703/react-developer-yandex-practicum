@@ -11,6 +11,7 @@ import {
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useForm } from '../hooks/useForm';
 
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
@@ -19,9 +20,10 @@ export function Profile() {
 	const accessToken = localStorage.getItem('accessToken');
 	const inputRef = React.useRef<HTMLInputElement>(null);
 	const { email, name } = useSelector((state: RootState) => state.user);
-	const [emailState, setEmailState] = React.useState(email);
-	const [nameState, setNameState] = React.useState(name);
-	const [password, setPassword] = React.useState('');
+	const { values, handleChange, setValues } = useForm({
+		email: email,
+		name: name,
+	});
 	const [showButtons, setShowButtons] = React.useState(false);
 
 	const onEditIconClick = () => {
@@ -51,16 +53,16 @@ export function Profile() {
 	}, []);
 
 	useEffect(() => {
-		setEmailState(email);
-		setNameState(name);
+		setValues({ ...values, email: email });
+		setValues({ ...values, name: name });
 	}, [email, name]);
 
 	useEffect(() => {
-		(emailState !== email || nameState !== name || password) &&
+		(values.email !== email || values.name !== name || values.password) &&
 		!document.querySelector('.input__error')
 			? setShowButtons(true)
 			: setShowButtons(false);
-	}, [email, emailState, name, nameState, password]);
+	}, [email, values.email, name, values.name, values.password]);
 
 	const handleUpdateUser = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -71,9 +73,9 @@ export function Profile() {
 						{
 							token: accessToken,
 							user: {
-								email: emailState,
-								password: password,
-								name: nameState,
+								email: values.email,
+								password: values.password,
+								name: values.name,
 							},
 						},
 						(hasError) => {
@@ -81,7 +83,7 @@ export function Profile() {
 								alert('Что-то пошло не так, попробуйте еще раз');
 							} else {
 								setShowButtons(false);
-								setPassword('');
+								setValues({ ...values, password: '' });
 							}
 						}
 					)
@@ -91,9 +93,7 @@ export function Profile() {
 	};
 
 	const handleResetChanges = () => {
-		setNameState(name);
-		setEmailState(email);
-		setPassword('');
+		setValues({ ...values, email: email, name: name, password: '' });
 	};
 
 	return (
@@ -101,9 +101,9 @@ export function Profile() {
 			<Input
 				type={'text'}
 				placeholder={'Имя'}
-				onChange={(e) => setNameState(e.target.value)}
+				onChange={(e) => handleChange(e)}
 				onBlur={onInputBlur}
-				value={nameState}
+				value={values.name}
 				name={'name'}
 				error={false}
 				ref={inputRef}
@@ -114,16 +114,16 @@ export function Profile() {
 				disabled
 			/>
 			<EmailInput
-				onChange={(e) => setEmailState(e.target.value)}
-				value={emailState}
+				onChange={(e) => handleChange(e)}
+				value={values.email}
 				name={'email'}
 				isIcon={true}
 				extraClass='mt-6'
 				placeholder={'Логин'}
 			/>
 			<PasswordInput
-				onChange={(e) => setPassword(e.target.value)}
-				value={password}
+				onChange={(e) => handleChange(e)}
+				value={values.password}
 				name={'password'}
 				icon='EditIcon'
 				extraClass='mt-6'

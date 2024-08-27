@@ -11,6 +11,7 @@ import {
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useForm } from '../hooks/useForm';
 
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
@@ -18,11 +19,10 @@ export function Login() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch: AppThunkDispatch = useDispatch();
-	const from = location.state?.from?.pathname || '/';
-	const [enteredEmail, setEnteredEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
-	const { email } = useSelector((state: RootState) => state.user);
 	const accessToken = localStorage.getItem('accessToken');
+	const from = location.state?.from?.pathname || '/';
+	const { email } = useSelector((state: RootState) => state.user);
+	const { values, handleChange } = useForm();
 
 	useEffect(() => {
 		const checkUser = async () => {
@@ -37,12 +37,16 @@ export function Login() {
 
 	const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (enteredEmail && password && !document.querySelector('.input__error')) {
+		if (
+			values.email &&
+			values.password &&
+			!document.querySelector('.input__error')
+		) {
 			await dispatch(
 				signIn(
 					{
-						email: enteredEmail,
-						password: password,
+						email: values.email,
+						password: values.password,
 					},
 					(hasError) => {
 						if (hasError) {
@@ -61,15 +65,15 @@ export function Login() {
 			<h1 className='text text_type_main-medium'>Вход</h1>
 			<form onSubmit={(e) => handleSignIn(e)}>
 				<EmailInput
-					onChange={(e) => setEnteredEmail(e.target.value)}
-					value={enteredEmail}
+					onChange={(e) => handleChange(e)}
+					value={values.email}
 					name={'email'}
 					isIcon={false}
 					extraClass='mt-6'
 				/>
 				<PasswordInput
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
+					onChange={(e) => handleChange(e)}
+					value={values.password}
 					name={'password'}
 					extraClass='mt-6'
 				/>

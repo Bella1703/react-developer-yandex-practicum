@@ -12,6 +12,7 @@ import {
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useForm } from '../hooks/useForm';
 
 type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
 
@@ -20,9 +21,7 @@ export function Register() {
 	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('accessToken');
 	const inputRef = React.useRef<HTMLInputElement>(null);
-	const [name, setName] = React.useState('');
-	const [enteredEmail, setEnteredEmail] = React.useState('');
-	const [password, setPassword] = React.useState('');
+	const { values, handleChange } = useForm();
 	const { email } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
@@ -39,17 +38,17 @@ export function Register() {
 	const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (
-			enteredEmail &&
-			password &&
-			name &&
+			values.email &&
+			values.password &&
+			values.name &&
 			!document.querySelector('.input__error')
 		) {
 			await dispatch(
 				register(
 					{
-						email: enteredEmail,
-						password: password,
-						name: name,
+						email: values.email,
+						password: values.password,
+						name: values.name,
 					},
 					(hasError) => {
 						if (!hasError) {
@@ -70,8 +69,8 @@ export function Register() {
 				<Input
 					type={'text'}
 					placeholder={'Имя'}
-					onChange={(e) => setName(e.target.value)}
-					value={name}
+					onChange={(e) => handleChange(e)}
+					value={values.name}
 					name={'name'}
 					error={false}
 					ref={inputRef}
@@ -80,15 +79,15 @@ export function Register() {
 					extraClass='mt-6'
 				/>
 				<EmailInput
-					onChange={(e) => setEnteredEmail(e.target.value)}
-					value={enteredEmail}
+					onChange={(e) => handleChange(e)}
+					value={values.email}
 					name={'email'}
 					isIcon={false}
 					extraClass='mt-6'
 				/>
 				<PasswordInput
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
+					onChange={(e) => handleChange(e)}
+					value={values.password}
 					name={'password'}
 					extraClass='mt-6'
 				/>

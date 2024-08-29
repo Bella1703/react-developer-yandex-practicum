@@ -10,3 +10,19 @@
 	width: 120px;
 	height: 120px;
 }
+
+.spinner {
+	border: 6px solid rgba(0, 0, 0, 0.1);
+	border-left-color: #fff;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	margin: auto;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	100% {
+		transform: rotate(360deg);
+	}
+}

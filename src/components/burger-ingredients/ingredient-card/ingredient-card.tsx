@@ -1,32 +1,18 @@
 import s from './ingredient-card.module.scss';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import {
 	CurrencyIcon,
 	Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal } from '../../modal/modal';
 import { Ingredient } from '../ingredients-group/ingredients-group';
-import { IngredientDetails } from '../../ingredient-details/ingredient-details';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../services/reducers';
-import { GET_INGREDIENT_DETAILS } from '../../../services/actions/ingredient-details';
 
 export const IngredientCard: FC<Ingredient> = ({ ...props }) => {
-	const [modalState, setModalState] = useState(false);
-	const { ingredients } = useSelector((state: RootState) => state.ingredients);
-	const dispatch = useDispatch();
-	const handleOpenModal = () => {
-		dispatch({
-			type: GET_INGREDIENT_DETAILS,
-			ingredients: ingredients,
-			id: props._id,
-		});
-		setModalState(true);
-	};
-	const handleCloseModal = () => {
-		setModalState(false);
-	};
+	const location = useLocation();
+	const ingredientId = props._id;
 	const [, dragRef] = useDrag({
 		type: props.type,
 		item: { ...props },
@@ -39,8 +25,11 @@ export const IngredientCard: FC<Ingredient> = ({ ...props }) => {
 	).length;
 
 	return (
-		<>
-			<div className={s.card} onClick={handleOpenModal} ref={dragRef}>
+		<Link
+			key={ingredientId}
+			to={`/ingredients/${ingredientId}`}
+			state={{ background: location }}>
+			<div className={s.card} ref={dragRef}>
 				{count > 0 && (
 					<Counter count={count} size='default' extraClass={s.counter} />
 				)}
@@ -52,11 +41,6 @@ export const IngredientCard: FC<Ingredient> = ({ ...props }) => {
 
 				<p className={'text text_type_main-default'}>{props.name}</p>
 			</div>
-			{modalState && (
-				<Modal title={'Детали ингредиента'} onClose={handleCloseModal}>
-					<IngredientDetails />
-				</Modal>
-			)}
-		</>
+		</Link>
 	);
 };

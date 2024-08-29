@@ -7,12 +7,11 @@ import { ModalOverlay } from '../modal-overlay/modal-overlay';
 interface ModalProps {
 	children: ReactNode;
 	onClose: () => void;
-	title: string;
 }
 
 const modalsNode = document.getElementById('modals') as HTMLDivElement;
 
-export const Modal: FC<ModalProps> = ({ children, onClose, title }) => {
+export const Modal: FC<ModalProps> = ({ children, onClose }) => {
 	useEffect(() => {
 		const handleDocumentKeyDown = (event: KeyboardEvent) =>
 			event.key === 'Escape' && onClose();
@@ -25,12 +24,9 @@ export const Modal: FC<ModalProps> = ({ children, onClose, title }) => {
 	return ReactDOM.createPortal(
 		<>
 			<div className={s.container}>
-				<header className={s.header}>
-					<p className={'text text_type_main-large'}>{title}</p>
-					<div className={s.closeIconWrapper}>
-						<CloseIcon type='primary' onClick={onClose} />
-					</div>
-				</header>
+				<div className={s.closeIconWrapper}>
+					<CloseIcon type='primary' onClick={onClose} />
+				</div>
 				{children}
 			</div>
 			<ModalOverlay onClose={onClose} />

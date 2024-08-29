@@ -26,18 +26,10 @@
 	opacity: 1;
 }
 
-.header {
-	display: flex;
-	flex-wrap: wrap;
-	place-content: center space-between;
-
-	& svg {
-		height: 100%;
-	}
-}
-
 .closeIconWrapper {
-	position: relative;
+	position: absolute;
 	z-index: 3;
+	top: 60px;
+	right: 40px;
 	cursor: pointer;
 }

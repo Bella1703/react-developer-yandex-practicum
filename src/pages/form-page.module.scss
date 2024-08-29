@@ -1,0 +1,38 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.formContainer {
+	max-width: 480px;
+	margin: 180px auto 0;
+	text-align: center;
+}
+
+.cabinetContainer {
+	display: grid;
+	grid-template-columns: 320px 480px;
+	gap: 60px;
+	width: 100%;
+	max-width: 1280px;
+	margin: 120px auto 0;
+}
+
+.profileForm {
+	text-align: end;
+}
+
+.linkBlock {
+	display: block;
+	width: 100%;
+	text-align: center;
+
+	& a {
+		color: #4C4CFF;
+	}
+}
+
+

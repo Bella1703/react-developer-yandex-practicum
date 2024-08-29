@@ -9,12 +9,14 @@ import {
 	ingredientDetailsInitialStateTypes,
 	ingredientDetailsReducer,
 } from './ingredient-details';
+import { userReducer, UserStateTypes } from './user';
 
 export type RootState = {
 	ingredients: IngredientsStateTypes;
 	burgerConstructor: BurgerConstructorStateTypes;
 	order: OrderStateTypes;
 	ingredientDetails: ingredientDetailsInitialStateTypes;
+	user: UserStateTypes;
 };
 
 export const rootReducer = combineReducers({
@@ -22,4 +24,5 @@ export const rootReducer = combineReducers({
 	burgerConstructor: burgerConstructorReducer,
 	order: placeOrderReducer,
 	ingredientDetails: ingredientDetailsReducer,
+	user: userReducer,
 });

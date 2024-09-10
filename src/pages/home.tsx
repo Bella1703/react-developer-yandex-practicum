@@ -4,11 +4,12 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BurgerIngredients } from '../components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../components/burger-constructor/burger-constructor';
-import { RootState } from '../services/reducers';
+import { TRootState } from '../services/reducers';
+import React from 'react';
 
-export function Home() {
+export const Home = (): React.JSX.Element => {
 	const { isLoading, hasError } = useSelector(
-		(state: RootState) => state.ingredients
+		(state: TRootState) => state.ingredients
 	);
 
 	return (
@@ -31,4 +32,4 @@ export function Home() {
 			</div>
 		</>
 	);
-}
+};

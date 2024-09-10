@@ -1,19 +1,19 @@
 import s from './tabs.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { FC, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { BurgerIngredientsGroupType } from '../burger-ingredients';
+import { TBurgerIngredientsGroup } from '../burger-ingredients';
 
-interface TabsProps {
-	burgerIngredientsGroups: BurgerIngredientsGroupType[];
+type TTabsProps = {
+	burgerIngredientsGroups: TBurgerIngredientsGroup[];
 	activeTabType: string;
-}
+};
 
-export const Tabs: FC<TabsProps> = ({
+export const Tabs = ({
 	burgerIngredientsGroups,
 	activeTabType,
-}) => {
-	const [current, setCurrent] = React.useState(activeTabType);
+}: TTabsProps): React.JSX.Element => {
+	const [current, setCurrent] = useState(activeTabType);
 
 	useEffect(() => {
 		setCurrent(activeTabType);

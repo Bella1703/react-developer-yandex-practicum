@@ -4,7 +4,7 @@ import {
 	GET_INGREDIENTS_ERROR,
 } from '../actions/ingredients';
 
-export interface IngredientType {
+export type TIngredient = {
 	_id: string;
 	name: string;
 	type: string;
@@ -17,27 +17,28 @@ export interface IngredientType {
 	image_mobile: string;
 	image_large: string;
 	__v: number;
-}
-interface GetIngredientsAction {
+};
+type TGetIngredientsAction = {
 	type: typeof GET_INGREDIENTS_REQUEST;
-}
-interface GetIngredientsSuccessAction {
+};
+type TGetIngredientsSuccessAction = {
 	type: typeof GET_INGREDIENTS_SUCCESS;
-	ingredients: IngredientType[];
-}
-interface GetIngredientsFailedAction {
+	ingredients: TIngredient[];
+};
+type TGetIngredientsFailedAction = {
 	type: typeof GET_INGREDIENTS_ERROR;
-}
-export type IngredientsActionTypes =
-	| GetIngredientsAction
-	| GetIngredientsSuccessAction
-	| GetIngredientsFailedAction;
-export interface IngredientsStateTypes {
-	ingredients: IngredientType[] | [];
+};
+export type TIngredientsAction =
+	| TGetIngredientsAction
+	| TGetIngredientsSuccessAction
+	| TGetIngredientsFailedAction;
+export type TIngredientsState = {
+	ingredients: TIngredient[] | [];
 	isLoading: boolean;
 	hasError: boolean;
-}
-const initialState: IngredientsStateTypes = {
+};
+
+const initialState: TIngredientsState = {
 	ingredients: [],
 	isLoading: false,
 	hasError: false,
@@ -45,8 +46,8 @@ const initialState: IngredientsStateTypes = {
 
 export const ingredientsReducer = (
 	state = initialState,
-	action: IngredientsActionTypes
-): IngredientsStateTypes => {
+	action: TIngredientsAction
+): TIngredientsState => {
 	switch (action.type) {
 		case GET_INGREDIENTS_REQUEST: {
 			return {

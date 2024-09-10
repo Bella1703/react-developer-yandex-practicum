@@ -1,11 +1,9 @@
 import styles from './form-page.module.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { getUser, register } from '../services/actions/user';
-import { RootState } from '../services/reducers';
+import { TRootState } from '../services/reducers';
 import {
 	Input,
 	EmailInput,
@@ -13,16 +11,15 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
+import { TAppDispatch } from '../components/app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-
-export function Register() {
-	const dispatch: AppThunkDispatch = useDispatch();
+export const Register = (): React.JSX.Element => {
+	const dispatch: TAppDispatch = useDispatch();
 	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('accessToken');
-	const inputRef = React.useRef<HTMLInputElement>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 	const { values, handleChange } = useForm();
-	const { email } = useSelector((state: RootState) => state.user);
+	const { email } = useSelector((state: TRootState) => state.user);
 
 	useEffect(() => {
 		const checkUser = async () => {
@@ -35,7 +32,7 @@ export function Register() {
 		checkUser();
 	}, [email]);
 
-	const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (
 			values.email &&
@@ -107,4 +104,4 @@ export function Register() {
 			</div>
 		</div>
 	);
-}
+};

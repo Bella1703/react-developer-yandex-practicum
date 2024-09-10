@@ -2,11 +2,11 @@ import s from './order-details.module.scss';
 import React from 'react';
 import imageDone from '../../images/done.png';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../services/reducers';
+import { TRootState } from '../../services/reducers';
 
-export const OrderDetails = () => {
+export const OrderDetails = (): React.JSX.Element => {
 	const { response, isLoading, hasError } = useSelector(
-		(state: RootState) => state.order
+		(state: TRootState) => state.order
 	);
 
 	return (

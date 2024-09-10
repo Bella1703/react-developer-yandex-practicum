@@ -1,16 +1,12 @@
 import s from './cabinet-nav.module.scss';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { NavLink } from 'react-router-dom';
-import { Action } from 'redux';
 import { signOut } from '../../services/actions/user';
-import { RootState } from '../../services/reducers';
+import { TAppDispatch } from '../app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-
-export const CabinetNav = () => {
-	const dispatch: AppThunkDispatch = useDispatch();
+export const CabinetNav = (): React.JSX.Element => {
+	const dispatch: TAppDispatch = useDispatch();
 	const handleSignOut = async () => {
 		const token = localStorage.getItem('refreshToken');
 		if (token) {

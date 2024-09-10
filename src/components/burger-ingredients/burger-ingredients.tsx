@@ -3,17 +3,17 @@ import React, { useRef, useState } from 'react';
 import { Tabs } from './tabs/tabs';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../services/reducers';
+import { TRootState } from '../../services/reducers';
 
-export interface BurgerIngredientsGroupType {
+export type TBurgerIngredientsGroup = {
 	name: string;
 	type: string;
-}
+};
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients = (): React.JSX.Element => {
 	const tabsRef = useRef<HTMLDivElement | null>(null);
 	const groupTitleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
-	const [burgerIngredientsGroups] = useState<BurgerIngredientsGroupType[]>([
+	const [burgerIngredientsGroups] = useState<TBurgerIngredientsGroup[]>([
 		{
 			name: 'Булки',
 			type: 'bun',
@@ -30,7 +30,7 @@ export const BurgerIngredients = () => {
 	const [activeTabType, setActiveTabType] = useState(
 		burgerIngredientsGroups[0].type
 	);
-	const { ingredients } = useSelector((state: RootState) => state.ingredients);
+	const { ingredients } = useSelector((state: TRootState) => state.ingredients);
 
 	const onIngredientsScroll = () => {
 		if (!tabsRef.current) {

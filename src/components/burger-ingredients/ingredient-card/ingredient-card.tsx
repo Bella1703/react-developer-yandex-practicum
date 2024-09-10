@@ -1,16 +1,16 @@
 import s from './ingredient-card.module.scss';
-import React, { FC } from 'react';
+import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import {
 	CurrencyIcon,
 	Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Ingredient } from '../ingredients-group/ingredients-group';
+import { TIngredient } from '../ingredients-group/ingredients-group';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../services/reducers';
+import { TRootState } from '../../../services/reducers';
 
-export const IngredientCard: FC<Ingredient> = ({ ...props }) => {
+export const IngredientCard = ({ ...props }: TIngredient): React.JSX.Element => {
 	const location = useLocation();
 	const ingredientId = props._id;
 	const [, dragRef] = useDrag({
@@ -18,7 +18,7 @@ export const IngredientCard: FC<Ingredient> = ({ ...props }) => {
 		item: { ...props },
 	});
 	const { selectedIngredients } = useSelector(
-		(state: RootState) => state.burgerConstructor
+		(state: TRootState) => state.burgerConstructor
 	);
 	const count = selectedIngredients.filter(
 		(ingredient) => ingredient._id === props._id

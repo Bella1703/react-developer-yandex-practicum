@@ -1,10 +1,14 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './nav-item.module.scss';
 import { NavLink, useLocation } from 'react-router-dom';
-import { NavItemTypes } from '../app-header';
+import { TNavItem } from '../app-header';
 
-export const NavItem: FC<NavItemTypes> = ({ Component, text, link }) => {
-	const [isActiveLink, setIsActiveLink] = React.useState(false);
+export const NavItem = ({
+	Component,
+	text,
+	link,
+}: TNavItem): React.JSX.Element => {
+	const [isActiveLink, setIsActiveLink] = useState(false);
 	const location = useLocation();
 
 	useEffect(() => {

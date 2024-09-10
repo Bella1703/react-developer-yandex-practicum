@@ -1,18 +1,18 @@
-import { IngredientType } from '../reducers/ingredients';
+import { TIngredient } from '../reducers/ingredients';
 import { request } from '../../utils/request';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR';
 
-export interface IngredientsResponseType {
+export type IngredientsResponseType = {
 	success: boolean;
-	data: IngredientType[];
-}
+	data: TIngredient[];
+};
 
 export const getIngredients = () => {
 	return async function (
-		dispatch: (arg0: { type: string; ingredients?: IngredientType[] }) => void
+		dispatch: (arg0: { type: string; ingredients?: TIngredient[] }) => void
 	) {
 		dispatch({
 			type: GET_INGREDIENTS_REQUEST,

@@ -1,9 +1,7 @@
 import styles from './form-page.module.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { RootState } from '../services/reducers';
+import { TRootState } from '../services/reducers';
 import { getUser, updateUser } from '../services/actions/user';
 import {
 	Input,
@@ -12,19 +10,18 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
+import { TAppDispatch } from '../components/app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-
-export function Profile() {
-	const dispatch: AppThunkDispatch = useDispatch();
+export const Profile = (): React.JSX.Element => {
+	const dispatch: TAppDispatch = useDispatch();
 	const accessToken = localStorage.getItem('accessToken');
-	const inputRef = React.useRef<HTMLInputElement>(null);
-	const { email, name } = useSelector((state: RootState) => state.user);
+	const inputRef = useRef<HTMLInputElement>(null);
+	const { email, name } = useSelector((state: TRootState) => state.user);
 	const { values, handleChange, setValues } = useForm({
 		email: email,
 		name: name,
 	});
-	const [showButtons, setShowButtons] = React.useState(false);
+	const [showButtons, setShowButtons] = useState(false);
 
 	const onEditIconClick = () => {
 		if (!inputRef.current) return;
@@ -64,7 +61,7 @@ export function Profile() {
 			: setShowButtons(false);
 	}, [email, values.email, name, values.name, values.password]);
 
-	const handleUpdateUser = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleUpdateUser = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!document.querySelector('.input__error')) {
 			if (accessToken) {
@@ -149,4 +146,4 @@ export function Profile() {
 			)}
 		</form>
 	);
-}
+};

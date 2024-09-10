@@ -1,23 +1,21 @@
-import { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { getUser } from '../services/actions/user';
-import { RootState } from '../services/reducers';
+import { TRootState } from '../services/reducers';
+import { TAppDispatch } from './app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-interface ProtectedRouteElementProps {
+type TProtectedRouteElementProps = {
 	element: ReactElement;
-}
+};
 
 export const ProtectedRouteElement = ({
 	element,
-}: ProtectedRouteElementProps) => {
+}: TProtectedRouteElementProps): React.JSX.Element => {
 	const location = useLocation();
-	const dispatch: AppThunkDispatch = useDispatch();
+	const dispatch: TAppDispatch = useDispatch();
 	const accessToken = localStorage.getItem('accessToken');
-	const { email } = useSelector((state: RootState) => state.user);
+	const { email } = useSelector((state: TRootState) => state.user);
 	const init = async () => {
 		if (email) {
 			return;

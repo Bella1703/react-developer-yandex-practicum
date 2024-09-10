@@ -1,8 +1,8 @@
 import s from './ingredients-group.module.scss';
-import React, { FC } from 'react';
+import React from 'react';
 import { IngredientCard } from '../ingredient-card/ingredient-card';
 
-export interface Ingredient {
+export type TIngredient = {
 	_id: string;
 	name: string;
 	type: string;
@@ -15,16 +15,16 @@ export interface Ingredient {
 	image_mobile: string;
 	image_large: string;
 	__v: number;
-}
+};
 
-export interface BurgerIngredientsGroup {
+export type TBurgerIngredientsGroup = {
 	type: string;
-	ingredients: Ingredient[];
-}
+	ingredients: TIngredient[];
+};
 
-export const IngredientsGroup: FC<BurgerIngredientsGroup> = ({
+export const IngredientsGroup = ({
 	ingredients,
-}) => {
+}: TBurgerIngredientsGroup): React.JSX.Element => {
 	return (
 		<ul className={`${s.list} pl-4 pr-4 mt-6`}>
 			{ingredients.map((ingredient) => (

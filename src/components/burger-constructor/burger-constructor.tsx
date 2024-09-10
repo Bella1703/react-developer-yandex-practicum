@@ -10,26 +10,23 @@ import {
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { BurgerIngredientType } from '../../services/reducers/burger-constructor';
+import { TBurgerIngredient } from '../../services/reducers/burger-constructor';
 import {
 	REMOVE_INGREDIENT,
 	REPLACE_BUN,
 	addIngredient,
 } from '../../services/actions/burger-constructor';
-import { RootState } from '../../services/reducers';
+import { TRootState } from '../../services/reducers';
 import { placeOrder } from '../../services/actions/order';
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient/burger-constructor-ingredient';
-import { IngredientType } from '../../services/reducers/ingredients';
+import { TIngredient } from '../../services/reducers/ingredients';
+import { TAppDispatch } from '../app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-
-export const BurgerConstructor = () => {
+export const BurgerConstructor = (): React.JSX.Element => {
 	const navigate = useNavigate();
-	const dispatch: AppThunkDispatch = useDispatch();
+	const dispatch: TAppDispatch = useDispatch();
 	const { bun, selectedIngredients } = useSelector(
-		(state: RootState) => state.burgerConstructor
+		(state: TRootState) => state.burgerConstructor
 	);
 	const [modalState, setModalState] = useState(false);
 	const handleOpenModal = () => {
@@ -59,14 +56,14 @@ export const BurgerConstructor = () => {
 	const [, ingredientDropTarget] = useDrop({
 		accept: ['main', 'sauce'],
 		drop(ingredient) {
-			dispatch(addIngredient(ingredient as IngredientType));
+			dispatch(addIngredient(ingredient as TIngredient));
 		},
 	});
 
 	const handleRemoveIngredient = (
-		e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-		ingredient: BurgerIngredientType
-	) => {
+		e: React.MouseEvent<HTMLLIElement, globalThis.MouseEvent>,
+		ingredient: TBurgerIngredient
+	): void => {
 		if (e.target instanceof SVGElement) {
 			dispatch({
 				type: REMOVE_INGREDIENT,
@@ -84,13 +81,13 @@ export const BurgerConstructor = () => {
 		return bunPrice + ingredientsPrice;
 	}, [bun, selectedIngredients]);
 
-	const handlePlaceOrder = () => {
+	const handlePlaceOrder = async () => {
 		if (!bun || selectedIngredients.length === 0) {
 			return false;
 		}
 		const accessToken = localStorage.getItem('accessToken');
 		if (accessToken) {
-			dispatch(
+			await dispatch(
 				placeOrder(
 					[
 						bun._id,

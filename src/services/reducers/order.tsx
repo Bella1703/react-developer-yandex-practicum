@@ -5,26 +5,26 @@ import {
 	OrderResponseType,
 } from '../actions/order';
 
-interface PlaceOrderAction {
+type TPlaceOrderAction = {
 	type: typeof PLACE_ORDER_REQUEST;
-}
-interface PlaceOrderSuccessAction {
+};
+type TPlaceOrderSuccessAction = {
 	type: typeof PLACE_ORDER_SUCCESS;
 	response: object;
-}
-interface PlaceOrderFailedAction {
+};
+type TPlaceOrderFailedAction = {
 	type: typeof PLACE_ORDER_ERROR;
-}
-export type OrderActionTypes =
-	| PlaceOrderAction
-	| PlaceOrderSuccessAction
-	| PlaceOrderFailedAction;
-export interface OrderStateTypes {
+};
+export type TOrderAction =
+	| TPlaceOrderAction
+	| TPlaceOrderSuccessAction
+	| TPlaceOrderFailedAction;
+export type TOrderState = {
 	response: null | OrderResponseType;
 	isLoading: boolean;
 	hasError: boolean;
-}
-const initialState: OrderStateTypes = {
+};
+const initialState: TOrderState = {
 	response: null,
 	isLoading: false,
 	hasError: false,
@@ -32,8 +32,8 @@ const initialState: OrderStateTypes = {
 
 export const placeOrderReducer = (
 	state = initialState,
-	action: OrderActionTypes
-): OrderStateTypes => {
+	action: TOrderAction
+): TOrderState => {
 	switch (action.type) {
 		case PLACE_ORDER_REQUEST: {
 			return {

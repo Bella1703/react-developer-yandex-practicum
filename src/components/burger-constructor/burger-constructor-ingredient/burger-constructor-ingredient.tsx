@@ -1,32 +1,34 @@
 import s from './burger-constructor-ingredient.module.scss';
-import React, { FC, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
 	ConstructorElement,
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
-import { BurgerIngredientType } from '../../../services/reducers/burger-constructor';
+import { TBurgerIngredient } from '../../../services/reducers/burger-constructor';
 import { MOVE_INGREDIENT } from '../../../services/actions/burger-constructor';
 import { useDispatch } from 'react-redux';
 
-interface BurgerConstructorIngredientTypes {
-	ingredient: BurgerIngredientType;
+type TBurgerConstructorIngredient = {
+	ingredient: TBurgerIngredient;
 	handleRemoveIngredient: (
 		e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-		ingredient: BurgerIngredientType
+		ingredient: TBurgerIngredient
 	) => void;
 	index: number;
-}
+};
 
-interface DragItem {
+type DragItem = {
 	id: string;
 	index: number;
 	type: string;
-}
+};
 
-export const BurgerConstructorIngredient: FC<
-	BurgerConstructorIngredientTypes
-> = ({ ingredient, index, handleRemoveIngredient }) => {
+export const BurgerConstructorIngredient = ({
+	ingredient,
+	index,
+	handleRemoveIngredient,
+}: TBurgerConstructorIngredient): React.JSX.Element => {
 	const dispatch = useDispatch();
 	const ref = useRef<HTMLLIElement>(null);
 	const [, drop] = useDrop<DragItem>({

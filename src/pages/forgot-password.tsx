@@ -1,27 +1,24 @@
 import styles from './form-page.module.scss';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
 import { request } from '../utils/request';
-import { RootState } from '../services/reducers';
+import { TRootState } from '../services/reducers';
 import { getUser } from '../services/actions/user';
 import {
 	EmailInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
+import { TAppDispatch } from '../components/app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-
-export function ForgotPassword() {
-	const dispatch: AppThunkDispatch = useDispatch();
+export const ForgotPassword = (): React.JSX.Element => {
+	const dispatch: TAppDispatch = useDispatch();
 	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('accessToken');
 	const emailInputRef = useRef(null);
 	const { values, handleChange } = useForm();
-	const { email } = useSelector((state: RootState) => state.user);
+	const { email } = useSelector((state: TRootState) => state.user);
 
 	useEffect(() => {
 		const checkUser = async () => {
@@ -34,7 +31,7 @@ export function ForgotPassword() {
 		checkUser();
 	}, [email]);
 
-	const recoverPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+	const recoverPassword = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (values.email && !document.querySelector('.input__error')) {
 			try {
@@ -82,4 +79,4 @@ export function ForgotPassword() {
 			</div>
 		</div>
 	);
-}
+};

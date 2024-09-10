@@ -1,28 +1,29 @@
 import { GET_INGREDIENT_DETAILS } from '../actions/ingredient-details';
-import { IngredientType } from './ingredients';
+import { TIngredient } from './ingredients';
 
-interface GetIngredientDetailsActionTypes {
+export type TGetIngredientDetailsAction = {
 	type: typeof GET_INGREDIENT_DETAILS;
-	ingredients: IngredientType[];
+	ingredients: Array<TIngredient>;
 	id: string;
-}
-export interface ingredientDetailsInitialStateTypes {
-	ingredientDetails: null | IngredientType;
-}
-const ingredientDetailsInitialState: ingredientDetailsInitialStateTypes = {
+};
+export type TIngredientDetailsInitialState = {
+	ingredientDetails: null | TIngredient;
+};
+const ingredientDetailsInitialState: TIngredientDetailsInitialState = {
 	ingredientDetails: null,
 };
 
 export const ingredientDetailsReducer = (
 	state = ingredientDetailsInitialState,
-	action: GetIngredientDetailsActionTypes
-) => {
+	action: TGetIngredientDetailsAction
+): TIngredientDetailsInitialState => {
 	switch (action.type) {
 		case GET_INGREDIENT_DETAILS: {
 			return {
-				ingredientDetails: action.ingredients.find(
-					(ingredient) => ingredient._id === action.id
-				),
+				ingredientDetails:
+					action.ingredients.find(
+						(ingredient) => ingredient._id === action.id
+					) || null,
 			};
 		}
 		default: {

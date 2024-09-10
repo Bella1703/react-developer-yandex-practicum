@@ -2,16 +2,16 @@ import s from './ingredient-details.module.scss';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { RootState } from '../../services/reducers';
+import { TRootState } from '../../services/reducers';
 import { GET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
 
-export const IngredientDetails = () => {
+export const IngredientDetails = (): React.JSX.Element | null => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const background = location.state?.background;
-	const { ingredients } = useSelector((state: RootState) => state.ingredients);
+	const { ingredients } = useSelector((state: TRootState) => state.ingredients);
 	const { ingredientDetails } = useSelector(
-		(state: RootState) => state.ingredientDetails
+		(state: TRootState) => state.ingredientDetails
 	);
 
 	useEffect(() => {

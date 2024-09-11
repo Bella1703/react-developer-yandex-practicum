@@ -1,5 +1,5 @@
 import React from 'react';
 
-export function Orders() {
+export const Orders = (): React.JSX.Element => {
 	return <div></div>;
-}
+};

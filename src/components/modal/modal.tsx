@@ -1,17 +1,20 @@
 import s from './modal.module.scss';
-import React, { FC, ReactNode, useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
-interface ModalProps {
+type TModalProps = {
 	children: ReactNode;
 	onClose: () => void;
-}
+};
 
 const modalsNode = document.getElementById('modals') as HTMLDivElement;
 
-export const Modal: FC<ModalProps> = ({ children, onClose }) => {
+export const Modal = ({
+	children,
+	onClose,
+}: TModalProps): React.JSX.Element => {
 	useEffect(() => {
 		const handleDocumentKeyDown = (event: KeyboardEvent) =>
 			event.key === 'Escape' && onClose();

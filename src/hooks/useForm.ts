@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 export function useForm(initialValues = {}) {
 	const [values, setValues] = useState({
@@ -9,7 +9,7 @@ export function useForm(initialValues = {}) {
 		...initialValues,
 	});
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = event.target;
 		setValues({ ...values, [name]: value });
 	};

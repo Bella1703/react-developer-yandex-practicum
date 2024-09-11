@@ -5,58 +5,58 @@ import {
 	CLEAR_CONSTRUCTOR,
 	MOVE_INGREDIENT,
 } from '../actions/burger-constructor';
-import { IngredientType } from './ingredients';
+import { TIngredient } from './ingredients';
 
-export interface BurgerIngredientType extends IngredientType {
+export type TBurgerIngredient = TIngredient & {
 	uuid: string;
-}
+};
 
-interface AddIngredientAction {
+type TAddIngredientAction = {
 	type: typeof ADD_INGREDIENT;
-	payload: BurgerIngredientType;
-}
+	payload: TBurgerIngredient;
+};
 
-interface RemoveIngredientAction {
+type TRemoveIngredientAction = {
 	type: typeof REMOVE_INGREDIENT;
-	ingredient: BurgerIngredientType;
-}
+	ingredient: TBurgerIngredient;
+};
 
-interface ReplaceBunAction {
+type TReplaceBunAction = {
 	type: typeof REPLACE_BUN;
-	bun: IngredientType;
-}
+	bun: TIngredient;
+};
 
-interface ClearConstructorAction {
+type TClearConstructorAction = {
 	type: typeof CLEAR_CONSTRUCTOR;
-}
+};
 
-interface MoveIngredientAction {
+type TMoveIngredientAction = {
 	type: typeof MOVE_INGREDIENT;
 	dragIndex: number;
 	hoverIndex: number;
-}
-
-export type BurgerConstructorActionTypes =
-	| AddIngredientAction
-	| RemoveIngredientAction
-	| ReplaceBunAction
-	| ClearConstructorAction
-	| MoveIngredientAction;
-
-const burgerConstructorInitialState = {
-	bun: null,
-	selectedIngredients: [] as BurgerIngredientType[],
 };
 
-export interface BurgerConstructorStateTypes {
-	bun: BurgerIngredientType;
-	selectedIngredients: BurgerIngredientType[];
-}
+export type TBurgerConstructorAction =
+	| TAddIngredientAction
+	| TRemoveIngredientAction
+	| TReplaceBunAction
+	| TClearConstructorAction
+	| TMoveIngredientAction;
+
+export type TBurgerConstructorState = {
+	bun: TBurgerIngredient | null;
+	selectedIngredients: Array<TBurgerIngredient>;
+};
+
+const burgerConstructorInitialState: TBurgerConstructorState = {
+	bun: null,
+	selectedIngredients: [] as TBurgerIngredient[],
+};
 
 export const burgerConstructorReducer = (
 	state = burgerConstructorInitialState,
-	action: BurgerConstructorActionTypes
-) => {
+	action: TBurgerConstructorAction
+): TBurgerConstructorState => {
 	switch (action.type) {
 		case ADD_INGREDIENT: {
 			return {
@@ -75,7 +75,10 @@ export const burgerConstructorReducer = (
 		case REPLACE_BUN: {
 			return {
 				...state,
-				bun: action.bun,
+				bun: {
+					...action.bun,
+					uuid: (action.bun as TBurgerIngredient).uuid,
+				},
 			};
 		}
 		case CLEAR_CONSTRUCTOR: {

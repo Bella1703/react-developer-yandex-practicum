@@ -6,7 +6,7 @@ export const SIGN_OUT = 'SIGN_OUT';
 export const GET_USER = 'GET_USER';
 export const SET_USER = 'SET_USER';
 
-export interface AuthResponseType {
+export type AuthResponseType = {
 	success: boolean;
 	user: {
 		email: string;
@@ -14,27 +14,27 @@ export interface AuthResponseType {
 	};
 	accessToken: string;
 	refreshToken: string;
-}
-export interface RegisterFormType {
+};
+export type RegisterFormType = {
 	email: string;
 	password: string;
 	name: string;
-}
-export interface LoginFormType {
+};
+export type LoginFormType = {
 	email: string;
 	password: string;
-}
-export interface TokenType {
+};
+export type TokenType = {
 	token: string;
-}
-export interface UpdateUserFormType {
+};
+export type UpdateUserFormType = {
 	token: string;
 	user: {
 		email?: string;
 		password?: string;
 		name?: string;
 	};
-}
+};
 
 export const register = (
 	form: RegisterFormType,

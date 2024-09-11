@@ -7,22 +7,22 @@ import {
 	AuthResponseType,
 } from '../actions/user';
 
-interface RegisterAction {
+type RegisterAction = {
 	type: typeof REGISTER;
 	response: AuthResponseType;
-}
-interface SignInAction {
+};
+type SignInAction = {
 	type: typeof SIGN_IN;
 	response: AuthResponseType;
-}
-interface SignOutAction {
+};
+type SignOutAction = {
 	type: typeof SIGN_OUT;
-}
-interface GetUserAction {
+};
+type GetUserAction = {
 	type: typeof GET_USER;
 	response: AuthResponseType;
-}
-interface SetUserAction {
+};
+type SetUserAction = {
 	type: typeof SET_USER;
 	response: {
 		user: {
@@ -30,26 +30,26 @@ interface SetUserAction {
 			name: string;
 		};
 	};
-}
-export type UserActionTypes =
+};
+export type TUserAction =
 	| RegisterAction
 	| SignInAction
 	| SignOutAction
 	| GetUserAction
 	| SetUserAction;
-export interface UserStateTypes {
+export type TUserState = {
 	email: string;
 	name: string;
-}
-const initialState: UserStateTypes = {
+};
+const initialState: TUserState = {
 	email: '',
 	name: '',
 };
 
 export const userReducer = (
 	state = initialState,
-	action: UserActionTypes
-): UserStateTypes => {
+	action: TUserAction
+): TUserState => {
 	switch (action.type) {
 		case REGISTER: {
 			return {

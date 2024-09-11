@@ -1,27 +1,24 @@
 import styles from './form-page.module.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
 import { getUser, signIn } from '../services/actions/user';
-import { RootState } from '../services/reducers';
+import { TRootState } from '../services/reducers';
 import {
 	EmailInput,
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
+import { TAppDispatch } from '../components/app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-
-export function Login() {
+export const Login = (): React.JSX.Element => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const dispatch: AppThunkDispatch = useDispatch();
+	const dispatch: TAppDispatch = useDispatch();
 	const accessToken = localStorage.getItem('accessToken');
 	const from = location.state?.from?.pathname || '/';
-	const { email } = useSelector((state: RootState) => state.user);
+	const { email } = useSelector((state: TRootState) => state.user);
 	const { values, handleChange } = useForm();
 
 	useEffect(() => {
@@ -35,7 +32,7 @@ export function Login() {
 		checkUser();
 	}, [email]);
 
-	const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (
 			values.email &&
@@ -98,4 +95,4 @@ export function Login() {
 			</div>
 		</div>
 	);
-}
+};

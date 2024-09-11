@@ -19,16 +19,16 @@ import { Orders } from '../../pages/orders';
 import { NotFound404 } from '../../pages/not-found';
 import { ProfileLayout } from '../../pages/profile-layout';
 import { useDispatch } from 'react-redux';
-import { RootState } from '../../services/reducers';
-import { useEffect } from 'react';
+import { TRootState } from '../../services/reducers';
+import React, { useEffect } from 'react';
 import { getIngredients } from '../../services/actions/ingredients';
 import { ThunkDispatch } from 'redux-thunk';
-import { IngredientsActionTypes } from '../../services/reducers/ingredients';
+import { Action } from 'redux';
 
-type AppDispatch = ThunkDispatch<RootState, void, IngredientsActionTypes>;
+export type TAppDispatch = ThunkDispatch<TRootState, unknown, Action>;
 
-export const App = () => {
-	const dispatch = useDispatch<AppDispatch>();
+export const App = (): React.JSX.Element => {
+	const dispatch = useDispatch<TAppDispatch>();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const background = location.state && location.state.background;

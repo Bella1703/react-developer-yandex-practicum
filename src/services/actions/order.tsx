@@ -6,13 +6,13 @@ export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST';
 export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS';
 export const PLACE_ORDER_ERROR = 'PLACE_ORDER_ERROR';
 
-export interface OrderResponseType {
+export type OrderResponseType = {
 	success: boolean;
 	name: string;
 	order: {
 		number: number;
 	};
-}
+};
 
 export const placeOrder = (order: string[], token: string) => {
 	return async (

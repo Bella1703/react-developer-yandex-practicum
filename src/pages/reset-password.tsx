@@ -1,11 +1,9 @@
 import styles from './form-page.module.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { request } from '../utils/request';
-import { RootState } from '../services/reducers';
+import { TRootState } from '../services/reducers';
 import { getUser } from '../services/actions/user';
 import {
 	Input,
@@ -13,16 +11,15 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
+import { TAppDispatch } from '../components/app';
 
-type AppThunkDispatch = ThunkDispatch<RootState, unknown, Action>;
-
-export function ResetPassword() {
-	const dispatch: AppThunkDispatch = useDispatch();
+export const ResetPassword = (): React.JSX.Element => {
+	const dispatch: TAppDispatch = useDispatch();
 	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('accessToken');
-	const codeRef = React.useRef<HTMLInputElement>(null);
+	const codeRef = useRef<HTMLInputElement>(null);
 	const { values, handleChange } = useForm();
-	const { email } = useSelector((state: RootState) => state.user);
+	const { email } = useSelector((state: TRootState) => state.user);
 
 	useEffect(() => {
 		const checkUser = async () => {
@@ -43,7 +40,7 @@ export function ResetPassword() {
 		}, 0);
 		alert('Icon Click Callback');
 	};
-	const saveNewPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+	const saveNewPassword = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (values.password && !document.querySelector('.input__error')) {
 			try {
@@ -104,4 +101,4 @@ export function ResetPassword() {
 			</div>
 		</div>
 	);
-}
+};

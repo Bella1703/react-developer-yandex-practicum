@@ -1,5 +1,5 @@
 import s from './app-header.module.scss';
-import React, { useState } from 'react';
+import React, { useState, ComponentType } from 'react';
 import { Link } from 'react-router-dom';
 import { NavItem } from './nav-item/nav-item.';
 import {
@@ -9,16 +9,16 @@ import {
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export interface NavItemTypes {
-	Component: React.ComponentType<{
+export type TNavItem = {
+	Component: ComponentType<{
 		type: 'primary' | 'secondary' | 'error' | 'success';
 	}>;
 	text: string;
 	link: string;
-}
+};
 
-export const AppHeader = () => {
-	const [navItems] = useState<NavItemTypes[]>([
+export const AppHeader = (): React.JSX.Element => {
+	const [navItems] = useState<Array<TNavItem>>([
 		{ Component: BurgerIcon, text: 'Конструктор', link: '/' },
 		{ Component: ListIcon, text: 'Лента заказов', link: '/unknown' },
 		{ Component: ProfileIcon, text: 'Личный кабинет', link: '/profile' },

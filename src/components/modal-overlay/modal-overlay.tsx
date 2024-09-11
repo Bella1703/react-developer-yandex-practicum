@@ -1,10 +1,12 @@
 import s from './modal-overlay.module.scss';
-import React, { FC } from 'react';
+import React from 'react';
 
-interface ModalOverlayProps {
+type ModalOverlayProps = {
 	onClose: () => void;
-}
+};
 
-export const ModalOverlay: FC<ModalOverlayProps> = ({ onClose }) => {
+export const ModalOverlay = ({
+	onClose,
+}: ModalOverlayProps): React.JSX.Element => {
 	return <div className={s.modalOverlay} onClick={onClose}></div>;
 };

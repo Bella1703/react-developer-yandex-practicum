@@ -1,24 +1,22 @@
 import styles from './form-page.module.scss';
 import React, { useEffect, FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { getUser, signIn } from '../services/actions/user';
-import { TRootState } from '../services/reducers';
 import {
 	EmailInput,
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
-import { TAppDispatch } from '../components/app';
 
 export const Login = (): React.JSX.Element => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const dispatch: TAppDispatch = useDispatch();
+	const dispatch = useDispatch();
 	const accessToken = localStorage.getItem('accessToken');
 	const from = location.state?.from?.pathname || '/';
-	const { email } = useSelector((state: TRootState) => state.user);
+	const { email } = useSelector((state) => state.user);
 	const { values, handleChange } = useForm();
 
 	useEffect(() => {

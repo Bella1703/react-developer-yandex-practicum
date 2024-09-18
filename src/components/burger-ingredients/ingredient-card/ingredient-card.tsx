@@ -7,10 +7,11 @@ import {
 	Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TIngredient } from '../ingredients-group/ingredients-group';
-import { useSelector } from 'react-redux';
-import { TRootState } from '../../../services/reducers';
+import { useSelector } from '../../../services/hooks';
 
-export const IngredientCard = ({ ...props }: TIngredient): React.JSX.Element => {
+export const IngredientCard = ({
+	...props
+}: TIngredient): React.JSX.Element => {
 	const location = useLocation();
 	const ingredientId = props._id;
 	const [, dragRef] = useDrag({
@@ -18,7 +19,7 @@ export const IngredientCard = ({ ...props }: TIngredient): React.JSX.Element => 
 		item: { ...props },
 	});
 	const { selectedIngredients } = useSelector(
-		(state: TRootState) => state.burgerConstructor
+		(state) => state.burgerConstructor
 	);
 	const count = selectedIngredients.filter(
 		(ingredient) => ingredient._id === props._id

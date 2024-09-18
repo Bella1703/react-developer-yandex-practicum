@@ -2,8 +2,7 @@ import s from './burger-ingredients.module.scss';
 import React, { useRef, useState } from 'react';
 import { Tabs } from './tabs/tabs';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
-import { useSelector } from 'react-redux';
-import { TRootState } from '../../services/reducers';
+import { useSelector } from '../../services/hooks';
 
 export type TBurgerIngredientsGroup = {
 	name: string;
@@ -30,7 +29,7 @@ export const BurgerIngredients = (): React.JSX.Element => {
 	const [activeTabType, setActiveTabType] = useState(
 		burgerIngredientsGroups[0].type
 	);
-	const { ingredients } = useSelector((state: TRootState) => state.ingredients);
+	const { ingredients } = useSelector((state) => state.ingredients);
 
 	const onIngredientsScroll = () => {
 		if (!tabsRef.current) {

@@ -1,9 +1,8 @@
 import styles from './form-page.module.scss';
 import React, { useEffect, useRef, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { getUser, register } from '../services/actions/user';
-import { TRootState } from '../services/reducers';
 import {
 	Input,
 	EmailInput,
@@ -11,15 +10,14 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
-import { TAppDispatch } from '../components/app';
 
 export const Register = (): React.JSX.Element => {
-	const dispatch: TAppDispatch = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('accessToken');
 	const inputRef = useRef<HTMLInputElement>(null);
 	const { values, handleChange } = useForm();
-	const { email } = useSelector((state: TRootState) => state.user);
+	const { email } = useSelector((state) => state.user);
 
 	useEffect(() => {
 		const checkUser = async () => {

@@ -5,9 +5,9 @@ import {
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
-import { TBurgerIngredient } from '../../../services/reducers/burger-constructor';
+import { TBurgerIngredient } from '../../../services/types';
 import { MOVE_INGREDIENT } from '../../../services/actions/burger-constructor';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../services/hooks';
 
 type TBurgerConstructorIngredient = {
 	ingredient: TBurgerIngredient;

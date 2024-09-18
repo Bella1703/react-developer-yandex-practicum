@@ -1,12 +1,8 @@
 import { GET_INGREDIENT_DETAILS } from '../actions/ingredient-details';
-import { TIngredient } from './ingredients';
+import { TIngredient } from '../types';
+import { TGetIngredientDetailsAction } from '../constants/ingredient-details';
 
-export type TGetIngredientDetailsAction = {
-	type: typeof GET_INGREDIENT_DETAILS;
-	ingredients: Array<TIngredient>;
-	id: string;
-};
-export type TIngredientDetailsInitialState = {
+type TIngredientDetailsInitialState = {
 	ingredientDetails: null | TIngredient;
 };
 const ingredientDetailsInitialState: TIngredientDetailsInitialState = {
@@ -14,7 +10,7 @@ const ingredientDetailsInitialState: TIngredientDetailsInitialState = {
 };
 
 export const ingredientDetailsReducer = (
-	state = ingredientDetailsInitialState,
+	state: TIngredientDetailsInitialState = ingredientDetailsInitialState,
 	action: TGetIngredientDetailsAction
 ): TIngredientDetailsInitialState => {
 	switch (action.type) {
@@ -22,7 +18,7 @@ export const ingredientDetailsReducer = (
 			return {
 				ingredientDetails:
 					action.ingredients.find(
-						(ingredient) => ingredient._id === action.id
+						(ingredient: TIngredient) => ingredient._id === action.id
 					) || null,
 			};
 		}

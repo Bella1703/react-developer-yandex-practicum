@@ -18,8 +18,7 @@ const root = createRoot(domNode);
 // @ts-ignore
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
-// @ts-ignore
-const store = createStore(
+export const store = createStore(
 	rootReducer,
 	composeEnhancers(applyMiddleware(thunk))
 );

@@ -1,10 +1,10 @@
 import { request, requestWithRefresh } from '../../utils/request';
-import { Dispatch } from 'react';
-export const REGISTER = 'REGISTER';
-export const SIGN_IN = 'SIGN_IN';
-export const SIGN_OUT = 'SIGN_OUT';
-export const GET_USER = 'GET_USER';
-export const SET_USER = 'SET_USER';
+import { TAppDispatch } from '../reducers';
+export const REGISTER = 'REGISTER' as const;
+export const SIGN_IN = 'SIGN_IN' as const;
+export const SIGN_OUT = 'SIGN_OUT' as const;
+export const GET_USER = 'GET_USER' as const;
+export const SET_USER = 'SET_USER' as const;
 
 export type AuthResponseType = {
 	success: boolean;
@@ -36,13 +36,9 @@ export type UpdateUserFormType = {
 	};
 };
 
-export const register = (
-	form: RegisterFormType,
-	callback: (hasError: boolean) => void
-) => {
-	return async (
-		dispatch: Dispatch<{ type: string; response?: AuthResponseType }>
-	) => {
+export const register =
+	(form: RegisterFormType, callback: (hasError: boolean) => void) =>
+	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/register', {
 				method: 'POST',
@@ -68,14 +64,9 @@ export const register = (
 			callback(true);
 		}
 	};
-};
-export const signIn = (
-	form: LoginFormType,
-	callback: (hasError: boolean) => void
-) => {
-	return async (
-		dispatch: Dispatch<{ type: string; response?: AuthResponseType }>
-	) => {
+export const signIn =
+	(form: LoginFormType, callback: (hasError: boolean) => void) =>
+	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/login', {
 				method: 'POST',
@@ -101,13 +92,10 @@ export const signIn = (
 			callback(true);
 		}
 	};
-};
 
-export const signOut = (
-	token: TokenType,
-	callback: (hasError: boolean) => void
-) => {
-	return async (dispatch: Dispatch<{ type: string }>) => {
+export const signOut =
+	(token: TokenType, callback: (hasError: boolean) => void) =>
+	async (dispatch: TAppDispatch) => {
 		try {
 			await request('auth/logout', {
 				method: 'POST',
@@ -124,15 +112,10 @@ export const signOut = (
 			callback(true);
 		}
 	};
-};
 
-export const getUser = (
-	token: string,
-	callback: (hasError: boolean) => void
-) => {
-	return async (
-		dispatch: Dispatch<{ type: string; response?: AuthResponseType }>
-	) => {
+export const getUser =
+	(token: string, callback: (hasError: boolean) => void) =>
+	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/user', {
 				method: 'GET',
@@ -150,15 +133,10 @@ export const getUser = (
 			callback(true);
 		}
 	};
-};
 
-export const updateUser = (
-	form: UpdateUserFormType,
-	callback: (hasError: boolean) => void
-) => {
-	return async (
-		dispatch: Dispatch<{ type: string; response?: AuthResponseType }>
-	) => {
+export const updateUser =
+	(form: UpdateUserFormType, callback: (hasError: boolean) => void) =>
+	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await requestWithRefresh('auth/user', {
 				method: 'PATCH',
@@ -177,4 +155,3 @@ export const updateUser = (
 			callback(true);
 		}
 	};
-};

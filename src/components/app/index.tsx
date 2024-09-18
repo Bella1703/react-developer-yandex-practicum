@@ -18,17 +18,13 @@ import { Profile } from '../../pages/profile';
 import { Orders } from '../../pages/orders';
 import { NotFound404 } from '../../pages/not-found';
 import { ProfileLayout } from '../../pages/profile-layout';
-import { useDispatch } from 'react-redux';
-import { TRootState } from '../../services/reducers';
 import React, { useEffect } from 'react';
 import { getIngredients } from '../../services/actions/ingredients';
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
-
-export type TAppDispatch = ThunkDispatch<TRootState, unknown, Action>;
+import { OrderFeed } from '../../pages/order-feed';
+import { useDispatch } from '../../services/hooks';
 
 export const App = (): React.JSX.Element => {
-	const dispatch = useDispatch<TAppDispatch>();
+	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const background = location.state && location.state.background;
@@ -51,6 +47,7 @@ export const App = (): React.JSX.Element => {
 					path='/ingredients/:ingredientId'
 					element={<IngredientDetails />}
 				/>
+				<Route path='/order-feed' element={<OrderFeed />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/forgot-password' element={<ForgotPassword />} />

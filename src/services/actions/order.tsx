@@ -1,10 +1,10 @@
-import { Dispatch } from 'react';
 import { CLEAR_CONSTRUCTOR } from './burger-constructor';
 import { requestWithRefresh } from '../../utils/request';
+import { TAppDispatch } from '../reducers';
 
-export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST';
-export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS';
-export const PLACE_ORDER_ERROR = 'PLACE_ORDER_ERROR';
+export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST' as const;
+export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS' as const;
+export const PLACE_ORDER_ERROR = 'PLACE_ORDER_ERROR' as const;
 
 export type OrderResponseType = {
 	success: boolean;
@@ -14,10 +14,8 @@ export type OrderResponseType = {
 	};
 };
 
-export const placeOrder = (order: string[], token: string) => {
-	return async (
-		dispatch: Dispatch<{ type: string; response?: OrderResponseType }>
-	) => {
+export const placeOrder =
+	(order: Array<string>, token: string) => async (dispatch: TAppDispatch) => {
 		dispatch({
 			type: PLACE_ORDER_REQUEST,
 		});
@@ -43,4 +41,3 @@ export const placeOrder = (order: string[], token: string) => {
 			});
 		}
 	};
-};

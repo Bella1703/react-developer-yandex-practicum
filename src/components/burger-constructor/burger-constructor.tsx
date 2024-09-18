@@ -9,24 +9,22 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
-import { TBurgerIngredient } from '../../services/reducers/burger-constructor';
+import { useSelector, useDispatch } from '../../services/hooks';
+import { TBurgerIngredient } from '../../services/types';
 import {
 	REMOVE_INGREDIENT,
 	REPLACE_BUN,
 	addIngredient,
 } from '../../services/actions/burger-constructor';
-import { TRootState } from '../../services/reducers';
 import { placeOrder } from '../../services/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient/burger-constructor-ingredient';
-import { TIngredient } from '../../services/reducers/ingredients';
-import { TAppDispatch } from '../app';
+import { TIngredient } from '../../services/types';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const navigate = useNavigate();
-	const dispatch: TAppDispatch = useDispatch();
+	const dispatch = useDispatch();
 	const { bun, selectedIngredients } = useSelector(
-		(state: TRootState) => state.burgerConstructor
+		(state) => state.burgerConstructor
 	);
 	const [modalState, setModalState] = useState(false);
 	const handleOpenModal = () => {
@@ -37,7 +35,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 	};
 	const [, topBunDropTarget] = useDrop({
 		accept: ['bun'],
-		drop(bun) {
+		drop(bun: TIngredient) {
 			dispatch({
 				type: REPLACE_BUN,
 				bun,
@@ -46,7 +44,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 	});
 	const [, bottomBunDropTarget] = useDrop({
 		accept: ['bun'],
-		drop(bun) {
+		drop(bun: TIngredient) {
 			dispatch({
 				type: REPLACE_BUN,
 				bun,

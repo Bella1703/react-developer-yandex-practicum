@@ -1,32 +1,27 @@
-import { TIngredient } from '../reducers/ingredients';
+import { TIngredient } from '../types';
 import { request } from '../../utils/request';
+import { TAppDispatch } from '../reducers';
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR';
+export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST' as const;
+export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS' as const;
+export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR' as const;
 
 export type IngredientsResponseType = {
 	success: boolean;
 	data: TIngredient[];
 };
 
-export const getIngredients = () => {
-	return async function (
-		dispatch: (arg0: { type: string; ingredients?: TIngredient[] }) => void
-	) {
+export const getIngredients = () => async (dispatch: TAppDispatch) => {
+	dispatch({ type: GET_INGREDIENTS_REQUEST });
+	try {
+		const data = await request('ingredients');
 		dispatch({
-			type: GET_INGREDIENTS_REQUEST,
+			type: GET_INGREDIENTS_SUCCESS,
+			ingredients: (data as IngredientsResponseType).data,
 		});
-		try {
-			const data = await request('ingredients');
-			dispatch({
-				type: GET_INGREDIENTS_SUCCESS,
-				ingredients: (data as IngredientsResponseType).data,
-			});
-		} catch (error) {
-			dispatch({
-				type: GET_INGREDIENTS_ERROR,
-			});
-		}
-	};
+	} catch (error) {
+		dispatch({
+			type: GET_INGREDIENTS_ERROR,
+		});
+	}
 };

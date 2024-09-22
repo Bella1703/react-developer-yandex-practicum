@@ -4,8 +4,8 @@ import {
 	SIGN_OUT,
 	GET_USER,
 	SET_USER,
-	AuthResponseType,
 } from '../actions/user';
+import { AuthResponseType } from '../types';
 
 export type RegisterAction = {
 	readonly type: typeof REGISTER;

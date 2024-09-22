@@ -1,6 +1,6 @@
 import { CLEAR_CONSTRUCTOR } from './burger-constructor';
 import { requestWithRefresh } from '../../utils/request';
-import { TAppDispatch } from '../reducers';
+import { TAppDispatch, TAppThunk } from '../reducers';
 
 export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST' as const;
 export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS' as const;
@@ -15,7 +15,8 @@ export type OrderResponseType = {
 };
 
 export const placeOrder =
-	(order: Array<string>, token: string) => async (dispatch: TAppDispatch) => {
+	(order: Array<string>, token: string): TAppThunk =>
+	async (dispatch: TAppDispatch) => {
 		dispatch({
 			type: PLACE_ORDER_REQUEST,
 		});

@@ -12,12 +12,16 @@ import {
 	compose,
 } from 'redux';
 
+type ReduxDevToolsCompose = typeof compose;
+declare global {
+	interface Window {
+		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: ReduxDevToolsCompose;
+	}
+}
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
-
-// @ts-ignore
-const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
-
+const composeEnhancers =
+	(window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(
 	rootReducer,
 	composeEnhancers(applyMiddleware(thunk))

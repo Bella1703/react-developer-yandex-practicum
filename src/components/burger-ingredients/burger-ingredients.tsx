@@ -62,7 +62,9 @@ export const BurgerIngredients = (): React.JSX.Element => {
 					activeTabType={activeTabType}
 				/>
 			</div>
-			<ul onScroll={onIngredientsScroll} className={`${s.list} custom-scroll`}>
+			<ul
+				onScroll={onIngredientsScroll}
+				className={'scrollContainer custom-scroll'}>
 				{burgerIngredientsGroups.map((group, index) => (
 					<li key={index}>
 						{ingredients && (

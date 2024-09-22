@@ -16,3 +16,69 @@ button {
 }
 
 iframe#webpack-dev-server-client-overlay{display:none!important}
+
+#root {
+	height: 100vh;
+	overflow: hidden;
+}
+
+.scrollContainer {
+	height: 100%;
+	padding-right: 8px;
+	overflow-y: scroll;
+}
+
+.numberShadow {
+	text-shadow: 0 0 16px rgb(51 51 255 / 25%), 0 0 8px rgb(51 51 255 / 25%), 0 4px 32px rgb(51 51 255 / 50%);
+}
+
+.blueText {
+	color: #00cccc;
+}
+
+.ingredient {
+	position: relative;
+	width: 64px;
+	height: 64px;
+	margin-right: -20px;
+	background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+	border-radius: 50%;
+
+	&:nth-child(1) {
+		z-index: 6;
+	}
+
+	&:nth-child(2) {
+		z-index: 5;
+	}
+
+	&:nth-child(3) {
+		z-index: 4;
+	}
+
+	&:nth-child(4) {
+		z-index: 3;
+	}
+
+	&:nth-child(5) {
+		z-index: 2;
+	}
+
+	&:nth-child(6) {
+		z-index: 1;
+	}
+
+	&:nth-child(n+7) {
+		display: none;
+	}
+
+	& img {
+		position: relative;
+		top: 2px;
+		left: 2px;
+		width: 60px;
+		height: 60px;
+		background-color: #1C1C21;
+		border-radius: 50%;
+	}
+}

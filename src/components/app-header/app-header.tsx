@@ -20,7 +20,7 @@ export type TNavItem = {
 export const AppHeader = (): React.JSX.Element => {
 	const [navItems] = useState<Array<TNavItem>>([
 		{ Component: BurgerIcon, text: 'Конструктор', link: '/' },
-		{ Component: ListIcon, text: 'Лента заказов', link: '/order-feed' },
+		{ Component: ListIcon, text: 'Лента заказов', link: '/feed' },
 		{ Component: ProfileIcon, text: 'Личный кабинет', link: '/profile' },
 	]);
 

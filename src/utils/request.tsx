@@ -1,6 +1,6 @@
 import { OrderResponseType } from '../services/actions/order';
 import { IngredientsResponseType } from '../services/actions/ingredients';
-import { AuthResponseType } from '../services/actions/user';
+import { AuthResponseType } from '../services/types';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api/';
 

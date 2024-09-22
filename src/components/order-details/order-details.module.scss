@@ -1,28 +1,43 @@
 .content {
+	width: 640px;
+	margin: 122px auto 0;
+}
+
+.centerText {
 	text-align: center;
 }
 
-.number {
-	text-shadow: 0 0 16px rgb(51 51 255 / 25%), 0 0 8px rgb(51 51 255 / 25%), 0 4px 32px rgb(51 51 255 / 50%);
+.cards {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	max-height: 312px;
+	overflow-y: scroll;
 }
 
-.image {
-	width: 120px;
-	height: 120px;
-}
+.card {
+	display: flex;
+    justify-content: space-between;
 
-.spinner {
-	border: 6px solid rgba(0, 0, 0, 0.1);
-	border-left-color: #fff;
-	border-radius: 50%;
-	width: 24px;
-	height: 24px;
-	margin: auto;
-	animation: spin 1s linear infinite;
-}
+	& div {
+		display: flex;
+		align-content: center;
+		gap: 16px;
 
-@keyframes spin {
-	100% {
-		transform: rotate(360deg);
+		& p {
+			align-content: center;
+		}
 	}
+}
+
+.price {
+	display: flex;
+	align-content: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.totalInfo {
+	display: flex;
+	justify-content: space-between;
 }

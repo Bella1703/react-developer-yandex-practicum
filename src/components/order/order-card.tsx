@@ -36,7 +36,7 @@ export const OrderCard = ({
 				<ul className={s.iconRow}>
 					{images.map((image, index) => (
 						<li
-							className={`${s.ingredient} ${
+							className={`ingredient ${
 								images.length > 6 && index === 5 ? s.darkened : ''
 							}`}
 							key={index}>

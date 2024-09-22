@@ -1,4 +1,4 @@
-import { combineReducers, Action, ActionCreator } from 'redux';
+import { combineReducers } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { ingredientsReducer } from './ingredients';
 import { burgerConstructorReducer } from './burger-constructor';
@@ -21,8 +21,11 @@ type TRootAction =
 	| TOrderAction
 	| TUserAction;
 
-export type TAppThunk<TReturn = void> = ActionCreator<
-	ThunkAction<TReturn, TRootAction, TRootState, TRootAction>
+export type TAppThunk<TReturn = void> = ThunkAction<
+	TReturn,
+	TRootState,
+	unknown,
+	TRootAction
 >;
 export type TAppDispatch = ThunkDispatch<TRootState, unknown, TRootAction>;
 

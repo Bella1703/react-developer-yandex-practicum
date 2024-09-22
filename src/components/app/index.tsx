@@ -20,8 +20,9 @@ import { NotFound404 } from '../../pages/not-found';
 import { ProfileLayout } from '../../pages/profile-layout';
 import React, { useEffect } from 'react';
 import { getIngredients } from '../../services/actions/ingredients';
-import { OrderFeed } from '../../pages/order-feed';
+import { Feed } from '../../pages/feed';
 import { useDispatch } from '../../services/hooks';
+import { OrderDetails } from '../order-details/order-details';
 
 export const App = (): React.JSX.Element => {
 	const dispatch = useDispatch();
@@ -47,7 +48,8 @@ export const App = (): React.JSX.Element => {
 					path='/ingredients/:ingredientId'
 					element={<IngredientDetails />}
 				/>
-				<Route path='/order-feed' element={<OrderFeed />} />
+				<Route path='/feed' element={<Feed />} />
+				<Route path='/feed/test' element={<OrderDetails />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/forgot-password' element={<ForgotPassword />} />

@@ -1,43 +1,20 @@
 import { request, requestWithRefresh } from '../../utils/request';
-import { TAppDispatch } from '../reducers';
+import { TAppDispatch, TAppThunk } from '../reducers';
+import {
+	RegisterFormType,
+	AuthResponseType,
+	LoginFormType,
+	TokenType,
+	UpdateUserFormType,
+} from '../types';
 export const REGISTER = 'REGISTER' as const;
 export const SIGN_IN = 'SIGN_IN' as const;
 export const SIGN_OUT = 'SIGN_OUT' as const;
 export const GET_USER = 'GET_USER' as const;
 export const SET_USER = 'SET_USER' as const;
 
-export type AuthResponseType = {
-	success: boolean;
-	user: {
-		email: string;
-		name: string;
-	};
-	accessToken: string;
-	refreshToken: string;
-};
-export type RegisterFormType = {
-	email: string;
-	password: string;
-	name: string;
-};
-export type LoginFormType = {
-	email: string;
-	password: string;
-};
-export type TokenType = {
-	token: string;
-};
-export type UpdateUserFormType = {
-	token: string;
-	user: {
-		email?: string;
-		password?: string;
-		name?: string;
-	};
-};
-
 export const register =
-	(form: RegisterFormType, callback: (hasError: boolean) => void) =>
+	(form: RegisterFormType, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/register', {
@@ -65,7 +42,7 @@ export const register =
 		}
 	};
 export const signIn =
-	(form: LoginFormType, callback: (hasError: boolean) => void) =>
+	(form: LoginFormType, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/login', {
@@ -94,7 +71,7 @@ export const signIn =
 	};
 
 export const signOut =
-	(token: TokenType, callback: (hasError: boolean) => void) =>
+	(token: TokenType, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			await request('auth/logout', {
@@ -114,7 +91,7 @@ export const signOut =
 	};
 
 export const getUser =
-	(token: string, callback: (hasError: boolean) => void) =>
+	(token: string, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/user', {
@@ -135,7 +112,10 @@ export const getUser =
 	};
 
 export const updateUser =
-	(form: UpdateUserFormType, callback: (hasError: boolean) => void) =>
+	(
+		form: UpdateUserFormType,
+		callback: (hasError: boolean) => void
+	): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await requestWithRefresh('auth/user', {

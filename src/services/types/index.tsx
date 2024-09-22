@@ -12,7 +12,35 @@ export type TIngredient = {
 	readonly image_large: string;
 	readonly __v: number;
 };
-
 export type TBurgerIngredient = TIngredient & {
 	uuid: string;
+};
+export type AuthResponseType = {
+	success: boolean;
+	user: {
+		email: string;
+		name: string;
+	};
+	accessToken: string;
+	refreshToken: string;
+};
+export type RegisterFormType = {
+	email: string;
+	password: string;
+	name: string;
+};
+export type LoginFormType = {
+	email: string;
+	password: string;
+};
+export type TokenType = {
+	token: string;
+};
+export type UpdateUserFormType = {
+	token: string;
+	user: {
+		email?: string;
+		password?: string;
+		name?: string;
+	};
 };

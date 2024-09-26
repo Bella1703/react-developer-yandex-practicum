@@ -85,7 +85,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 		}
 		const accessToken = localStorage.getItem('accessToken');
 		if (accessToken) {
-			await dispatch(
+			dispatch(
 				placeOrder(
 					[
 						bun._id,

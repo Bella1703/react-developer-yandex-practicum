@@ -1,11 +1,11 @@
 import { request, requestWithRefresh } from '../../utils/request';
 import { TAppDispatch, TAppThunk } from '../reducers';
 import {
-	RegisterFormType,
-	AuthResponseType,
-	LoginFormType,
-	TokenType,
-	UpdateUserFormType,
+	TRegisterForm,
+	TAuthResponse,
+	TLoginForm,
+	TToken,
+	TUpdateUserForm,
 } from '../types';
 export const REGISTER = 'REGISTER' as const;
 export const SIGN_IN = 'SIGN_IN' as const;
@@ -14,7 +14,7 @@ export const GET_USER = 'GET_USER' as const;
 export const SET_USER = 'SET_USER' as const;
 
 export const register =
-	(form: RegisterFormType, callback: (hasError: boolean) => void): TAppThunk =>
+	(form: TRegisterForm, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/register', {
@@ -26,15 +26,15 @@ export const register =
 			});
 			localStorage.setItem(
 				'accessToken',
-				(data as AuthResponseType).accessToken
+				(data as TAuthResponse).accessToken
 			);
 			localStorage.setItem(
 				'refreshToken',
-				(data as AuthResponseType).refreshToken
+				(data as TAuthResponse).refreshToken
 			);
 			dispatch({
 				type: REGISTER,
-				response: data as AuthResponseType,
+				response: data as TAuthResponse,
 			});
 			callback(false);
 		} catch (error) {
@@ -42,7 +42,7 @@ export const register =
 		}
 	};
 export const signIn =
-	(form: LoginFormType, callback: (hasError: boolean) => void): TAppThunk =>
+	(form: TLoginForm, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await request('auth/login', {
@@ -54,15 +54,15 @@ export const signIn =
 			});
 			localStorage.setItem(
 				'accessToken',
-				(data as AuthResponseType).accessToken
+				(data as TAuthResponse).accessToken
 			);
 			localStorage.setItem(
 				'refreshToken',
-				(data as AuthResponseType).refreshToken
+				(data as TAuthResponse).refreshToken
 			);
 			dispatch({
 				type: SIGN_IN,
-				response: data as AuthResponseType,
+				response: data as TAuthResponse,
 			});
 			callback(false);
 		} catch (error) {
@@ -71,7 +71,7 @@ export const signIn =
 	};
 
 export const signOut =
-	(token: TokenType, callback: (hasError: boolean) => void): TAppThunk =>
+	(token: TToken, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			await request('auth/logout', {
@@ -103,7 +103,7 @@ export const getUser =
 			});
 			dispatch({
 				type: GET_USER,
-				response: data as AuthResponseType,
+				response: data as TAuthResponse,
 			});
 			callback(false);
 		} catch (err) {
@@ -112,10 +112,7 @@ export const getUser =
 	};
 
 export const updateUser =
-	(
-		form: UpdateUserFormType,
-		callback: (hasError: boolean) => void
-	): TAppThunk =>
+	(form: TUpdateUserForm, callback: (hasError: boolean) => void): TAppThunk =>
 	async (dispatch: TAppDispatch) => {
 		try {
 			const data = await requestWithRefresh('auth/user', {
@@ -128,7 +125,7 @@ export const updateUser =
 			});
 			dispatch({
 				type: SET_USER,
-				response: data as AuthResponseType,
+				response: data as TAuthResponse,
 			});
 			callback(false);
 		} catch (error) {

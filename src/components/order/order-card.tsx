@@ -1,57 +1,64 @@
 import s from './order-card.module.scss';
 import React from 'react';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import illustration from '../../images/illustration.png';
+import {
+	CurrencyIcon,
+	FormattedDate,
+} from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { TOrder } from '../../services/types';
+import { useSelector } from '../../services/hooks';
 
 type TOrderCard = {
+	order: TOrder;
 	className?: string;
 };
 
 export const OrderCard = ({
+	order,
 	className,
 }: TOrderCard): React.JSX.Element | null => {
-	const images = [
-		illustration,
-		illustration,
-		illustration,
-		illustration,
-		illustration,
-		illustration,
-		illustration,
-		illustration,
-	];
+	const { ingredients } = useSelector((state) => state.ingredients);
 
 	return (
 		<div className={`${s.container} pt-6 pr-6 pb-6 pl-6 ${className}`}>
 			<span className={s.row}>
-				<p className='text text_type_digits-default'>#034535</p>
-				<p className='text text_type_main-default text_color_inactive'>
-					Сегодня, 16:20
-				</p>
+				<p className='text text_type_digits-default'>#{order.number}</p>
+				<FormattedDate
+					date={new Date(order.updatedAt)}
+					className='text text_type_main-default text_color_inactive'
+				/>
 			</span>
-			<p className='text text_type_main-medium'>
-				Death Star Starship Main бургер
-			</p>
+			<p className='text text_type_main-medium'>{order.name}</p>
 			<span className={s.row}>
 				<ul className={s.iconRow}>
-					{images.map((image, index) => (
-						<li
-							className={`ingredient ${
-								images.length > 6 && index === 5 ? s.darkened : ''
-							}`}
-							key={index}>
-							<img src={image} alt='' />
-						</li>
-					))}
+					{order.ingredients.map((ingredient, index) => {
+						const item = ingredients.find((item) => item._id === ingredient);
+						if (!item) return null;
+
+						return (
+							<li
+								className={`ingredient ${
+									order.ingredients.length > 6 && index === 5 ? s.darkened : ''
+								}`}
+								key={index}>
+								<span>
+									<img src={item.image} alt='' />
+								</span>
+							</li>
+						);
+					})}
 				</ul>
-				{images.length > 6 && (
+				{order.ingredients.length > 6 && (
 					<span className={`${s.counter} text text_type_main-default`}>
-						+{images.length - 6}
+						+{order.ingredients.length - 6}
 					</span>
 				)}
-
 				<p className='text text_type_digits-default'>
-					480 <CurrencyIcon type='primary' />
+					{order.ingredients.reduce((sum, id) => {
+						const ingredient = ingredients.find((item) => item._id === id);
+						return ingredient ? sum + ingredient.price : sum;
+					}, 0)}
+					<CurrencyIcon type='primary' />
 				</p>
 			</span>
 		</div>

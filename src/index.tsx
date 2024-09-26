@@ -11,6 +11,8 @@ import {
 	applyMiddleware,
 	compose,
 } from 'redux';
+import { wsMiddleware } from './services/middleware';
+import { wsActions } from './services/actions/ws';
 
 type ReduxDevToolsCompose = typeof compose;
 declare global {
@@ -24,7 +26,12 @@ const composeEnhancers =
 	(window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(
 	rootReducer,
-	composeEnhancers(applyMiddleware(thunk))
+	composeEnhancers(
+		applyMiddleware(
+			thunk,
+			wsMiddleware('wss://norma.nomoreparties.space/orders/all', wsActions)
+		)
+	)
 );
 
 root.render(

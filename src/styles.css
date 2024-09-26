@@ -72,13 +72,21 @@ iframe#webpack-dev-server-client-overlay{display:none!important}
 		display: none;
 	}
 
-	& img {
+	& span {
 		position: relative;
 		top: 2px;
 		left: 2px;
+		display: block;
 		width: 60px;
 		height: 60px;
 		background-color: #1C1C21;
 		border-radius: 50%;
+	}
+
+	& img {
+		position: relative;
+		top: 10px;
+		width: 60px;
+		height: 40px;
 	}
 }

@@ -38,7 +38,7 @@ export const Register = (): React.JSX.Element => {
 			values.name &&
 			!document.querySelector('.input__error')
 		) {
-			await dispatch(
+			dispatch(
 				register(
 					{
 						email: values.email,

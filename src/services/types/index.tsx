@@ -15,7 +15,7 @@ export type TIngredient = {
 export type TBurgerIngredient = TIngredient & {
 	uuid: string;
 };
-export type AuthResponseType = {
+export type TAuthResponse = {
 	success: boolean;
 	user: {
 		email: string;
@@ -24,23 +24,39 @@ export type AuthResponseType = {
 	accessToken: string;
 	refreshToken: string;
 };
-export type RegisterFormType = {
+export type TRegisterForm = {
 	email: string;
 	password: string;
 	name: string;
 };
-export type LoginFormType = {
+export type TLoginForm = {
 	email: string;
 	password: string;
 };
-export type TokenType = {
+export type TToken = {
 	token: string;
 };
-export type UpdateUserFormType = {
+export type TUpdateUserForm = {
 	token: string;
 	user: {
 		email?: string;
 		password?: string;
 		name?: string;
 	};
+};
+export type TWsMessage = {
+	success: boolean;
+	orders: Array<TOrder>;
+	total: number;
+	totalToday: number;
+};
+
+export type TOrder = {
+	ingredients: Array<string>;
+	_id: string;
+	name: string;
+	status: 'created' | 'pending' | 'done';
+	number: number;
+	createdAt: string;
+	updatedAt: string;
 };

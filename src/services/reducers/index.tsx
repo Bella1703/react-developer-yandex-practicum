@@ -5,21 +5,24 @@ import { burgerConstructorReducer } from './burger-constructor';
 import { placeOrderReducer } from './order';
 import { ingredientDetailsReducer } from './ingredient-details';
 import { userReducer } from './user';
+import { wsReducer } from './ws';
 import { TBurgerConstructorAction } from '../constants/burger-constructor';
 import { TIngredientsAction } from '../constants/ingredients';
 import { TOrderAction } from '../constants/order';
 import { TGetIngredientDetailsAction } from '../constants/ingredient-details';
 import { TUserAction } from '../constants/user';
+import { TWsAction } from '../constants/ws';
 import { store } from '../../index';
 
 export type TRootState = ReturnType<typeof store.getState>;
 
-type TRootAction =
+export type TRootAction =
 	| TBurgerConstructorAction
 	| TGetIngredientDetailsAction
 	| TIngredientsAction
 	| TOrderAction
-	| TUserAction;
+	| TUserAction
+	| TWsAction;
 
 export type TAppThunk<TReturn = void> = ThunkAction<
 	TReturn,
@@ -35,4 +38,5 @@ export const rootReducer = combineReducers({
 	order: placeOrderReducer,
 	ingredientDetails: ingredientDetailsReducer,
 	user: userReducer,
+	ws: wsReducer,
 });

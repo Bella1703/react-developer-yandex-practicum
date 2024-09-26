@@ -1,6 +1,6 @@
 import { OrderResponseType } from '../services/actions/order';
 import { IngredientsResponseType } from '../services/actions/ingredients';
-import { AuthResponseType } from '../services/types';
+import { TAuthResponse } from '../services/types';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
@@ -12,7 +12,7 @@ const checkResponse = (res: Response) => {
 };
 
 const checkSuccess = (
-	res: IngredientsResponseType | OrderResponseType | AuthResponseType
+	res: IngredientsResponseType | OrderResponseType | TAuthResponse
 ) => {
 	if (res && res.success) {
 		return res;

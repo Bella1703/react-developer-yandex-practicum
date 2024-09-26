@@ -5,22 +5,22 @@ import {
 	GET_USER,
 	SET_USER,
 } from '../actions/user';
-import { AuthResponseType } from '../types';
+import { TAuthResponse } from '../types';
 
 export type RegisterAction = {
 	readonly type: typeof REGISTER;
-	readonly response: AuthResponseType;
+	readonly response: TAuthResponse;
 };
 export type SignInAction = {
 	readonly type: typeof SIGN_IN;
-	readonly response: AuthResponseType;
+	readonly response: TAuthResponse;
 };
 export type SignOutAction = {
 	readonly type: typeof SIGN_OUT;
 };
 export type GetUserAction = {
 	readonly type: typeof GET_USER;
-	readonly response: AuthResponseType;
+	readonly response: TAuthResponse;
 };
 export type SetUserAction = {
 	readonly type: typeof SET_USER;

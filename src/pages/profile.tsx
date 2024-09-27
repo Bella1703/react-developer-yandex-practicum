@@ -63,22 +63,22 @@ export const Profile = (): React.JSX.Element => {
 		e.preventDefault();
 		if (!document.querySelector('.input__error')) {
 			if (accessToken) {
-				await dispatch(
+				dispatch(
 					updateUser(
 						{
 							token: accessToken,
 							user: {
 								email: values.email,
 								password: values.password,
-								name: values.name,
-							},
+								name: values.name
+							}
 						},
 						(hasError) => {
 							if (hasError) {
-								alert('Что-то пошло не так, попробуйте еще раз');
+								alert("Что-то пошло не так, попробуйте еще раз");
 							} else {
 								setShowButtons(false);
-								setValues({ ...values, password: '' });
+								setValues({ ...values, password: "" });
 							}
 						}
 					)

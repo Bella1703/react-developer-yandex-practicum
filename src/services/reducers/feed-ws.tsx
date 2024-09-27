@@ -8,13 +8,13 @@ import { TFeedWsAction } from '../constants/feed-ws';
 import { TWsMessage } from '../types';
 
 type TFeedWsState = {
-	wsConnected: boolean;
+	feedWsConnected: boolean;
 	feedWsMessage: TWsMessage;
 	error?: Event;
 };
 
 const initialState: TFeedWsState = {
-	wsConnected: false,
+	feedWsConnected: false,
 	feedWsMessage: {
 		success: false,
 		orders: [],
@@ -32,19 +32,19 @@ export const feedWsReducer = (
 			return {
 				...state,
 				error: undefined,
-				wsConnected: true,
+				feedWsConnected: true,
 			};
 		case FEED_WS_CONNECTION_ERROR:
 			return {
 				...state,
 				error: action.payload,
-				wsConnected: false,
+				feedWsConnected: false,
 			};
 		case FEED_WS_CONNECTION_CLOSED:
 			return {
 				...state,
 				error: undefined,
-				wsConnected: false,
+				feedWsConnected: false,
 			};
 		case FEED_WS_GET_MESSAGE:
 			return {

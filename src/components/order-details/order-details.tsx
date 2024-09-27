@@ -24,7 +24,7 @@ export const OrderDetails = (): React.JSX.Element => {
 			{!hasError && !isLoading && response && response.success && (
 				<>
 					<h2 className={`${s.number} text text_type_digits-large mt-9`}>
-						{response.order.number}
+						{response.order?.number}
 					</h2>
 					<p className={'text text_type_main-medium mt-8'}>
 						идентификатор заказа

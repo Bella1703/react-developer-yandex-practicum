@@ -1,6 +1,7 @@
 import { CLEAR_CONSTRUCTOR } from './burger-constructor';
-import { requestWithRefresh } from '../../utils/request';
+import { request, requestWithRefresh } from '../../utils/request';
 import { TAppDispatch, TAppThunk } from '../reducers';
+import { TOrder } from '../types';
 
 export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST' as const;
 export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS' as const;
@@ -9,9 +10,8 @@ export const PLACE_ORDER_ERROR = 'PLACE_ORDER_ERROR' as const;
 export type OrderResponseType = {
 	success: boolean;
 	name: string;
-	order: {
-		number: number;
-	};
+	order?: TOrder;
+	orders?: Array<TOrder>;
 };
 
 export const placeOrder =
@@ -40,5 +40,19 @@ export const placeOrder =
 			dispatch({
 				type: PLACE_ORDER_ERROR,
 			});
+		}
+	};
+
+export const getOrderByNumber =
+	(orderNumber: string): TAppThunk =>
+	async (dispatch: TAppDispatch) => {
+		try {
+			const data = await request(`orders/${orderNumber}`);
+			dispatch({
+				type: PLACE_ORDER_SUCCESS,
+				response: data,
+			});
+		} catch (error) {
+			alert('Что-то пошло не так');
 		}
 	};

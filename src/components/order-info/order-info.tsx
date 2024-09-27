@@ -1,44 +1,61 @@
 import s from './order-info.module.scss';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from '../../services/hooks';
 import {
 	CurrencyIcon,
 	FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TOrder } from '../../services/types';
-import { FEED_WS_CONNECTION_START } from '../../services/actions/feed-ws';
+import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/hooks';
+import { getOrderByNumber } from '../../services/actions/order';
+import { FEED_WS_CONNECTION_START } from '../../services/actions/feed-ws';
+import { ORDERS_WS_CONNECTION_START } from '../../services/actions/orders-ws';
 
 export const OrderInfo = (): React.JSX.Element => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const background = location.state?.background;
-	const orderId = location.pathname.split('/')[2];
+	const orderNumber =
+		location.pathname.split('/')[location.pathname.split('/').length - 1];
 	const { ingredients } = useSelector((state) => state.ingredients);
-	const { feedWsMessage } = useSelector((state) => state.feedWs);
-	const { orderWsMessage } = useSelector((state) => state.ordersWs);
-	const [order, setOrder] = useState<TOrder | undefined>(undefined);
+	const { feedWsConnected, feedWsMessage } = useSelector(
+		(state) => state.feedWs
+	);
+	const { orderWsConnected, orderWsMessage } = useSelector(
+		(state) => state.ordersWs
+	);
+	const { response } = useSelector((state) => state.order);
 
-	const findOrderById = (): TOrder | undefined => {
-		let foundOrder = feedWsMessage.orders?.find((item) => item._id === orderId);
+	const order = useSelector((state) => {
+		let foundOrder = feedWsMessage.orders?.find(
+			(item) => item.number === +orderNumber
+		);
 		if (!foundOrder) {
-			foundOrder = orderWsMessage.orders?.find((item) => item._id === orderId);
+			foundOrder = orderWsMessage.orders?.find(
+				(item) => item.number === +orderNumber
+			);
+		}
+		if (!foundOrder && response?.orders?.[0]?.number === +orderNumber) {
+			foundOrder = response.orders[0];
 		}
 		return foundOrder;
-	};
+	});
+
 	useEffect(() => {
-		dispatch({ type: FEED_WS_CONNECTION_START });
-	}, []);
-	useEffect(() => {
-		if (feedWsMessage.orders.length || orderWsMessage.orders.length) {
-			const foundOrder = findOrderById();
-			setOrder(foundOrder);
+		if (!feedWsConnected) {
+			dispatch({ type: FEED_WS_CONNECTION_START });
 		}
-	}, [feedWsMessage.orders, orderWsMessage.orders]);
+		if (!orderWsMessage) {
+			dispatch({ type: ORDERS_WS_CONNECTION_START });
+		}
+	}, [dispatch, feedWsConnected, orderWsConnected]);
+
+	useEffect(() => {
+		if (!order) {
+			dispatch(getOrderByNumber(orderNumber));
+		}
+	}, []);
 
 	const totalPrice = useMemo(() => {
-		// ?? след строка?
-
 		if (!order) return 0;
 
 		return order.ingredients.reduce((acc, ingredientId) => {
@@ -61,19 +78,19 @@ export const OrderInfo = (): React.JSX.Element => {
 	return (
 		<div className={`${s.content} ${background ? '' : 'mt-30'}`}>
 			<p className={`text text_type_digits-default ${s.centerText}`}>
-				#{order?.number}
+				#{order.number}
 			</p>
-			<p className={'text text_type_main-medium mt-10'}>{order?.name}</p>
+			<p className={'text text_type_main-medium mt-10'}>{order.name}</p>
 			<p className={'text text_type_main-default blueText mt-3'}>
-				{order?.status === 'done'
+				{order.status === 'done'
 					? 'Выполнен'
-					: order?.status === 'pending'
+					: order.status === 'pending'
 					? 'В работе'
 					: 'Создан'}
 			</p>
 			<p className={'text text_type_main-medium mt-15'}>Состав:</p>
 			<ul className={`${s.cards} scrollContainer mt-6`}>
-				{order?.ingredients
+				{order.ingredients
 					.reduce((acc, ingredient) => {
 						const item = ingredients.find((item) => item._id === ingredient);
 						if (!item) return acc;
@@ -102,15 +119,10 @@ export const OrderInfo = (): React.JSX.Element => {
 					))}
 			</ul>
 			<div className={`${s.totalInfo} mt-10`}>
-				{/*//поправить - убрать условие*/}
-
-				{order && (
-					<FormattedDate
-						date={new Date(order.createdAt)}
-						className='text text_type_main-default text_color_inactive'
-					/>
-				)}
-
+				<FormattedDate
+					date={new Date(order.createdAt)}
+					className='text text_type_main-default text_color_inactive'
+				/>
 				<p className={`${s.price} text text_type_digits-default`}>
 					{totalPrice} <CurrencyIcon type='primary' />
 				</p>

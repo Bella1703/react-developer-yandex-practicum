@@ -8,13 +8,13 @@ import { TOrdersWsAction } from '../constants/orders-ws';
 import { TWsMessage } from '../types';
 
 type TOrdersWsState = {
-	wsConnected: boolean;
+	orderWsConnected: boolean;
 	orderWsMessage: TWsMessage;
 	error?: Event;
 };
 
 const initialState: TOrdersWsState = {
-	wsConnected: false,
+	orderWsConnected: false,
 	orderWsMessage: {
 		success: false,
 		orders: [],
@@ -32,19 +32,19 @@ export const ordersWsReducer = (
 			return {
 				...state,
 				error: undefined,
-				wsConnected: true,
+				orderWsConnected: true,
 			};
 		case ORDERS_WS_CONNECTION_ERROR:
 			return {
 				...state,
 				error: action.payload,
-				wsConnected: false,
+				orderWsConnected: false,
 			};
 		case ORDERS_WS_CONNECTION_CLOSED:
 			return {
 				...state,
 				error: undefined,
-				wsConnected: false,
+				orderWsConnected: false,
 			};
 		case ORDERS_WS_GET_MESSAGE:
 			return {

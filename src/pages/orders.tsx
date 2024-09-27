@@ -4,17 +4,19 @@ import { useDispatch, useSelector } from '../services/hooks';
 import { ORDERS_WS_CONNECTION_START } from '../services/actions/orders-ws';
 
 export const Orders = (): React.JSX.Element => {
-	const { wsConnected, orderWsMessage } = useSelector(
+	const { orderWsConnected, orderWsMessage } = useSelector(
 		(state) => state.ordersWs
 	);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: ORDERS_WS_CONNECTION_START });
+		if(!orderWsConnected) {
+			dispatch({ type: ORDERS_WS_CONNECTION_START });
+		}
 	}, []);
 	return (
 		<div className={'scrollContainer'}>
-			{wsConnected &&
+			{orderWsConnected &&
 				orderWsMessage.orders
 					.slice()
 					.reverse()

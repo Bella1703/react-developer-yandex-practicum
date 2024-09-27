@@ -49,7 +49,7 @@ export const App = (): React.JSX.Element => {
 					element={<IngredientDetails />}
 				/>
 				<Route path='/feed' element={<Feed />} />
-				<Route path='/feed/:orderId' element={<OrderInfo />} />
+				<Route path='/feed/:number' element={<OrderInfo />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/forgot-password' element={<ForgotPassword />} />
@@ -65,6 +65,7 @@ export const App = (): React.JSX.Element => {
 					<Route index element={<Profile />} />
 					<Route path='orders' element={<Orders />} />
 				</Route>
+				<Route path='/profile/orders/:number' element={<OrderInfo />} />
 				<Route path='*' element={<NotFound404 />} />
 			</Routes>
 
@@ -79,7 +80,15 @@ export const App = (): React.JSX.Element => {
 						}
 					/>
 					<Route
-						path='/feed/:orderId'
+						path='/feed/:number'
+						element={
+							<Modal onClose={handleModalClose}>
+								<OrderInfo />
+							</Modal>
+						}
+					/>
+					<Route
+						path='/profile/orders/:number'
 						element={
 							<Modal onClose={handleModalClose}>
 								<OrderInfo />

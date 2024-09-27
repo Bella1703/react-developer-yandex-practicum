@@ -5,17 +5,19 @@ import { useSelector, useDispatch } from '../services/hooks';
 import { FEED_WS_CONNECTION_START } from '../services/actions/feed-ws';
 
 export const Feed = (): React.JSX.Element => {
-	const { wsConnected, feedWsMessage } = useSelector((state) => state.feedWs);
+	const { feedWsConnected, feedWsMessage } = useSelector((state) => state.feedWs);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: FEED_WS_CONNECTION_START });
+		if(!feedWsConnected) {
+			dispatch({ type: FEED_WS_CONNECTION_START });
+		}
 	}, []);
 
 	return (
 		<div className={s.container}>
 			<h1 className={'text text_type_main-large mt-10 mb-5'}>Лента заказов</h1>
-			{wsConnected && (
+			{feedWsConnected && (
 				<div className={s.columns}>
 					<div className={'scrollContainer'}>
 						{feedWsMessage.orders.map((order, index) => (

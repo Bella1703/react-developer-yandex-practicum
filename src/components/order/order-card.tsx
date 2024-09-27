@@ -20,11 +20,12 @@ export const OrderCard = ({
 }: TOrderCard): React.JSX.Element | null => {
 	const { ingredients } = useSelector((state) => state.ingredients);
 	const location = useLocation();
+	const path = location.pathname.includes('profile') ? 'profile/orders' : 'feed';
 
 	return (
 		<Link
-			key={order._id}
-			to={`/feed/${order._id}`}
+			key={order.number}
+			to={`/${path}/${order.number}`}
 			state={{ background: location }}
 			className={`${s.container} pt-6 pr-6 pb-6 pl-6 ${className}`}>
 			<span className={s.row}>

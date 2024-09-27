@@ -25,7 +25,7 @@ iframe#webpack-dev-server-client-overlay{display:none!important}
 .scrollContainer {
 	height: 100%;
 	padding-right: 8px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .numberShadow {

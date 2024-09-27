@@ -22,7 +22,7 @@ import React, { useEffect } from 'react';
 import { getIngredients } from '../../services/actions/ingredients';
 import { Feed } from '../../pages/feed';
 import { useDispatch } from '../../services/hooks';
-import { OrderDetails } from '../order-details/order-details';
+import { OrderInfo } from '../order-info/order-info';
 
 export const App = (): React.JSX.Element => {
 	const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export const App = (): React.JSX.Element => {
 					element={<IngredientDetails />}
 				/>
 				<Route path='/feed' element={<Feed />} />
-				<Route path='/feed/test' element={<OrderDetails />} />
+				<Route path='/feed/:orderId' element={<OrderInfo />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/forgot-password' element={<ForgotPassword />} />
@@ -75,6 +75,14 @@ export const App = (): React.JSX.Element => {
 						element={
 							<Modal onClose={handleModalClose}>
 								<IngredientDetails />
+							</Modal>
+						}
+					/>
+					<Route
+						path='/feed/:orderId'
+						element={
+							<Modal onClose={handleModalClose}>
+								<OrderInfo />
 							</Modal>
 						}
 					/>

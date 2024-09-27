@@ -11,8 +11,10 @@ import {
 	applyMiddleware,
 	compose,
 } from 'redux';
-import { wsMiddleware } from './services/middleware';
-import { wsActions } from './services/actions/ws';
+import { feedWsMiddleware } from './services/feed-middleware';
+import { ordersWsMiddleware } from './services/orders-middleware';
+import { feedWsActions } from './services/actions/feed-ws';
+import { ordersWsActions } from './services/actions/orders-ws';
 
 type ReduxDevToolsCompose = typeof compose;
 declare global {
@@ -29,7 +31,14 @@ export const store = createStore(
 	composeEnhancers(
 		applyMiddleware(
 			thunk,
-			wsMiddleware('wss://norma.nomoreparties.space/orders/all', wsActions)
+			feedWsMiddleware(
+				'wss://norma.nomoreparties.space/orders/all',
+				feedWsActions
+			),
+			ordersWsMiddleware(
+				'wss://norma.nomoreparties.space/orders',
+				ordersWsActions
+			)
 		)
 	)
 );

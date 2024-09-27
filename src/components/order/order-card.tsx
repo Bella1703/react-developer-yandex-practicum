@@ -1,5 +1,6 @@
 import s from './order-card.module.scss';
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
 	CurrencyIcon,
 	FormattedDate,
@@ -18,9 +19,14 @@ export const OrderCard = ({
 	className,
 }: TOrderCard): React.JSX.Element | null => {
 	const { ingredients } = useSelector((state) => state.ingredients);
+	const location = useLocation();
 
 	return (
-		<div className={`${s.container} pt-6 pr-6 pb-6 pl-6 ${className}`}>
+		<Link
+			key={order._id}
+			to={`/feed/${order._id}`}
+			state={{ background: location }}
+			className={`${s.container} pt-6 pr-6 pb-6 pl-6 ${className}`}>
 			<span className={s.row}>
 				<p className='text text_type_digits-default'>#{order.number}</p>
 				<FormattedDate
@@ -61,6 +67,6 @@ export const OrderCard = ({
 					<CurrencyIcon type='primary' />
 				</p>
 			</span>
-		</div>
+		</Link>
 	);
 };

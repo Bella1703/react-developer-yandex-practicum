@@ -16,7 +16,7 @@
 	position: absolute;
 	top: 25%;
 	left: calc(50% - 360px);
-	z-index: 3;
+	z-index: 8;
 	width: 100%;
 	max-width: 640px;
 	height: fit-content;
@@ -28,7 +28,7 @@
 
 .closeIconWrapper {
 	position: absolute;
-	z-index: 3;
+	z-index: 8;
 	top: 60px;
 	right: 40px;
 	cursor: pointer;

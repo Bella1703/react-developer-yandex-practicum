@@ -2,14 +2,14 @@ import s from './feed.module.scss';
 import { OrderCard } from '../components/order/order-card';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from '../services/hooks';
-import { WS_CONNECTION_START } from '../services/actions/ws';
+import { FEED_WS_CONNECTION_START } from '../services/actions/feed-ws';
 
 export const Feed = (): React.JSX.Element => {
-	const { wsConnected, message } = useSelector((state) => state.ws);
+	const { wsConnected, feedWsMessage } = useSelector((state) => state.feedWs);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: WS_CONNECTION_START });
+		dispatch({ type: FEED_WS_CONNECTION_START });
 	}, []);
 
 	return (
@@ -18,7 +18,7 @@ export const Feed = (): React.JSX.Element => {
 			{wsConnected && (
 				<div className={s.columns}>
 					<div className={'scrollContainer'}>
-						{message.orders.map((order, index) => (
+						{feedWsMessage.orders.map((order, index) => (
 							<OrderCard className='mb-4' order={order} key={index} />
 						))}
 					</div>
@@ -27,7 +27,7 @@ export const Feed = (): React.JSX.Element => {
 							<div>
 								<p className='text text_type_main-medium mb-6'>Готовы:</p>
 								<ul className={s.list}>
-									{message.orders
+									{feedWsMessage.orders
 										.filter((order) => order.status === 'done')
 										.slice(0, 14)
 										.map((order, index) => (
@@ -42,7 +42,7 @@ export const Feed = (): React.JSX.Element => {
 							<div>
 								<p className='text text_type_main-medium mb-6'>В работе:</p>
 								<ul className={s.list}>
-									{message.orders
+									{feedWsMessage.orders
 										.filter((order) => order.status === 'pending')
 										.slice(0, 14)
 										.map((order, index) => (
@@ -60,7 +60,7 @@ export const Feed = (): React.JSX.Element => {
 								Выполнено за все время:
 							</p>
 							<p className='text text_type_digits-large numberShadow'>
-								{message.total}
+								{feedWsMessage.total}
 							</p>
 						</span>
 						<span>
@@ -68,7 +68,7 @@ export const Feed = (): React.JSX.Element => {
 								Выполнено за сегодня:
 							</p>
 							<p className='text text_type_digits-large numberShadow'>
-								{message.totalToday}
+								{feedWsMessage.totalToday}
 							</p>
 						</span>
 					</div>

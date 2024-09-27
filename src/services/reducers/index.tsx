@@ -5,13 +5,15 @@ import { burgerConstructorReducer } from './burger-constructor';
 import { placeOrderReducer } from './order';
 import { ingredientDetailsReducer } from './ingredient-details';
 import { userReducer } from './user';
-import { wsReducer } from './ws';
+import { feedWsReducer } from './feed-ws';
+import { ordersWsReducer } from './orders-ws';
 import { TBurgerConstructorAction } from '../constants/burger-constructor';
 import { TIngredientsAction } from '../constants/ingredients';
 import { TOrderAction } from '../constants/order';
 import { TGetIngredientDetailsAction } from '../constants/ingredient-details';
 import { TUserAction } from '../constants/user';
-import { TWsAction } from '../constants/ws';
+import { TFeedWsAction } from '../constants/feed-ws';
+import { TOrdersWsAction } from '../constants/orders-ws';
 import { store } from '../../index';
 
 export type TRootState = ReturnType<typeof store.getState>;
@@ -22,7 +24,8 @@ export type TRootAction =
 	| TIngredientsAction
 	| TOrderAction
 	| TUserAction
-	| TWsAction;
+	| TFeedWsAction
+	| TOrdersWsAction;
 
 export type TAppThunk<TReturn = void> = ThunkAction<
 	TReturn,
@@ -38,5 +41,6 @@ export const rootReducer = combineReducers({
 	order: placeOrderReducer,
 	ingredientDetails: ingredientDetailsReducer,
 	user: userReducer,
-	ws: wsReducer,
+	feedWs: feedWsReducer,
+	ordersWs: ordersWsReducer,
 });

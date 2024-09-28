@@ -1,8 +1,8 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
-import { TOrdersWsStoreActions } from './constants/orders-ws';
-import { TAppDispatch, TRootState, TRootAction } from './reducers';
-import { TWsMessage } from './types';
-import { refreshToken } from '../utils/request';
+import { TOrdersWsStoreActions } from '../constants/orders-ws';
+import { TAppDispatch, TRootState, TRootAction } from '../reducers';
+import { TWsMessage } from '../types';
+import { refreshToken } from '../../utils/request';
 
 export const ordersWsMiddleware = (
 	wsUrl: string,
@@ -43,7 +43,7 @@ export const ordersWsMiddleware = (
 										refreshData.accessToken.replace.slice(7)
 									);
 								})
-								.catch((err) => {
+								.catch(() => {
 									dispatch({ type: onError, payload: event });
 								});
 

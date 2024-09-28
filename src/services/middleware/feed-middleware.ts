@@ -1,7 +1,7 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
-import { TFeedWsStoreActions } from './constants/feed-ws';
-import { TAppDispatch, TRootState, TRootAction } from './reducers';
-import { TWsMessage } from './types';
+import { TFeedWsStoreActions } from '../constants/feed-ws';
+import { TAppDispatch, TRootState, TRootAction } from '../reducers';
+import { TWsMessage } from '../types';
 
 export const feedWsMiddleware = (
 	wsUrl: string,

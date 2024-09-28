@@ -6,8 +6,10 @@ import {
 import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { getOrderByNumber } from '../../services/actions/order';
-import { FEED_WS_CONNECTION_START } from '../../services/actions/feed-ws';
+import {
+	getOrderByNumber,
+	FEED_WS_CONNECTION_START,
+} from '../../services/actions/feed-ws';
 import { ORDERS_WS_CONNECTION_START } from '../../services/actions/orders-ws';
 
 export const OrderInfo = (): React.JSX.Element => {
@@ -25,7 +27,7 @@ export const OrderInfo = (): React.JSX.Element => {
 	);
 	const { response } = useSelector((state) => state.order);
 
-	const order = useSelector((state) => {
+	const order = useSelector(() => {
 		let foundOrder = feedWsMessage.orders?.find(
 			(item) => item.number === +orderNumber
 		);
@@ -34,8 +36,8 @@ export const OrderInfo = (): React.JSX.Element => {
 				(item) => item.number === +orderNumber
 			);
 		}
-		if (!foundOrder && response?.orders?.[0]?.number === +orderNumber) {
-			foundOrder = response.orders[0];
+		if (!foundOrder && response?.order?.number === +orderNumber) {
+			foundOrder = response.order;
 		}
 		return foundOrder;
 	});

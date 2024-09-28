@@ -11,8 +11,8 @@ import {
 	applyMiddleware,
 	compose,
 } from 'redux';
-import { feedWsMiddleware } from './services/feed-middleware';
-import { ordersWsMiddleware } from './services/orders-middleware';
+import { feedWsMiddleware } from './services/middleware/feed-middleware';
+import { ordersWsMiddleware } from './services/middleware/orders-middleware';
 import { feedWsActions } from './services/actions/feed-ws';
 import { ordersWsActions } from './services/actions/orders-ws';
 

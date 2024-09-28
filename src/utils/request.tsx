@@ -4,11 +4,12 @@ import { TAuthResponse } from '../services/types';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
-const checkResponse = (res: Response) => {
+const checkResponse = async (res: Response) => {
 	if (res.ok) {
 		return res.json();
 	}
-	return res.json().then((err) => Promise.reject(err));
+	const err = await res.json();
+	return await Promise.reject(err);
 };
 
 const checkSuccess = (
@@ -20,31 +21,29 @@ const checkSuccess = (
 	return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const request = (endpoint: string, options?: RequestInit) => {
-	return fetch(`${BASE_URL}${endpoint}`, options)
-		.then(checkResponse)
-		.then(checkSuccess);
+export const request = async (endpoint: string, options?: RequestInit) => {
+	const res = await fetch(`${BASE_URL}${endpoint}`, options);
+	const res_1 = await checkResponse(res);
+	return checkSuccess(res_1);
 };
 
-export const refreshToken = () => {
-	return fetch(`${BASE_URL}/auth/token`, {
-		method: 'POST',
+export const refreshToken = async () => {
+	const res = await fetch(`${BASE_URL}/auth/token`, {
+		method: "POST",
 		headers: {
-			'Content-Type': 'application/json;charset=utf-8',
+			"Content-Type": "application/json;charset=utf-8"
 		},
 		body: JSON.stringify({
-			token: localStorage.getItem('refreshToken'),
-		}),
-	})
-		.then(checkResponse)
-		.then((refreshData) => {
-			if (!refreshData.success) {
-				return Promise.reject(refreshData);
-			}
-			localStorage.setItem('refreshToken', refreshData.refreshToken);
-			localStorage.setItem('accessToken', refreshData.accessToken);
-			return refreshData;
-		});
+			token: localStorage.getItem("refreshToken")
+		})
+	});
+	const refreshData = await checkResponse(res);
+	if (!refreshData.success) {
+		return Promise.reject(refreshData);
+	}
+	localStorage.setItem("refreshToken", refreshData.refreshToken);
+	localStorage.setItem("accessToken", refreshData.accessToken);
+	return refreshData;
 };
 
 export const requestWithRefresh = async (

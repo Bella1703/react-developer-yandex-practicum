@@ -20,7 +20,9 @@ export const OrderCard = ({
 }: TOrderCard): React.JSX.Element | null => {
 	const { ingredients } = useSelector((state) => state.ingredients);
 	const location = useLocation();
-	const path = location.pathname.includes('profile') ? 'profile/orders' : 'feed';
+	const path = location.pathname.includes('profile')
+		? 'profile/orders'
+		: 'feed';
 
 	return (
 		<Link

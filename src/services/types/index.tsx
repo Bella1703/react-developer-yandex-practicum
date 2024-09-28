@@ -49,6 +49,7 @@ export type TWsMessage = {
 	orders: Array<TOrder>;
 	total: number;
 	totalToday: number;
+	message: string
 };
 
 export type TOrder = {

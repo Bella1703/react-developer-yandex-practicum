@@ -20,6 +20,7 @@ const initialState: TFeedWsState = {
 		orders: [],
 		total: 0,
 		totalToday: 0,
+		message: '',
 	},
 };
 

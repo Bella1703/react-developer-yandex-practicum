@@ -2,6 +2,7 @@ import type { Middleware, MiddlewareAPI } from 'redux';
 import { TOrdersWsStoreActions } from './constants/orders-ws';
 import { TAppDispatch, TRootState, TRootAction } from './reducers';
 import { TWsMessage } from './types';
+import { refreshToken } from '../utils/request';
 
 export const ordersWsMiddleware = (
 	wsUrl: string,
@@ -15,10 +16,6 @@ export const ordersWsMiddleware = (
 			const { type } = action;
 			const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 			const accessToken = localStorage.getItem('accessToken');
-
-			//если токен устарел
-
-
 
 			if (type === wsInit && accessToken) {
 				socket = new WebSocket(`${wsUrl}?token=${accessToken.slice(7)}`);
@@ -34,12 +31,32 @@ export const ordersWsMiddleware = (
 
 				socket.onmessage = (event) => {
 					const { data } = event;
-					const parsedData: TWsMessage = JSON.parse(data);
 
-					dispatch({
-						type: onMessage,
-						payload: parsedData,
-					});
+					try {
+						const parsedData: TWsMessage = JSON.parse(data);
+						if (parsedData.message === 'Invalid or missing token') {
+							refreshToken()
+								.then((refreshData) => {
+									const url = new URL(wsUrl);
+									url.searchParams.set(
+										'token',
+										refreshData.accessToken.replace.slice(7)
+									);
+								})
+								.catch((err) => {
+									dispatch({ type: onError, payload: event });
+								});
+
+							dispatch({ type: onClose });
+						}
+
+						dispatch({
+							type: onMessage,
+							payload: parsedData,
+						});
+					} catch (err) {
+						dispatch({ type: onError, payload: event });
+					}
 				};
 
 				socket.onclose = (event) => {

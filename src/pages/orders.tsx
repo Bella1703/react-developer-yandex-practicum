@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { OrderCard } from '../components/order/order-card';
 import { useDispatch, useSelector } from '../services/hooks';
-import { ORDERS_WS_CONNECTION_START } from '../services/actions/orders-ws';
+import { ORDERS_WS_CONNECTION_CLOSED, ORDERS_WS_CONNECTION_START } from "../services/actions/orders-ws";
 
 export const Orders = (): React.JSX.Element => {
 	const { orderWsConnected, orderWsMessage } = useSelector(
@@ -13,6 +13,9 @@ export const Orders = (): React.JSX.Element => {
 		if(!orderWsConnected) {
 			dispatch({ type: ORDERS_WS_CONNECTION_START });
 		}
+		return () => {
+			dispatch({ type: ORDERS_WS_CONNECTION_CLOSED });
+		};
 	}, []);
 	return (
 		<div className={'scrollContainer'}>

@@ -2,16 +2,22 @@ import s from './feed.module.scss';
 import { OrderCard } from '../components/order/order-card';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from '../services/hooks';
-import { FEED_WS_CONNECTION_START } from '../services/actions/feed-ws';
+import { FEED_WS_CONNECTION_CLOSED, FEED_WS_CONNECTION_START } from "../services/actions/feed-ws";
 
 export const Feed = (): React.JSX.Element => {
-	const { feedWsConnected, feedWsMessage } = useSelector((state) => state.feedWs);
+	const { feedWsConnected, feedWsMessage } = useSelector(
+		(state) => state.feedWs
+	);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if(!feedWsConnected) {
+		if (!feedWsConnected) {
 			dispatch({ type: FEED_WS_CONNECTION_START });
 		}
+
+		return () => {
+			dispatch({ type: FEED_WS_CONNECTION_CLOSED });
+		};
 	}, []);
 
 	return (

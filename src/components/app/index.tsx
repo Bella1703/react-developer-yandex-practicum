@@ -65,7 +65,10 @@ export const App = (): React.JSX.Element => {
 					<Route index element={<Profile />} />
 					<Route path='orders' element={<Orders />} />
 				</Route>
-				<Route path='/profile/orders/:number' element={<OrderInfo />} />
+				<Route
+					path='/profile/orders/:number'
+					element={<ProtectedRouteElement element={<OrderInfo />} />}
+				/>
 				<Route path='*' element={<NotFound404 />} />
 			</Routes>
 

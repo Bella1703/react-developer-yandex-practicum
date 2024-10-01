@@ -50,7 +50,7 @@ export const OrderInfo = (): React.JSX.Element => {
 				payload: 'wss://norma.nomoreparties.space/orders/all',
 			});
 		}
-		if (!orderWsMessage && accessToken) {
+		if (!orderWsConnected && accessToken) {
 			dispatch({
 				type: ORDERS_WS_CONNECTION_START,
 				payload: `wss://norma.nomoreparties.space/orders?token=${accessToken.slice(

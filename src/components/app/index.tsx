@@ -93,9 +93,13 @@ export const App = (): React.JSX.Element => {
 					<Route
 						path='/profile/orders/:number'
 						element={
-							<Modal onClose={handleModalClose}>
-								<OrderInfo />
-							</Modal>
+							<ProtectedRouteElement
+								element={
+									<Modal onClose={handleModalClose}>
+										<OrderInfo />
+									</Modal>
+								}
+							/>
 						}
 					/>
 				</Routes>

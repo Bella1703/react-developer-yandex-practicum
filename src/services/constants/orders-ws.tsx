@@ -9,6 +9,7 @@ import { TWsMessage } from '../types';
 
 export type TOrdersWsConnectionStartAction = {
 	readonly type: typeof ORDERS_WS_CONNECTION_START;
+	readonly payload: string;
 };
 export type TOrdersWsConnectionSuccessAction = {
 	readonly type: typeof ORDERS_WS_CONNECTION_SUCCESS;

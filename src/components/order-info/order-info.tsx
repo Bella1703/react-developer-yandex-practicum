@@ -16,6 +16,7 @@ export const OrderInfo = (): React.JSX.Element => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const background = location.state?.background;
+	const accessToken = localStorage.getItem('accessToken');
 	const orderNumber =
 		location.pathname.split('/')[location.pathname.split('/').length - 1];
 	const { ingredients } = useSelector((state) => state.ingredients);
@@ -44,12 +45,20 @@ export const OrderInfo = (): React.JSX.Element => {
 
 	useEffect(() => {
 		if (!feedWsConnected) {
-			dispatch({ type: FEED_WS_CONNECTION_START });
+			dispatch({
+				type: FEED_WS_CONNECTION_START,
+				payload: 'wss://norma.nomoreparties.space/orders/all',
+			});
 		}
-		if (!orderWsMessage) {
-			dispatch({ type: ORDERS_WS_CONNECTION_START });
+		if (!orderWsMessage && accessToken) {
+			dispatch({
+				type: ORDERS_WS_CONNECTION_START,
+				payload: `wss://norma.nomoreparties.space/orders?token=${accessToken.slice(
+					7
+				)}`,
+			});
 		}
-	}, [dispatch, feedWsConnected, orderWsConnected]);
+	}, [dispatch, feedWsConnected, orderWsConnected, accessToken]);
 
 	useEffect(() => {
 		if (!order) {

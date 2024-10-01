@@ -1,24 +1,26 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
-import { TOrdersWsStoreActions } from '../constants/orders-ws';
-import { TAppDispatch, TRootState, TRootAction } from '../reducers';
-import { TWsMessage } from '../types';
-import { refreshToken } from '../../utils/request';
+import { TOrdersWsStoreActions } from './constants/orders-ws';
+import { TFeedWsStoreActions } from './constants/feed-ws';
+import { TAppDispatch, TRootState, TRootAction } from './reducers';
+import { TWsMessage } from './types';
+import { refreshToken } from '../utils/request';
 
-export const ordersWsMiddleware = (
-	wsUrl: string,
-	wsActions: TOrdersWsStoreActions
+export const wsMiddleware = (
+	wsActions: TOrdersWsStoreActions | TFeedWsStoreActions,
+	withRefreshToken = false
 ): Middleware => {
 	return ((store: MiddlewareAPI<TAppDispatch, TRootState>) => {
 		let socket: WebSocket | null = null;
+		let url = '';
 
 		return (next) => (action: TRootAction) => {
 			const { dispatch } = store;
 			const { type } = action;
 			const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
-			const accessToken = localStorage.getItem('accessToken');
 
-			if (type === wsInit && accessToken) {
-				socket = new WebSocket(`${wsUrl}?token=${accessToken.slice(7)}`);
+			if (type === wsInit) {
+				url = action.payload;
+				socket = new WebSocket(url);
 			}
 			if (socket) {
 				socket.onopen = (event) => {
@@ -34,14 +36,15 @@ export const ordersWsMiddleware = (
 
 					try {
 						const parsedData: TWsMessage = JSON.parse(data);
-						if (parsedData.message === 'Invalid or missing token') {
+						if (withRefreshToken && parsedData.message === 'Invalid or missing token') {
 							refreshToken()
 								.then((refreshData) => {
-									const url = new URL(wsUrl);
-									url.searchParams.set(
+									const wsUrl = new URL(url);
+									wsUrl.searchParams.set(
 										'token',
 										refreshData.accessToken.replace.slice(7)
 									);
+									socket = new WebSocket(wsUrl);
 								})
 								.catch(() => {
 									dispatch({ type: onError, payload: event });

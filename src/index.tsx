@@ -11,8 +11,7 @@ import {
 	applyMiddleware,
 	compose,
 } from 'redux';
-import { feedWsMiddleware } from './services/middleware/feed-middleware';
-import { ordersWsMiddleware } from './services/middleware/orders-middleware';
+import { wsMiddleware } from './services/ws-middleware';
 import { feedWsActions } from './services/actions/feed-ws';
 import { ordersWsActions } from './services/actions/orders-ws';
 
@@ -31,14 +30,8 @@ export const store = createStore(
 	composeEnhancers(
 		applyMiddleware(
 			thunk,
-			feedWsMiddleware(
-				'wss://norma.nomoreparties.space/orders/all',
-				feedWsActions
-			),
-			ordersWsMiddleware(
-				'wss://norma.nomoreparties.space/orders',
-				ordersWsActions
-			)
+			wsMiddleware(feedWsActions),
+			wsMiddleware(ordersWsActions, true)
 		)
 	)
 );

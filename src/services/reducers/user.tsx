@@ -4,39 +4,9 @@ import {
 	SIGN_OUT,
 	GET_USER,
 	SET_USER,
-	AuthResponseType,
 } from '../actions/user';
+import { TUserAction } from '../constants/user';
 
-type RegisterAction = {
-	type: typeof REGISTER;
-	response: AuthResponseType;
-};
-type SignInAction = {
-	type: typeof SIGN_IN;
-	response: AuthResponseType;
-};
-type SignOutAction = {
-	type: typeof SIGN_OUT;
-};
-type GetUserAction = {
-	type: typeof GET_USER;
-	response: AuthResponseType;
-};
-type SetUserAction = {
-	type: typeof SET_USER;
-	response: {
-		user: {
-			email: string;
-			name: string;
-		};
-	};
-};
-export type TUserAction =
-	| RegisterAction
-	| SignInAction
-	| SignOutAction
-	| GetUserAction
-	| SetUserAction;
 export type TUserState = {
 	email: string;
 	name: string;
@@ -47,7 +17,7 @@ const initialState: TUserState = {
 };
 
 export const userReducer = (
-	state = initialState,
+	state: TUserState = initialState,
 	action: TUserAction
 ): TUserState => {
 	switch (action.type) {

@@ -5,45 +5,10 @@ import {
 	CLEAR_CONSTRUCTOR,
 	MOVE_INGREDIENT,
 } from '../actions/burger-constructor';
-import { TIngredient } from './ingredients';
+import { TBurgerConstructorAction } from '../constants/burger-constructor';
+import { TBurgerIngredient } from '../types';
 
-export type TBurgerIngredient = TIngredient & {
-	uuid: string;
-};
-
-type TAddIngredientAction = {
-	type: typeof ADD_INGREDIENT;
-	payload: TBurgerIngredient;
-};
-
-type TRemoveIngredientAction = {
-	type: typeof REMOVE_INGREDIENT;
-	ingredient: TBurgerIngredient;
-};
-
-type TReplaceBunAction = {
-	type: typeof REPLACE_BUN;
-	bun: TIngredient;
-};
-
-type TClearConstructorAction = {
-	type: typeof CLEAR_CONSTRUCTOR;
-};
-
-type TMoveIngredientAction = {
-	type: typeof MOVE_INGREDIENT;
-	dragIndex: number;
-	hoverIndex: number;
-};
-
-export type TBurgerConstructorAction =
-	| TAddIngredientAction
-	| TRemoveIngredientAction
-	| TReplaceBunAction
-	| TClearConstructorAction
-	| TMoveIngredientAction;
-
-export type TBurgerConstructorState = {
+type TBurgerConstructorState = {
 	bun: TBurgerIngredient | null;
 	selectedIngredients: Array<TBurgerIngredient>;
 };
@@ -54,7 +19,7 @@ const burgerConstructorInitialState: TBurgerConstructorState = {
 };
 
 export const burgerConstructorReducer = (
-	state = burgerConstructorInitialState,
+	state: TBurgerConstructorState = burgerConstructorInitialState,
 	action: TBurgerConstructorAction
 ): TBurgerConstructorState => {
 	switch (action.type) {
@@ -68,7 +33,8 @@ export const burgerConstructorReducer = (
 			return {
 				...state,
 				selectedIngredients: state.selectedIngredients.filter(
-					(ingredient) => ingredient.uuid !== action.ingredient.uuid
+					(ingredient: TBurgerIngredient) =>
+						ingredient.uuid !== action.ingredient.uuid
 				),
 			};
 		}
@@ -85,8 +51,9 @@ export const burgerConstructorReducer = (
 			return burgerConstructorInitialState;
 		}
 		case MOVE_INGREDIENT: {
-			const dragCard = state.selectedIngredients[action.dragIndex];
-			const newCards = [...state.selectedIngredients];
+			const dragCard: TBurgerIngredient =
+				state.selectedIngredients[action.dragIndex];
+			const newCards: Array<TBurgerIngredient> = [...state.selectedIngredients];
 			newCards.splice(action.dragIndex, 1);
 			newCards.splice(action.hoverIndex, 0, dragCard);
 			return {

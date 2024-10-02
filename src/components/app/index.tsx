@@ -18,17 +18,14 @@ import { Profile } from '../../pages/profile';
 import { Orders } from '../../pages/orders';
 import { NotFound404 } from '../../pages/not-found';
 import { ProfileLayout } from '../../pages/profile-layout';
-import { useDispatch } from 'react-redux';
-import { TRootState } from '../../services/reducers';
 import React, { useEffect } from 'react';
 import { getIngredients } from '../../services/actions/ingredients';
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
-
-export type TAppDispatch = ThunkDispatch<TRootState, unknown, Action>;
+import { Feed } from '../../pages/feed';
+import { useDispatch } from '../../services/hooks';
+import { OrderInfo } from '../order-info/order-info';
 
 export const App = (): React.JSX.Element => {
-	const dispatch = useDispatch<TAppDispatch>();
+	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const background = location.state && location.state.background;
@@ -51,6 +48,8 @@ export const App = (): React.JSX.Element => {
 					path='/ingredients/:ingredientId'
 					element={<IngredientDetails />}
 				/>
+				<Route path='/feed' element={<Feed />} />
+				<Route path='/feed/:number' element={<OrderInfo />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/forgot-password' element={<ForgotPassword />} />
@@ -66,6 +65,10 @@ export const App = (): React.JSX.Element => {
 					<Route index element={<Profile />} />
 					<Route path='orders' element={<Orders />} />
 				</Route>
+				<Route
+					path='/profile/orders/:number'
+					element={<ProtectedRouteElement element={<OrderInfo />} />}
+				/>
 				<Route path='*' element={<NotFound404 />} />
 			</Routes>
 
@@ -77,6 +80,26 @@ export const App = (): React.JSX.Element => {
 							<Modal onClose={handleModalClose}>
 								<IngredientDetails />
 							</Modal>
+						}
+					/>
+					<Route
+						path='/feed/:number'
+						element={
+							<Modal onClose={handleModalClose}>
+								<OrderInfo />
+							</Modal>
+						}
+					/>
+					<Route
+						path='/profile/orders/:number'
+						element={
+							<ProtectedRouteElement
+								element={
+									<Modal onClose={handleModalClose}>
+										<OrderInfo />
+									</Modal>
+								}
+							/>
 						}
 					/>
 				</Routes>

@@ -1,13 +1,10 @@
 import s from './order-details.module.scss';
 import React from 'react';
 import imageDone from '../../images/done.png';
-import { useSelector } from 'react-redux';
-import { TRootState } from '../../services/reducers';
+import { useSelector } from '../../services/hooks';
 
 export const OrderDetails = (): React.JSX.Element => {
-	const { response, isLoading, hasError } = useSelector(
-		(state: TRootState) => state.order
-	);
+	const { response, isLoading, hasError } = useSelector((state) => state.order);
 
 	return (
 		<div className={s.content}>
@@ -27,7 +24,7 @@ export const OrderDetails = (): React.JSX.Element => {
 			{!hasError && !isLoading && response && response.success && (
 				<>
 					<h2 className={`${s.number} text text_type_digits-large mt-9`}>
-						{response.order.number}
+						{response.order?.number}
 					</h2>
 					<p className={'text text_type_main-medium mt-8'}>
 						идентификатор заказа

@@ -1,0 +1,44 @@
+.content {
+	width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.centerText {
+	text-align: center;
+}
+
+.cards {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	max-height: 312px;
+}
+
+.card {
+	display: flex;
+    justify-content: space-between;
+
+	& div {
+		display: flex;
+		align-content: center;
+		gap: 16px;
+
+		& p {
+			align-content: center;
+		}
+	}
+}
+
+.price {
+	display: flex;
+	align-content: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.totalInfo {
+	display: flex;
+	justify-content: space-between;
+}

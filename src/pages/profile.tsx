@@ -1,7 +1,6 @@
 import styles from './form-page.module.scss';
 import React, { useEffect, useState, useRef, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TRootState } from '../services/reducers';
+import { useSelector, useDispatch } from '../services/hooks';
 import { getUser, updateUser } from '../services/actions/user';
 import {
 	Input,
@@ -10,13 +9,12 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useForm } from '../hooks/useForm';
-import { TAppDispatch } from '../components/app';
 
 export const Profile = (): React.JSX.Element => {
-	const dispatch: TAppDispatch = useDispatch();
+	const dispatch = useDispatch();
 	const accessToken = localStorage.getItem('accessToken');
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { email, name } = useSelector((state: TRootState) => state.user);
+	const { email, name } = useSelector((state) => state.user);
 	const { values, handleChange, setValues } = useForm({
 		email: email,
 		name: name,
@@ -65,22 +63,22 @@ export const Profile = (): React.JSX.Element => {
 		e.preventDefault();
 		if (!document.querySelector('.input__error')) {
 			if (accessToken) {
-				await dispatch(
+				dispatch(
 					updateUser(
 						{
 							token: accessToken,
 							user: {
 								email: values.email,
 								password: values.password,
-								name: values.name,
-							},
+								name: values.name
+							}
 						},
 						(hasError) => {
 							if (hasError) {
-								alert('Что-то пошло не так, попробуйте еще раз');
+								alert("Что-то пошло не так, попробуйте еще раз");
 							} else {
 								setShowButtons(false);
-								setValues({ ...values, password: '' });
+								setValues({ ...values, password: "" });
 							}
 						}
 					)

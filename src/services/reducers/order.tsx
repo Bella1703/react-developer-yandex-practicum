@@ -4,21 +4,8 @@ import {
 	PLACE_ORDER_ERROR,
 	OrderResponseType,
 } from '../actions/order';
+import { TOrderAction } from '../constants/order';
 
-type TPlaceOrderAction = {
-	type: typeof PLACE_ORDER_REQUEST;
-};
-type TPlaceOrderSuccessAction = {
-	type: typeof PLACE_ORDER_SUCCESS;
-	response: object;
-};
-type TPlaceOrderFailedAction = {
-	type: typeof PLACE_ORDER_ERROR;
-};
-export type TOrderAction =
-	| TPlaceOrderAction
-	| TPlaceOrderSuccessAction
-	| TPlaceOrderFailedAction;
 export type TOrderState = {
 	response: null | OrderResponseType;
 	isLoading: boolean;
@@ -31,7 +18,7 @@ const initialState: TOrderState = {
 };
 
 export const placeOrderReducer = (
-	state = initialState,
+	state: TOrderState = initialState,
 	action: TOrderAction
 ): TOrderState => {
 	switch (action.type) {

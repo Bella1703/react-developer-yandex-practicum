@@ -1,16 +1,15 @@
 import s from './cabinet-nav.module.scss';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { NavLink } from 'react-router-dom';
 import { signOut } from '../../services/actions/user';
-import { TAppDispatch } from '../app';
 
 export const CabinetNav = (): React.JSX.Element => {
-	const dispatch: TAppDispatch = useDispatch();
+	const dispatch = useDispatch();
 	const handleSignOut = async () => {
 		const token = localStorage.getItem('refreshToken');
 		if (token) {
-			await dispatch(
+			dispatch(
 				signOut(
 					{
 						token: token,

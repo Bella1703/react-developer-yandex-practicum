@@ -1,16 +1,13 @@
 import s from './home.module.scss';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../services/hooks';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BurgerIngredients } from '../components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../components/burger-constructor/burger-constructor';
-import { TRootState } from '../services/reducers';
 import React from 'react';
 
 export const Home = (): React.JSX.Element => {
-	const { isLoading, hasError } = useSelector(
-		(state: TRootState) => state.ingredients
-	);
+	const { isLoading, hasError } = useSelector((state) => state.ingredients);
 
 	return (
 		<>

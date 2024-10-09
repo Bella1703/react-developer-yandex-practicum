@@ -66,6 +66,9 @@ describe('order is placed', function () {
 
 		cy.get('[data-testid=modal]')
 			.should('be.visible')
-			.should('contain.text', '55827');
+			.should('contain.text', '55827')
+			.and('contain.text', 'идентификатор заказа')
+			.and('contain.text', 'Ваш заказ начали готовить')
+			.and('contain.text', 'Дождитесь готовности на орбитальной станции');
 	});
 });

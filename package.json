@@ -69,7 +69,8 @@
 		"test": "jest",
 		"prepare": "husky install",
 		"commit": "yarn test && cz",
-		"cypress:open": "./node_modules/.bin/cypress open"
+		"cypress:open": "./node_modules/.bin/cypress open",
+		"deploy-script": "npm run build && scp -r ./dist/* bella@84.201.181.99:/var/www/stellar-burgers.nomorepartiesco.ru/html"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.2.7",

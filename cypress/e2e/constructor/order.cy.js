@@ -53,11 +53,11 @@ describe('order is placed', function () {
 		cy.get('@bun-place').trigger('drop');
 		cy.get('@sauce').trigger('dragstart');
 		cy.get('@filling_place').trigger('drop');
-		cy.window().then((win) => {
-			cy.stub(win.localStorage, 'getItem')
-				.withArgs('accessToken')
-				.returns('mockedAccessToken');
-		});
+		window.localStorage.setItem(
+			'accessToken',
+			JSON.stringify('testAccessToken')
+		);
+
 		cy.intercept('POST', 'orders', {
 			fixture: 'order',
 		}).as('postOrder');

@@ -30,7 +30,16 @@ export const IngredientCard = ({
 			key={ingredientId}
 			to={`/ingredients/${ingredientId}`}
 			state={{ background: location }}>
-			<div className={s.card} ref={dragRef}>
+			<div
+				className={s.card}
+				ref={dragRef}
+				data-testid={
+					props.type === 'bun'
+						? 'bun'
+						: props.type === 'main'
+						? 'main'
+						: 'sauce'
+				}>
 				{count > 0 && (
 					<Counter count={count} size='default' extraClass={s.counter} />
 				)}

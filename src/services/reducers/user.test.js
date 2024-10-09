@@ -24,6 +24,7 @@ describe('user reducer', () => {
 				},
 			})
 		).toEqual({
+			...initialState,
 			email: 'email',
 			name: 'name',
 		});
@@ -41,6 +42,7 @@ describe('user reducer', () => {
 				},
 			})
 		).toEqual({
+			...initialState,
 			email: 'email',
 			name: 'name',
 		});
@@ -56,6 +58,7 @@ describe('user reducer', () => {
 				type: SIGN_OUT,
 			})
 		).toEqual({
+			...initialState,
 			email: '',
 			name: '',
 		});
@@ -73,6 +76,7 @@ describe('user reducer', () => {
 				},
 			})
 		).toEqual({
+			...initialState,
 			email: 'email',
 			name: 'name',
 		});
@@ -96,6 +100,7 @@ describe('user reducer', () => {
 				}
 			)
 		).toEqual({
+			...initialState,
 			email: 'email_2',
 			name: 'name_2',
 		});
@@ -116,6 +121,7 @@ describe('user reducer', () => {
 				}
 			)
 		).toEqual({
+			...initialState,
 			email: 'email_1',
 			name: 'name_1',
 		});

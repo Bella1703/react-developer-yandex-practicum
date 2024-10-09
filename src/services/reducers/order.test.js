@@ -28,6 +28,7 @@ describe('place order reducer', () => {
 				response: { response: 'response' },
 			})
 		).toEqual({
+			...initialState,
 			response: { response: 'response' },
 			isLoading: false,
 			hasError: false,

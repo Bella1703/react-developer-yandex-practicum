@@ -28,6 +28,7 @@ describe('ingredients reducer', () => {
 				ingredients: [1, 2, 3],
 			})
 		).toEqual({
+			...initialState,
 			ingredients: [...initialState.ingredients, 1, 2, 3],
 			isLoading: false,
 			hasError: false,

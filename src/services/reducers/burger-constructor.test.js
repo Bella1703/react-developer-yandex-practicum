@@ -12,9 +12,7 @@ const {
 
 describe('burger-constructor reducer', () => {
 	it('should return the initial state', () => {
-		expect(burgerConstructorReducer(undefined, {})).toEqual(
-			initialState
-		);
+		expect(burgerConstructorReducer(undefined, {})).toEqual(initialState);
 	});
 
 	it('should handle ADD_INGREDIENT action', () => {

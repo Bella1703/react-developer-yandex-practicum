@@ -3,7 +3,7 @@ describe('modal works', function () {
 		cy.intercept('GET', 'ingredients', {
 			fixture: 'ingredients',
 		}).as('getIngredients');
-		cy.visit('http://localhost:8080');
+		cy.visit('/');
 
 		cy.get('[data-testid=bun]').first().as('ingredient');
 		cy.get('@ingredient').click();

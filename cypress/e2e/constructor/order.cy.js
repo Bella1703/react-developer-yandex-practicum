@@ -3,7 +3,7 @@ describe('order is placed', function () {
 		cy.intercept('GET', 'ingredients', {
 			fixture: 'ingredients',
 		}).as('getIngredients');
-		cy.visit('http://localhost:8080');
+		cy.visit('/');
 
 		cy.get('[data-testid=bun]').first().as('bun');
 		cy.get('[data-testid=main]').first().as('main_ingredient');

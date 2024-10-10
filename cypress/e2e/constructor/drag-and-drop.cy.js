@@ -3,7 +3,7 @@ describe('ingredients are dragged', function () {
 		cy.intercept('GET', 'ingredients', {
 			fixture: 'ingredients',
 		}).as('getIngredients');
-		cy.visit('http://localhost:8080');
+		cy.visit('/');
 
 		cy.get('[data-testid=bun]').first().as('first_bun');
 		cy.get('[data-testid=bun]').last().as('second_bun');

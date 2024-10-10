@@ -11,7 +11,7 @@ export type TUserState = {
 	email: string;
 	name: string;
 };
-const initialState: TUserState = {
+export const initialState: TUserState = {
 	email: '',
 	name: '',
 };

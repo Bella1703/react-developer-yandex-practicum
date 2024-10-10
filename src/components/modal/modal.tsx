@@ -26,8 +26,8 @@ export const Modal = ({
 
 	return ReactDOM.createPortal(
 		<>
-			<div className={s.container}>
-				<div className={s.closeIconWrapper}>
+			<div className={s.container} data-testid={'modal'}>
+				<div className={s.closeIconWrapper} data-testid={'close_icon'}>
 					<CloseIcon type='primary' onClick={onClose} />
 				</div>
 				{children}

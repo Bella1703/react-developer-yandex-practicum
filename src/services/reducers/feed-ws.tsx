@@ -13,7 +13,7 @@ type TFeedWsState = {
 	error?: Event;
 };
 
-const initialState: TFeedWsState = {
+export const initialState: TFeedWsState = {
 	feedWsConnected: false,
 	feedWsMessage: {
 		success: false,

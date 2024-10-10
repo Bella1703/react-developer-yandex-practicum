@@ -13,7 +13,7 @@ type TOrdersWsState = {
 	error?: Event;
 };
 
-const initialState: TOrdersWsState = {
+export const initialState: TOrdersWsState = {
 	orderWsConnected: false,
 	orderWsMessage: {
 		success: false,

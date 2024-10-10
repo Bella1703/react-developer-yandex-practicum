@@ -13,13 +13,13 @@ type TBurgerConstructorState = {
 	selectedIngredients: Array<TBurgerIngredient>;
 };
 
-const burgerConstructorInitialState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
 	bun: null,
 	selectedIngredients: [] as TBurgerIngredient[],
 };
 
 export const burgerConstructorReducer = (
-	state: TBurgerConstructorState = burgerConstructorInitialState,
+	state: TBurgerConstructorState = initialState,
 	action: TBurgerConstructorAction
 ): TBurgerConstructorState => {
 	switch (action.type) {
@@ -48,7 +48,7 @@ export const burgerConstructorReducer = (
 			};
 		}
 		case CLEAR_CONSTRUCTOR: {
-			return burgerConstructorInitialState;
+			return initialState;
 		}
 		case MOVE_INGREDIENT: {
 			const dragCard: TBurgerIngredient =

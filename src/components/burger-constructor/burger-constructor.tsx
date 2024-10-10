@@ -10,7 +10,7 @@ import {
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useSelector, useDispatch } from '../../services/hooks';
-import { TBurgerIngredient } from '../../services/types';
+import { TBurgerIngredient, TIngredient } from '../../services/types';
 import {
 	REMOVE_INGREDIENT,
 	REPLACE_BUN,
@@ -18,7 +18,6 @@ import {
 } from '../../services/actions/burger-constructor';
 import { placeOrder } from '../../services/actions/order';
 import { BurgerConstructorIngredient } from './burger-constructor-ingredient/burger-constructor-ingredient';
-import { TIngredient } from '../../services/types';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const navigate = useNavigate();
@@ -105,16 +104,19 @@ export const BurgerConstructor = (): React.JSX.Element => {
 		<section className={`${s.container} pl-4 pr-4`}>
 			<div
 				ref={topBunDropTarget}
-				className={bun ? '' : `${s.placeholder} ${s.placeholderTopBun}`}>
+				className={bun ? '' : `${s.placeholder} ${s.placeholderTopBun}`}
+				data-testid={'top-bun-place'}>
 				{bun ? (
-					<ConstructorElement
-						text={bun.name + ' (верх)'}
-						price={bun.price}
-						thumbnail={bun.image}
-						type='top'
-						isLocked={true}
-						extraClass={'ml-8'}
-					/>
+					<div data-testid={'bun_in_burger'}>
+						<ConstructorElement
+							text={bun.name + ' (верх)'}
+							price={bun.price}
+							thumbnail={bun.image}
+							type='top'
+							isLocked={true}
+							extraClass={'ml-8'}
+						/>
+					</div>
 				) : (
 					<p>Выберите булки</p>
 				)}
@@ -126,9 +128,12 @@ export const BurgerConstructor = (): React.JSX.Element => {
 					selectedIngredients.length === 0
 						? `${s.placeholder} ${s.placeholderIngredient} mt-4`
 						: 'mt-4'
-				}>
+				}
+				data-testid={'filling_place'}>
 				{selectedIngredients.length > 0 ? (
-					<ul className={`${s.ingredients} custom-scroll mt-4`}>
+					<ul
+						className={`${s.ingredients} custom-scroll mt-4`}
+						data-testid={'filling_in_burger'}>
 						{selectedIngredients.map((ingredient, index) => (
 							<BurgerConstructorIngredient
 								key={ingredient.uuid}
@@ -147,16 +152,19 @@ export const BurgerConstructor = (): React.JSX.Element => {
 				ref={bottomBunDropTarget}
 				className={
 					bun ? 'mt-4' : `${s.placeholder} ${s.placeholderBottomBun} mt-4`
-				}>
+				}
+				data-testid={'bottom_bun_place'}>
 				{bun ? (
-					<ConstructorElement
-						text={bun.name + ' (низ)'}
-						price={bun.price}
-						thumbnail={bun.image}
-						type='bottom'
-						isLocked={true}
-						extraClass={'ml-8'}
-					/>
+					<div data-testid={'bun_in_burger'}>
+						<ConstructorElement
+							text={bun.name + ' (низ)'}
+							price={bun.price}
+							thumbnail={bun.image}
+							type='bottom'
+							isLocked={true}
+							extraClass={'ml-8'}
+						/>
+					</div>
 				) : (
 					<p>Выберите булки</p>
 				)}
@@ -167,13 +175,15 @@ export const BurgerConstructor = (): React.JSX.Element => {
 					{totalPrice}
 					<CurrencyIcon type='primary' />
 				</div>
-				<Button
-					onClick={handlePlaceOrder}
-					htmlType='button'
-					type='primary'
-					size='large'>
-					Оформить заказ
-				</Button>
+				<div data-testid={'place_order_button'}>
+					<Button
+						onClick={handlePlaceOrder}
+						htmlType='button'
+						type='primary'
+						size='large'>
+						Оформить заказ
+					</Button>
+				</div>
 				{modalState && (
 					<Modal onClose={handleCloseModal}>
 						<OrderDetails />

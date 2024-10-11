@@ -5,12 +5,12 @@ import { TGetIngredientDetailsAction } from '../constants/ingredient-details';
 type TIngredientDetailsInitialState = {
 	ingredientDetails: null | TIngredient;
 };
-const ingredientDetailsInitialState: TIngredientDetailsInitialState = {
+export const initialState: TIngredientDetailsInitialState = {
 	ingredientDetails: null,
 };
 
 export const ingredientDetailsReducer = (
-	state: TIngredientDetailsInitialState = ingredientDetailsInitialState,
+	state: TIngredientDetailsInitialState = initialState,
 	action: TGetIngredientDetailsAction
 ): TIngredientDetailsInitialState => {
 	switch (action.type) {

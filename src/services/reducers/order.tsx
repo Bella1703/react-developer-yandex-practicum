@@ -11,7 +11,7 @@ export type TOrderState = {
 	isLoading: boolean;
 	hasError: boolean;
 };
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
 	response: null,
 	isLoading: false,
 	hasError: false,
